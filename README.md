@@ -6,7 +6,7 @@ Markdown-powered test site for GitHub Pages in the `gusvega-dev` organization.
 
 ```sh
 python3 scripts/build.py
-python3 -m http.server 8080 -d _site
+python3 -m http.server 8080 -d _site 
 ```
 
 ## Build
