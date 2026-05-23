@@ -84,10 +84,6 @@ def markdown_to_html(markdown: str) -> str:
 
 
 def render_page(title: str, content: str) -> str:
-    letters = "".join(
-        f'<span class="name-letter" style="--i:{index}">{html.escape(letter)}</span>'
-        for index, letter in enumerate("GUS")
-    )
     return f"""<!doctype html>
 <html lang="en">
   <head>
@@ -95,15 +91,19 @@ def render_page(title: str, content: str) -> str:
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{html.escape(title)}</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script type="importmap">
+      {{
+        "imports": {{
+          "three": "./vendor/build/three.module.js"
+        }}
+      }}
+    </script>
+    <script type="module" src="script.js"></script>
   </head>
   <body>
     <main class="name-stage">
-      <section class="name-lockup" aria-label="Drag to turn the name">
-        <h1 id="page-title" class="animated-name" aria-label="{html.escape(title)}">
-          {letters}
-        </h1>
-      </section>
+      <h1 id="page-title" class="sr-only">{html.escape(title)}</h1>
+      <canvas class="letter-canvas" aria-labelledby="page-title"></canvas>
     </main>
   </body>
 </html>
@@ -117,6 +117,8 @@ def build() -> None:
 
     shutil.copy2(SRC / "styles.css", OUT / "styles.css")
     shutil.copy2(SRC / "script.js", OUT / "script.js")
+    if (SRC / "vendor").exists():
+        shutil.copytree(SRC / "vendor", OUT / "vendor")
 
     for path in SRC.glob("*.md"):
         frontmatter, body = read_frontmatter(path.read_text(encoding="utf-8"))
