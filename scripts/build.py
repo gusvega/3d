@@ -110,22 +110,65 @@ def render_page(title: str, content: str) -> str:
 """
 
 
+def render_ferrofluid_page(title: str) -> str:
+    return f"""<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <title>{html.escape(title)}</title>
+    <link rel="stylesheet" href="ferrofluid.css">
+    <script type="importmap">
+      {{
+        "imports": {{
+          "three": "./vendor/build/three.module.js"
+        }}
+      }}
+    </script>
+    <script type="module" src="ferrofluid.js"></script>
+  </head>
+  <body class="ferro-body">
+    <h1 class="sr-only">{html.escape(title)}</h1>
+    <canvas class="fluid-canvas" aria-label="Audio-reactive ferrofluid"></canvas>
+    <div class="panel">
+      <form class="yt-form" id="yt-form">
+        <input id="yt-input" type="text" placeholder="Paste a YouTube link or ID" autocomplete="off" spellcheck="false">
+        <button type="submit">Load</button>
+      </form>
+      <div class="btn-row">
+        <button id="mic-btn" type="button">Listen via mic</button>
+        <label class="upload-btn">Upload audio
+          <input id="file-input" type="file" accept="audio/*" hidden>
+        </label>
+      </div>
+      <p id="status" class="status">Upload an audio file, or load a YouTube song and press “Listen via mic” so the fluid reacts to what’s playing.</p>
+      <div id="yt-embed" class="yt-embed" aria-hidden="false"></div>
+    </div>
+  </body>
+</html>
+"""
+
+
 def build() -> None:
     if OUT.exists():
         shutil.rmtree(OUT)
     OUT.mkdir()
 
-    shutil.copy2(SRC / "styles.css", OUT / "styles.css")
-    shutil.copy2(SRC / "script.js", OUT / "script.js")
+    for asset in (*SRC.glob("*.css"), *SRC.glob("*.js")):
+        shutil.copy2(asset, OUT / asset.name)
     if (SRC / "vendor").exists():
         shutil.copytree(SRC / "vendor", OUT / "vendor")
 
     for path in SRC.glob("*.md"):
         frontmatter, body = read_frontmatter(path.read_text(encoding="utf-8"))
         title = frontmatter.get("title", path.stem)
-        content = markdown_to_html(body)
         output_name = "index.html" if path.name == "index.md" else f"{path.stem}.html"
-        (OUT / output_name).write_text(render_page(title, content), encoding="utf-8")
+        if frontmatter.get("app") == "ferrofluid":
+            page = render_ferrofluid_page(title)
+        else:
+            page = render_page(title, markdown_to_html(body))
+        (OUT / output_name).write_text(page, encoding="utf-8")
 
 
 if __name__ == "__main__":
