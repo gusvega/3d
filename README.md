@@ -1,6 +1,8 @@
-# md-pages-test
+# Gus
 
-Markdown-powered test site for GitHub Pages in the `gusvega-dev` organization.
+One-page animated personal-name website for GitHub Pages.
+
+The page shows a gray, glossy `GUS` wordmark on a white background. Drag anywhere on the page to turn the name in the drag direction.
 
 ## Local Development
 
@@ -17,7 +19,7 @@ python3 scripts/build.py
 
 ## GitHub Pages
 
-The workflow in `.github/workflows/pages.yml` builds the Markdown site and deploys `_site` to GitHub Pages.
+The workflow in `.github/workflows/pages.yml` builds the static site and deploys `_site` to GitHub Pages.
 
 After the first deployment, confirm Pages is configured to use **GitHub Actions** as the source in the repository settings.
 
