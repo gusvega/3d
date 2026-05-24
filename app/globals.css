@@ -326,6 +326,61 @@ body.immersive.reveal .panel {
   color: #555b66;
 }
 
+.transport {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.transport[hidden] {
+  display: none;
+}
+
+.track-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.track-name {
+  min-width: 0;
+  overflow: hidden;
+  color: #16181d;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.time-readout {
+  flex: 0 0 auto;
+  color: #626873;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.seek-slider {
+  width: 100%;
+  accent-color: #16181d;
+}
+
+.transport-buttons {
+  display: grid;
+  grid-template-columns: 0.74fr 0.96fr 0.74fr 1.05fr 0.82fr;
+  gap: 8px;
+}
+
+.transport-buttons button {
+  min-width: 0;
+  padding-inline: 8px;
+  white-space: nowrap;
+}
+
 .yt-embed {
   display: none;
   width: 100%;
@@ -390,6 +445,20 @@ body.immersive.reveal .panel {
   }
 
   .status {
+    font-size: 12px;
+  }
+
+  .track-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .transport-buttons {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .transport-buttons button {
     font-size: 12px;
   }
 }

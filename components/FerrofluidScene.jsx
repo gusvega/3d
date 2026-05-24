@@ -11,6 +11,15 @@ export default function FerrofluidScene() {
   const micRef = useRef(null);
   const fileRef = useRef(null);
   const statusRef = useRef(null);
+  const playerRef = useRef(null);
+  const playPauseRef = useRef(null);
+  const restartRef = useRef(null);
+  const stopRef = useRef(null);
+  const backRef = useRef(null);
+  const forwardRef = useRef(null);
+  const seekRef = useRef(null);
+  const timeRef = useRef(null);
+  const trackRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,7 +29,33 @@ export default function FerrofluidScene() {
     const micBtn = micRef.current;
     const fileInput = fileRef.current;
     const status = statusRef.current;
-    if (!canvas || !ytForm || !ytInput || !ytEmbed || !micBtn || !fileInput || !status) {
+    const player = playerRef.current;
+    const playPauseBtn = playPauseRef.current;
+    const restartBtn = restartRef.current;
+    const stopBtn = stopRef.current;
+    const backBtn = backRef.current;
+    const forwardBtn = forwardRef.current;
+    const seek = seekRef.current;
+    const timeReadout = timeRef.current;
+    const trackName = trackRef.current;
+    if (
+      !canvas ||
+      !ytForm ||
+      !ytInput ||
+      !ytEmbed ||
+      !micBtn ||
+      !fileInput ||
+      !status ||
+      !player ||
+      !playPauseBtn ||
+      !restartBtn ||
+      !stopBtn ||
+      !backBtn ||
+      !forwardBtn ||
+      !seek ||
+      !timeReadout ||
+      !trackName
+    ) {
       return undefined;
     }
 
@@ -257,7 +292,12 @@ export default function FerrofluidScene() {
     let analyser = null;
     let freqData = null;
     let audioActive = false;
-    let fileSource = null;
+    let audioMode = "idle";
+    let mediaElement = null;
+    let mediaSource = null;
+    let micSource = null;
+    let micStream = null;
+    let objectUrl = "";
     const bands = { bass: 0, mid: 0, treble: 0, level: 0 };
     let bassSlow = 0;
     let pump = 0;
@@ -277,14 +317,54 @@ export default function FerrofluidScene() {
       return analyser;
     }
 
+    function getMediaElement() {
+      if (!mediaElement) {
+        mediaElement = new Audio();
+        mediaElement.preload = "metadata";
+        mediaElement.addEventListener("loadedmetadata", updateTransport);
+        mediaElement.addEventListener("timeupdate", updateTransport);
+        mediaElement.addEventListener("play", updateTransport);
+        mediaElement.addEventListener("pause", updateTransport);
+        mediaElement.addEventListener("ended", onMediaEnded);
+      }
+      return mediaElement;
+    }
+
+    function connectMediaElement() {
+      const element = getMediaElement();
+      ensureAnalyser();
+      if (!mediaSource) {
+        mediaSource = audioCtx.createMediaElementSource(element);
+        mediaSource.connect(analyser);
+        mediaSource.connect(audioCtx.destination);
+      }
+      return element;
+    }
+
     async function startMic() {
       ensureAnalyser();
       await audioCtx.resume();
-      const stream = await navigator.mediaDevices.getUserMedia({
+      micStream = await navigator.mediaDevices.getUserMedia({
         audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false },
       });
-      audioCtx.createMediaStreamSource(stream).connect(analyser);
+      micSource = audioCtx.createMediaStreamSource(micStream);
+      micSource.connect(analyser);
       audioActive = true;
+      audioMode = "mic";
+    }
+
+    function stopMicInput() {
+      if (micSource) {
+        micSource.disconnect();
+        micSource = null;
+      }
+      if (micStream) {
+        micStream.getTracks().forEach((track) => track.stop());
+        micStream = null;
+      }
+      micBtn.disabled = false;
+      micBtn.textContent = "Listen via mic";
+      micBtn.classList.remove("active");
     }
 
     function unlockAudio() {
@@ -295,21 +375,32 @@ export default function FerrofluidScene() {
     }
 
     async function startFile(file) {
-      ensureAnalyser();
+      stopMicInput();
+      const element = connectMediaElement();
       await audioCtx.resume().catch(() => {});
-      const arrayBuf = await file.arrayBuffer();
-      const audioBuf = await audioCtx.decodeAudioData(arrayBuf);
-      if (fileSource) {
-        try {
-          fileSource.stop();
-        } catch (_) {}
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
       }
-      fileSource = audioCtx.createBufferSource();
-      fileSource.buffer = audioBuf;
-      fileSource.connect(analyser);
-      fileSource.connect(audioCtx.destination);
-      fileSource.start();
-      audioActive = true;
+      objectUrl = URL.createObjectURL(file);
+      element.src = objectUrl;
+      element.load();
+      audioMode = "file";
+      trackName.textContent = file.name;
+      player.hidden = false;
+      updateTransport();
+      try {
+        await element.play();
+        audioActive = true;
+        scheduleFade(4600);
+        return true;
+      } catch (err) {
+        audioActive = false;
+        updateTransport();
+        if (err?.name === "NotAllowedError") {
+          return false;
+        }
+        throw err;
+      }
     }
 
     function sampleAudio() {
@@ -349,6 +440,7 @@ export default function FerrofluidScene() {
     let time = 0;
     let frame = 0;
     let revealTimer = 0;
+    let openingFadeTimer = 0;
 
     function onPointerDown(e) {
       dragging = true;
@@ -480,6 +572,16 @@ export default function FerrofluidScene() {
       revealControls();
     }
 
+    function scheduleFade(delay = 1600) {
+      clearTimeout(openingFadeTimer);
+      clearTimeout(revealTimer);
+      document.body.classList.remove("immersive", "reveal");
+      openingFadeTimer = window.setTimeout(() => {
+        document.body.classList.add("immersive");
+        document.body.classList.remove("reveal");
+      }, delay);
+    }
+
     function revealControls() {
       if (!document.body.classList.contains("immersive")) {
         return;
@@ -487,6 +589,99 @@ export default function FerrofluidScene() {
       document.body.classList.add("reveal");
       clearTimeout(revealTimer);
       revealTimer = window.setTimeout(() => document.body.classList.remove("reveal"), 2600);
+    }
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds) || seconds < 0) {
+        return "0:00";
+      }
+      const minutes = Math.floor(seconds / 60);
+      const remaining = Math.floor(seconds % 60).toString().padStart(2, "0");
+      return `${minutes}:${remaining}`;
+    }
+
+    function updateTransport() {
+      const element = mediaElement;
+      const hasFile = Boolean(element && element.src);
+      playPauseBtn.disabled = !hasFile;
+      restartBtn.disabled = !hasFile;
+      stopBtn.disabled = !hasFile;
+      backBtn.disabled = !hasFile;
+      forwardBtn.disabled = !hasFile;
+      seek.disabled = !hasFile;
+      if (!hasFile) {
+        seek.value = "0";
+        timeReadout.textContent = "0:00 / 0:00";
+        playPauseBtn.textContent = "Play";
+        return;
+      }
+
+      const duration = Number.isFinite(element.duration) ? element.duration : 0;
+      const progress = duration > 0 ? (element.currentTime / duration) * 1000 : 0;
+      seek.value = String(Math.round(progress));
+      timeReadout.textContent = `${formatTime(element.currentTime)} / ${formatTime(duration)}`;
+      playPauseBtn.textContent = element.paused ? "Play" : "Pause";
+      audioActive = audioMode === "mic" || (audioMode === "file" && !element.paused && !element.ended);
+    }
+
+    async function togglePlayback() {
+      if (!mediaElement || !mediaElement.src) {
+        return;
+      }
+      if (mediaElement.paused) {
+        await audioCtx?.resume().catch(() => {});
+        await mediaElement.play();
+        audioActive = true;
+        scheduleFade(mediaElement.currentTime < 1 ? 4600 : 1200);
+      } else {
+        mediaElement.pause();
+        audioActive = false;
+        document.body.classList.remove("immersive", "reveal");
+        clearTimeout(openingFadeTimer);
+      }
+      updateTransport();
+    }
+
+    function seekBy(seconds) {
+      if (!mediaElement || !mediaElement.src) {
+        return;
+      }
+      const duration = Number.isFinite(mediaElement.duration) ? mediaElement.duration : 0;
+      mediaElement.currentTime = Math.min(Math.max(mediaElement.currentTime + seconds, 0), duration || 0);
+      updateTransport();
+    }
+
+    function rewindTrack() {
+      seekBy(-10);
+    }
+
+    function forwardTrack() {
+      seekBy(10);
+    }
+
+    function restartTrack() {
+      if (!mediaElement || !mediaElement.src) {
+        return;
+      }
+      mediaElement.currentTime = 0;
+      if (mediaElement.paused) {
+        mediaElement.play().catch(() => {});
+      }
+      audioActive = true;
+      scheduleFade(4600);
+      updateTransport();
+    }
+
+    function stopTrack() {
+      if (!mediaElement || !mediaElement.src) {
+        return;
+      }
+      mediaElement.pause();
+      mediaElement.currentTime = 0;
+      audioActive = false;
+      clearTimeout(openingFadeTimer);
+      document.body.classList.remove("immersive", "reveal");
+      updateTransport();
     }
 
     function onSubmit(e) {
@@ -514,6 +709,7 @@ export default function FerrofluidScene() {
         await startMic();
         micBtn.textContent = "Listening";
         micBtn.classList.add("active");
+        player.hidden = true;
         status.textContent = "Listening. Move the mouse to bring the controls back.";
         enterImmersive();
       } catch (err) {
@@ -530,13 +726,32 @@ export default function FerrofluidScene() {
       }
       status.textContent = `Playing ${file.name}...`;
       try {
-        await startFile(file);
-        status.textContent = "Playing your file. Move the mouse to bring the controls back.";
-        enterImmersive();
+        const didPlay = await startFile(file);
+        status.textContent = didPlay
+          ? "Playing your file. Controls will fade after the opening."
+          : "Track loaded. Press Play to start.";
       } catch (err) {
         console.error("file error", err);
         status.textContent = "File error: " + (err ? `${err.name} - ${err.message}` : err);
       }
+    }
+
+    function onSeekInput() {
+      if (!mediaElement || !mediaElement.src) {
+        return;
+      }
+      const duration = Number.isFinite(mediaElement.duration) ? mediaElement.duration : 0;
+      if (duration > 0) {
+        mediaElement.currentTime = (Number(seek.value) / 1000) * duration;
+      }
+      updateTransport();
+    }
+
+    function onMediaEnded() {
+      audioActive = false;
+      document.body.classList.remove("immersive", "reveal");
+      clearTimeout(openingFadeTimer);
+      updateTransport();
     }
 
     canvas.addEventListener("pointerdown", onPointerDown);
@@ -550,6 +765,12 @@ export default function FerrofluidScene() {
     ytForm.addEventListener("submit", onSubmit);
     micBtn.addEventListener("click", onMicClick);
     fileInput.addEventListener("change", onFileChange);
+    playPauseBtn.addEventListener("click", togglePlayback);
+    restartBtn.addEventListener("click", restartTrack);
+    stopBtn.addEventListener("click", stopTrack);
+    backBtn.addEventListener("click", rewindTrack);
+    forwardBtn.addEventListener("click", forwardTrack);
+    seek.addEventListener("input", onSeekInput);
 
     resize();
     animate();
@@ -557,6 +778,7 @@ export default function FerrofluidScene() {
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(revealTimer);
+      clearTimeout(openingFadeTimer);
       document.body.classList.remove("immersive", "reveal");
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
@@ -569,11 +791,25 @@ export default function FerrofluidScene() {
       ytForm.removeEventListener("submit", onSubmit);
       micBtn.removeEventListener("click", onMicClick);
       fileInput.removeEventListener("change", onFileChange);
-      if (fileSource) {
-        try {
-          fileSource.stop();
-        } catch (_) {}
+      playPauseBtn.removeEventListener("click", togglePlayback);
+      restartBtn.removeEventListener("click", restartTrack);
+      stopBtn.removeEventListener("click", stopTrack);
+      backBtn.removeEventListener("click", rewindTrack);
+      forwardBtn.removeEventListener("click", forwardTrack);
+      seek.removeEventListener("input", onSeekInput);
+      if (mediaElement) {
+        mediaElement.removeEventListener("loadedmetadata", updateTransport);
+        mediaElement.removeEventListener("timeupdate", updateTransport);
+        mediaElement.removeEventListener("play", updateTransport);
+        mediaElement.removeEventListener("pause", updateTransport);
+        mediaElement.removeEventListener("ended", onMediaEnded);
+        mediaElement.pause();
+        mediaElement.src = "";
       }
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+      stopMicInput();
       if (audioCtx) {
         audioCtx.close().catch(() => {});
       }
@@ -607,6 +843,43 @@ export default function FerrofluidScene() {
             Upload audio
             <input ref={fileRef} type="file" accept="audio/*" hidden />
           </label>
+        </div>
+        <div ref={playerRef} className="transport" hidden>
+          <div className="track-row">
+            <span ref={trackRef} className="track-name">
+              No track loaded
+            </span>
+            <span ref={timeRef} className="time-readout">
+              0:00 / 0:00
+            </span>
+          </div>
+          <input
+            ref={seekRef}
+            className="seek-slider"
+            type="range"
+            min="0"
+            max="1000"
+            defaultValue="0"
+            aria-label="Track position"
+            disabled
+          />
+          <div className="transport-buttons">
+            <button ref={backRef} type="button" disabled>
+              -10
+            </button>
+            <button ref={playPauseRef} type="button" disabled>
+              Play
+            </button>
+            <button ref={forwardRef} type="button" disabled>
+              +10
+            </button>
+            <button ref={restartRef} type="button" disabled>
+              Restart
+            </button>
+            <button ref={stopRef} type="button" disabled>
+              Stop
+            </button>
+          </div>
         </div>
         <p ref={statusRef} className="status">
           Upload an audio file, or load a YouTube song and press Listen via mic so the fluid
