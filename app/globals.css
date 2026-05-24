@@ -214,6 +214,10 @@ input {
   cursor: grabbing;
 }
 
+.hidden-audio {
+  display: none;
+}
+
 .ferrofluid-page .panel {
   position: fixed;
   left: 50%;

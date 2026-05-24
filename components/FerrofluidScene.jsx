@@ -20,6 +20,7 @@ export default function FerrofluidScene() {
   const seekRef = useRef(null);
   const timeRef = useRef(null);
   const trackRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -38,6 +39,7 @@ export default function FerrofluidScene() {
     const seek = seekRef.current;
     const timeReadout = timeRef.current;
     const trackName = trackRef.current;
+    const audioElement = audioRef.current;
     if (
       !canvas ||
       !ytForm ||
@@ -54,7 +56,8 @@ export default function FerrofluidScene() {
       !forwardBtn ||
       !seek ||
       !timeReadout ||
-      !trackName
+      !trackName ||
+      !audioElement
     ) {
       return undefined;
     }
@@ -79,7 +82,7 @@ export default function FerrofluidScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x020203);
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-    camera.position.set(0, 0.38, 7.6);
+    camera.position.set(0, 0.1, 12.8);
 
     function makeEnvironment() {
       const w = 1024;
@@ -166,7 +169,7 @@ export default function FerrofluidScene() {
     scene.add(glintLight);
     scene.add(new THREE.HemisphereLight(0xb7c1d6, 0x000000, 0.35));
 
-    const RADIUS = 1.72;
+    const RADIUS = 1.42;
     const raw = new THREE.IcosahedronGeometry(RADIUS, isMobile ? 5 : 6);
     const rawPos = raw.attributes.position.array;
     const keyToIndex = new Map();
@@ -208,7 +211,7 @@ export default function FerrofluidScene() {
     const posAttr = geometry.attributes.position;
 
     const SPIKE_COUNT = isMobile ? 118 : 172;
-    const SPIKE_MAX = isMobile ? 0.78 : 0.94;
+    const SPIKE_MAX = isMobile ? 0.48 : 0.58;
     const SPIKE_NEAR = 8;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
     const SPIKE_SIGMA = SPIKE_SPACING * 0.38;
@@ -335,9 +338,9 @@ export default function FerrofluidScene() {
     blob.frustumCulled = false;
     blob.castShadow = true;
     blob.receiveShadow = true;
-    blob.position.set(0, -1.15, 0);
-    blob.scale.set(1.34, 1.34, 1.34);
-    blob.rotation.x = -0.18;
+    blob.position.set(0, 0.05, 0);
+    blob.scale.set(1, 1, 1);
+    blob.rotation.x = -0.08;
     scene.add(blob);
 
     let audioCtx = null;
@@ -381,8 +384,10 @@ export default function FerrofluidScene() {
 
     function getMediaElement() {
       if (!mediaElement) {
-        mediaElement = new Audio();
+        mediaElement = audioElement;
         mediaElement.preload = "metadata";
+        mediaElement.volume = 1;
+        mediaElement.muted = false;
         mediaElement.addEventListener("loadedmetadata", updateTransport);
         mediaElement.addEventListener("timeupdate", updateTransport);
         mediaElement.addEventListener("play", updateTransport);
@@ -625,11 +630,10 @@ export default function FerrofluidScene() {
         const normalized = weightSum > 0 ? h / weightSum : h;
         const roundedPeak = normalized * 0.72 + crown * 0.36;
         const directionY = base[o + 1];
-        const moundMask = THREE.MathUtils.smoothstep(directionY, -0.82, 0.32);
-        const lowerCompression = directionY < -0.2 ? (directionY + 0.2) * 0.3 : 0;
-        const r = RADIUS * pulse + roundedPeak * moundMask + lowerCompression;
+        const sphereBalance = 0.78 + THREE.MathUtils.smoothstep(directionY, -0.72, 0.28) * 0.22;
+        const r = RADIUS * pulse + roundedPeak * sphereBalance;
         arr[o] = base[o] * r;
-        arr[o + 1] = base[o + 1] * r - Math.max(0, -base[o + 1] - 0.2) * 0.34;
+        arr[o + 1] = base[o + 1] * r;
         arr[o + 2] = base[o + 2] * r;
       }
       posAttr.needsUpdate = true;
@@ -642,8 +646,8 @@ export default function FerrofluidScene() {
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       const portrait = w / h < 0.9;
-      camera.position.z = portrait ? 10.2 : 7.6;
-      camera.position.y = portrait ? 0.55 : 0.38;
+      camera.position.z = portrait ? 14.6 : 12.8;
+      camera.position.y = portrait ? 0.16 : 0.1;
       camera.updateProjectionMatrix();
     }
 
@@ -658,7 +662,7 @@ export default function FerrofluidScene() {
         velY *= 0.94;
       }
       blob.rotation.y = rotY;
-      blob.rotation.x = -0.18 + rotX;
+      blob.rotation.x = -0.08 + rotX;
       blob.rotation.z = Math.sin(time * 0.08) * 0.035;
       updateGeometry();
       renderer.render(scene, camera);
@@ -753,9 +757,16 @@ export default function FerrofluidScene() {
       }
       if (mediaElement.paused) {
         await audioCtx?.resume().catch(() => {});
-        await mediaElement.play();
-        audioActive = true;
-        scheduleFade(mediaElement.currentTime < 1 ? 4600 : 1200);
+        try {
+          await mediaElement.play();
+          audioActive = true;
+          status.textContent = "Playing your file.";
+          scheduleFade(mediaElement.currentTime < 1 ? 4600 : 1200);
+        } catch (err) {
+          audioActive = false;
+          status.textContent = "Playback blocked. Press Play again or check browser audio permissions.";
+          console.error("playback error", err);
+        }
       } else {
         mediaElement.pause();
         audioActive = false;
@@ -788,7 +799,20 @@ export default function FerrofluidScene() {
       }
       mediaElement.currentTime = 0;
       if (mediaElement.paused) {
-        mediaElement.play().catch(() => {});
+        mediaElement
+          .play()
+          .then(() => {
+            audioActive = true;
+            scheduleFade(4600);
+            updateTransport();
+          })
+          .catch((err) => {
+            audioActive = false;
+            console.error("restart playback error", err);
+            status.textContent = "Track reset. Press Play to start.";
+            updateTransport();
+          });
+        return;
       }
       audioActive = true;
       scheduleFade(4600);
@@ -947,6 +971,7 @@ export default function FerrofluidScene() {
     <section aria-label="Audio-reactive ferrofluid sketch">
       <h1 className="sr-only">Ferrofluid</h1>
       <canvas ref={canvasRef} className="fluid-canvas" aria-label="Audio-reactive ferrofluid" />
+      <audio ref={audioRef} className="hidden-audio" preload="metadata" playsInline />
       <div className="panel">
         <form ref={formRef} className="yt-form">
           <input
