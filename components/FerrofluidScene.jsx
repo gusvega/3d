@@ -192,20 +192,6 @@ export default function FerrofluidScene() {
     scene.add(rearFill);
     scene.add(new THREE.HemisphereLight(0xffffff, 0x5f636b, 1.18));
 
-    const contactShadow = new THREE.Mesh(
-      new THREE.CircleGeometry(1.95, 96),
-      new THREE.MeshBasicMaterial({
-        color: 0x000000,
-        transparent: true,
-        opacity: 0.055,
-        depthWrite: false,
-      })
-    );
-    contactShadow.rotation.x = -Math.PI / 2;
-    contactShadow.position.set(0, -1.78, 0.18);
-    contactShadow.scale.set(1.16, 0.42, 1);
-    scene.add(contactShadow);
-
     const RADIUS = 1.42;
     const raw = new THREE.IcosahedronGeometry(RADIUS, isMobile ? 5 : 6);
     const rawPos = raw.attributes.position.array;
