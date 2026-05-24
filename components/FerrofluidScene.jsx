@@ -248,7 +248,7 @@ export default function FerrofluidScene() {
     const SPIKE_MAX = isMobile ? 0.58 : 0.72;
     const SPIKE_NEAR = 1;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
-    const CELL_RADIUS = SPIKE_SPACING * 0.78;
+    const CELL_RADIUS = SPIKE_SPACING * 0.9;
     const spikeDirs = new Float32Array(SPIKE_COUNT * 3);
     const golden = Math.PI * (3 - Math.sqrt(5));
     for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -281,10 +281,10 @@ export default function FerrofluidScene() {
       const ang = Math.acos(Math.min(1, Math.max(-1, bestDot)));
       const cellT = Math.min(1, ang / CELL_RADIUS);
       const shoulder = Math.max(0, 1 - cellT);
-      const centerPeak = Math.pow(shoulder, 1.42);
-      const roundedTop = THREE.MathUtils.smoothstep(centerPeak, 0, 1);
+      const edgeLock = 1 - THREE.MathUtils.smoothstep(cellT, 0.76, 1);
+      const roundedTop = Math.pow(shoulder, 0.72) * edgeLock;
       vOwner[i] = bestK;
-      vCellWeight[i] = roundedTop * THREE.MathUtils.smoothstep(1 - cellT, 0.02, 0.2);
+      vCellWeight[i] = Math.sin(roundedTop * Math.PI * 0.5);
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
@@ -608,7 +608,7 @@ export default function FerrofluidScene() {
             0.72
           );
           const rising = Math.max(0, spectralLevel - spikeLastLevel[k] * 0.92);
-          spikeMotion[k] = Math.max(spikeMotion[k] * profile.hold, rising * 4.65 * sensitivity);
+          spikeMotion[k] = Math.max(spikeMotion[k] * profile.hold, rising * 5.25 * sensitivity);
           spikeLastLevel[k] += (spectralLevel - spikeLastLevel[k]) * 0.18;
           spectralMotion = Math.min(1, spikeMotion[k]);
         } else {
@@ -625,10 +625,10 @@ export default function FerrofluidScene() {
           motionLift +
           pump * spikeLowWeight[k] * 1.08 * profile.pump +
           bands.transient * spikeHighWeight[k] * 0.92 * profile.transient +
-          keyHit * (0.18 + spikeSeed[k] * 0.12) +
-          spectralMotion * 1.18 * profile.motion;
+          keyHit * (0.28 + spikeSeed[k] * 0.18) +
+          spectralMotion * 1.32 * profile.motion;
 
-        spikeTarget[k] = Math.min(1.55, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
+        spikeTarget[k] = Math.min(1.85, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -637,7 +637,7 @@ export default function FerrofluidScene() {
         spikeHeight[k] = Math.max(0, spikeHeight[k] + spikeVelocity[k]);
       }
 
-      const pulse = 1 + 0.006 * Math.sin(time * 0.8) + bands.sub * 0.035 + pump * 0.075;
+      const pulse = 1;
       const arr = posAttr.array;
       for (let i = 0; i < vertexCount; i++) {
         const o = i * 3;
@@ -658,18 +658,20 @@ export default function FerrofluidScene() {
               profile.shimmer *
               sensitivity
             : 0;
-        const roundedPeak = idleOrganic + activeShimmer + height * cellWeight;
-        const directionY = base[o + 1];
-        const sphereBalance = 0.9 + THREE.MathUtils.smoothstep(directionY, -0.74, 0.18) * 0.1;
-        const r = RADIUS * pulse + roundedPeak * sphereBalance;
-        const leanAmount = height * cellWeight * 0.08;
+        const ownerX = spikeDirs[owner * 3];
+        const ownerY = spikeDirs[owner * 3 + 1];
+        const ownerZ = spikeDirs[owner * 3 + 2];
+        const roundedPeak = (idleOrganic + activeShimmer + height * cellWeight) *
+          (0.92 + THREE.MathUtils.smoothstep(ownerY, -0.72, 0.22) * 0.08);
+        const r = RADIUS * pulse;
+        const leanAmount = height * cellWeight * 0.055;
         const dot = base[o] * magneticField.x + base[o + 1] * magneticField.y + base[o + 2] * magneticField.z;
         const leanX = magneticField.x - base[o] * dot;
         const leanY = magneticField.y - base[o + 1] * dot;
         const leanZ = magneticField.z - base[o + 2] * dot;
-        arr[o] = base[o] * r + leanX * leanAmount;
-        arr[o + 1] = base[o + 1] * r + leanY * leanAmount;
-        arr[o + 2] = base[o + 2] * r + leanZ * leanAmount;
+        arr[o] = base[o] * r + ownerX * roundedPeak + leanX * leanAmount;
+        arr[o + 1] = base[o + 1] * r + ownerY * roundedPeak + leanY * leanAmount;
+        arr[o + 2] = base[o + 2] * r + ownerZ * roundedPeak + leanZ * leanAmount;
       }
       posAttr.needsUpdate = true;
       geometry.computeVertexNormals();
