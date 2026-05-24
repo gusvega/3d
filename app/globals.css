@@ -154,8 +154,8 @@ input {
 }
 
 .ferrofluid-page {
-  background: #020203;
-  color: #f6f7fb;
+  background: #ffffff;
+  color: #16181d;
 }
 
 .back-link {
@@ -205,7 +205,7 @@ input {
 .fluid-canvas {
   position: fixed;
   inset: 0;
-  background: #020203;
+  background: #ffffff;
   cursor: grab;
   touch-action: none;
 }
@@ -215,7 +215,11 @@ input {
 }
 
 .hidden-audio {
-  display: none;
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .ferrofluid-page .panel {

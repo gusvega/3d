@@ -75,12 +75,12 @@ export default function FerrofluidScene() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.85;
-    renderer.setClearColor(0x020203, 1);
+    renderer.setClearColor(0xffffff, 1);
     renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x020203);
+    scene.background = new THREE.Color(0xffffff);
     const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
     camera.position.set(0, 0.1, 12.8);
 
@@ -350,6 +350,7 @@ export default function FerrofluidScene() {
     let audioMode = "idle";
     let mediaElement = null;
     let mediaSource = null;
+    let outputGain = null;
     let micSource = null;
     let micStream = null;
     let objectUrl = "";
@@ -402,8 +403,11 @@ export default function FerrofluidScene() {
       ensureAnalyser();
       if (!mediaSource) {
         mediaSource = audioCtx.createMediaElementSource(element);
-        mediaSource.connect(analyser);
-        mediaSource.connect(audioCtx.destination);
+        outputGain = audioCtx.createGain();
+        outputGain.gain.value = 1;
+        mediaSource.connect(outputGain);
+        outputGain.connect(analyser);
+        outputGain.connect(audioCtx.destination);
       }
       return element;
     }
@@ -450,6 +454,8 @@ export default function FerrofluidScene() {
       }
       objectUrl = URL.createObjectURL(file);
       element.src = objectUrl;
+      element.muted = false;
+      element.volume = 1;
       element.load();
       audioMode = "file";
       trackName.textContent = file.name;
