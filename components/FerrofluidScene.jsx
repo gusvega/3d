@@ -285,13 +285,13 @@ export default function FerrofluidScene() {
       const ang = Math.acos(Math.min(1, Math.max(-1, bestDot)));
       // Normalised distance from the cell centre. Only the inner CELL_FILL of the
       // cell lifts; outside it the weight is exactly 0, so those vertices stay on
-      // the original sphere (anchored base). (1 - u^2)^2 gives a rounded top (zero
-      // slope at the centre) and a smooth join to the base (zero slope at u = 1),
-      // so the centre rises into a rounded peak while the rim never moves.
+      // the original sphere (anchored base). The exponent shapes the dome: a fuller
+      // (lower) exponent bulges convex near the apex -> rounder tips, while still
+      // joining the base smoothly (zero slope) at u = 1 so the rim never moves.
       const u = ang / (CELL_RADIUS * CELL_FILL);
       const falloff = u >= 1 ? 0 : (1 - u * u);
       vOwner[i] = bestK;
-      vCellWeight[i] = falloff * falloff;
+      vCellWeight[i] = Math.pow(falloff, 1.35);
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
