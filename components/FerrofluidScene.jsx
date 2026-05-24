@@ -370,12 +370,19 @@ export default function FerrofluidScene() {
     let freqData = null;
     let audioActive = false;
     let audioMode = "idle";
-    let mediaElement = null;
-    let mediaSource = null;
     let outputGain = null;
     let micSource = null;
     let micStream = null;
-    let objectUrl = "";
+    let transportClock = 0; // throttles the transport UI refresh during playback
+    // Uploaded files play through a decoded AudioBuffer + AudioBufferSourceNode.
+    // Safari's createMediaElementSource() feeds the analyser but is silent through
+    // the graph, so we avoid the media element for playback entirely.
+    let fileBuffer = null;     // decoded AudioBuffer
+    let fileNode = null;       // current AudioBufferSourceNode (one-shot)
+    let filePlaying = false;
+    let fileStartCtxTime = 0;  // audioCtx.currentTime at the last (re)start
+    let fileStartOffset = 0;   // buffer offset (seconds) at the last (re)start
+    let fileLoaded = false;
     const bands = {
       sub: 0,
       bass: 0,
@@ -405,36 +412,95 @@ export default function FerrofluidScene() {
       return analyser;
     }
 
-    function getMediaElement() {
-      if (!mediaElement) {
-        mediaElement = audioElement;
-        mediaElement.preload = "metadata";
-        mediaElement.volume = 1;
-        mediaElement.muted = false;
-        mediaElement.addEventListener("loadedmetadata", updateTransport);
-        mediaElement.addEventListener("timeupdate", updateTransport);
-        mediaElement.addEventListener("play", updateTransport);
-        mediaElement.addEventListener("pause", updateTransport);
-        mediaElement.addEventListener("ended", onMediaEnded);
-      }
-      return mediaElement;
-    }
-
-    function connectMediaElement() {
-      const element = getMediaElement();
+    // Output bus: file audio -> outputGain -> analyser (for visuals) + speakers.
+    function ensureOutputGraph() {
       ensureAnalyser();
-      if (!mediaSource) {
-        mediaSource = audioCtx.createMediaElementSource(element);
+      if (!outputGain) {
         outputGain = audioCtx.createGain();
         outputGain.gain.value = 1;
-        mediaSource.connect(outputGain);
         outputGain.connect(analyser);
         outputGain.connect(audioCtx.destination);
       }
-      return element;
+    }
+
+    function fileDuration() {
+      return fileBuffer ? fileBuffer.duration : 0;
+    }
+
+    function fileCurrentTime() {
+      if (!fileBuffer) {
+        return 0;
+      }
+      const t = filePlaying
+        ? fileStartOffset + (audioCtx.currentTime - fileStartCtxTime)
+        : fileStartOffset;
+      return Math.min(Math.max(t, 0), fileBuffer.duration);
+    }
+
+    function stopFileNode() {
+      if (fileNode) {
+        fileNode.onended = null;
+        try {
+          fileNode.stop();
+        } catch (_) {}
+        try {
+          fileNode.disconnect();
+        } catch (_) {}
+        fileNode = null;
+      }
+    }
+
+    function playFileFrom(offset) {
+      if (!fileBuffer) {
+        return;
+      }
+      ensureOutputGraph();
+      stopFileNode();
+      const node = audioCtx.createBufferSource();
+      node.buffer = fileBuffer;
+      node.connect(outputGain);
+      fileStartOffset = Math.min(Math.max(offset, 0), fileBuffer.duration);
+      fileStartCtxTime = audioCtx.currentTime;
+      node.onended = () => {
+        if (node !== fileNode || !filePlaying) {
+          return; // superseded by a new node (seek/stop) — not a real end
+        }
+        filePlaying = false;
+        fileStartOffset = fileBuffer.duration;
+        audioActive = false;
+        onFilePlaybackEnded();
+      };
+      fileNode = node;
+      node.start(0, fileStartOffset);
+      filePlaying = true;
+      audioActive = true;
+    }
+
+    function pauseFile() {
+      if (!filePlaying) {
+        return;
+      }
+      fileStartOffset = fileCurrentTime();
+      filePlaying = false;
+      audioActive = false;
+      stopFileNode();
+    }
+
+    function seekFileTo(seconds) {
+      if (!fileLoaded) {
+        return;
+      }
+      const clamped = Math.min(Math.max(seconds, 0), fileDuration());
+      if (filePlaying) {
+        playFileFrom(clamped);
+      } else {
+        fileStartOffset = clamped;
+      }
+      updateTransport();
     }
 
     async function startMic() {
+      pauseFile();
       ensureAnalyser();
       await audioCtx.resume();
       micStream = await navigator.mediaDevices.getUserMedia({
@@ -469,33 +535,22 @@ export default function FerrofluidScene() {
 
     async function startFile(file) {
       stopMicInput();
-      const element = connectMediaElement();
+      ensureOutputGraph();
       await audioCtx.resume().catch(() => {});
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
-      objectUrl = URL.createObjectURL(file);
-      element.src = objectUrl;
-      element.muted = false;
-      element.volume = 1;
-      element.load();
+      const arrayBuf = await file.arrayBuffer();
+      // callback form of decodeAudioData for broad Safari compatibility
+      fileBuffer = await new Promise((resolve, reject) => {
+        audioCtx.decodeAudioData(arrayBuf, resolve, reject);
+      });
+      fileLoaded = true;
+      fileStartOffset = 0;
       audioMode = "file";
       trackName.textContent = file.name;
       player.hidden = false;
+      playFileFrom(0);
+      scheduleFade(4600);
       updateTransport();
-      try {
-        await element.play();
-        audioActive = true;
-        scheduleFade(4600);
-        return true;
-      } catch (err) {
-        audioActive = false;
-        updateTransport();
-        if (err?.name === "NotAllowedError") {
-          return false;
-        }
-        throw err;
-      }
+      return true;
     }
 
     function sampleAudio() {
@@ -711,6 +766,13 @@ export default function FerrofluidScene() {
         frameCount = 0;
       }
       sampleAudio();
+      if (audioMode === "file" && filePlaying) {
+        transportClock += 0.016;
+        if (transportClock > 0.2) {
+          transportClock = 0;
+          updateTransport();
+        }
+      }
       if (!dragging) {
         rotY += velX + 0.00062 + bands.level * 0.0024;
         rotX += velY + 0.00022;
@@ -796,8 +858,7 @@ export default function FerrofluidScene() {
     }
 
     function updateTransport() {
-      const element = mediaElement;
-      const hasFile = Boolean(element && element.src);
+      const hasFile = fileLoaded;
       playPauseBtn.disabled = !hasFile;
       restartBtn.disabled = !hasFile;
       stopBtn.disabled = !hasFile;
@@ -811,33 +872,32 @@ export default function FerrofluidScene() {
         return;
       }
 
-      const duration = Number.isFinite(element.duration) ? element.duration : 0;
-      const progress = duration > 0 ? (element.currentTime / duration) * 1000 : 0;
-      seek.value = String(Math.round(progress));
-      timeReadout.textContent = `${formatTime(element.currentTime)} / ${formatTime(duration)}`;
-      playPauseBtn.textContent = element.paused ? "Play" : "Pause";
-      audioActive = audioMode === "mic" || (audioMode === "file" && !element.paused && !element.ended);
+      const duration = fileDuration();
+      const current = fileCurrentTime();
+      const progress = duration > 0 ? (current / duration) * 1000 : 0;
+      // don't fight the user while they drag the scrubber
+      if (document.activeElement !== seek) {
+        seek.value = String(Math.round(progress));
+      }
+      timeReadout.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+      playPauseBtn.textContent = filePlaying ? "Pause" : "Play";
+      audioActive = audioMode === "mic" || (audioMode === "file" && filePlaying);
     }
 
     async function togglePlayback() {
-      if (!mediaElement || !mediaElement.src) {
+      if (!fileLoaded) {
         return;
       }
-      if (mediaElement.paused) {
+      if (!filePlaying) {
         await audioCtx?.resume().catch(() => {});
-        try {
-          await mediaElement.play();
-          audioActive = true;
-          status.textContent = "Playing your file.";
-          scheduleFade(mediaElement.currentTime < 1 ? 4600 : 1200);
-        } catch (err) {
-          audioActive = false;
-          status.textContent = "Playback blocked. Press Play again or check browser audio permissions.";
-          console.error("playback error", err);
+        if (fileStartOffset >= fileDuration() - 0.05) {
+          fileStartOffset = 0; // restart if we were parked at the end
         }
+        playFileFrom(fileStartOffset);
+        status.textContent = "Playing your file.";
+        scheduleFade(fileCurrentTime() < 1 ? 4600 : 1200);
       } else {
-        mediaElement.pause();
-        audioActive = false;
+        pauseFile();
         document.body.classList.remove("immersive", "reveal");
         clearTimeout(openingFadeTimer);
       }
@@ -845,12 +905,7 @@ export default function FerrofluidScene() {
     }
 
     function seekBy(seconds) {
-      if (!mediaElement || !mediaElement.src) {
-        return;
-      }
-      const duration = Number.isFinite(mediaElement.duration) ? mediaElement.duration : 0;
-      mediaElement.currentTime = Math.min(Math.max(mediaElement.currentTime + seconds, 0), duration || 0);
-      updateTransport();
+      seekFileTo(fileCurrentTime() + seconds);
     }
 
     function rewindTrack() {
@@ -862,38 +917,20 @@ export default function FerrofluidScene() {
     }
 
     function restartTrack() {
-      if (!mediaElement || !mediaElement.src) {
+      if (!fileLoaded) {
         return;
       }
-      mediaElement.currentTime = 0;
-      if (mediaElement.paused) {
-        mediaElement
-          .play()
-          .then(() => {
-            audioActive = true;
-            scheduleFade(4600);
-            updateTransport();
-          })
-          .catch((err) => {
-            audioActive = false;
-            console.error("restart playback error", err);
-            status.textContent = "Track reset. Press Play to start.";
-            updateTransport();
-          });
-        return;
-      }
-      audioActive = true;
+      playFileFrom(0);
       scheduleFade(4600);
       updateTransport();
     }
 
     function stopTrack() {
-      if (!mediaElement || !mediaElement.src) {
+      if (!fileLoaded) {
         return;
       }
-      mediaElement.pause();
-      mediaElement.currentTime = 0;
-      audioActive = false;
+      pauseFile();
+      fileStartOffset = 0;
       clearTimeout(openingFadeTimer);
       document.body.classList.remove("immersive", "reveal");
       updateTransport();
@@ -952,18 +989,16 @@ export default function FerrofluidScene() {
     }
 
     function onSeekInput() {
-      if (!mediaElement || !mediaElement.src) {
+      if (!fileLoaded) {
         return;
       }
-      const duration = Number.isFinite(mediaElement.duration) ? mediaElement.duration : 0;
+      const duration = fileDuration();
       if (duration > 0) {
-        mediaElement.currentTime = (Number(seek.value) / 1000) * duration;
+        seekFileTo((Number(seek.value) / 1000) * duration);
       }
-      updateTransport();
     }
 
-    function onMediaEnded() {
-      audioActive = false;
+    function onFilePlaybackEnded() {
       document.body.classList.remove("immersive", "reveal");
       clearTimeout(openingFadeTimer);
       updateTransport();
@@ -1018,18 +1053,7 @@ export default function FerrofluidScene() {
       sensitivityControl.removeEventListener("input", updateSensitivity);
       decayControl.removeEventListener("input", updateDecay);
       modeControl.removeEventListener("change", updateMode);
-      if (mediaElement) {
-        mediaElement.removeEventListener("loadedmetadata", updateTransport);
-        mediaElement.removeEventListener("timeupdate", updateTransport);
-        mediaElement.removeEventListener("play", updateTransport);
-        mediaElement.removeEventListener("pause", updateTransport);
-        mediaElement.removeEventListener("ended", onMediaEnded);
-        mediaElement.pause();
-        mediaElement.src = "";
-      }
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl);
-      }
+      stopFileNode();
       stopMicInput();
       if (audioCtx) {
         audioCtx.close().catch(() => {});
