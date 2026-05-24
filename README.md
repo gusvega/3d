@@ -1,34 +1,36 @@
-# Gus
+# Gus 3D
 
-One-page animated personal-name website for GitHub Pages.
+Interactive 3D sketch site built with Next.js.
 
-The page shows a gray, glossy `GUS` wordmark on a white background. Drag anywhere on the page to turn the name in the drag direction.
+## Routes
+
+- `/` - landing page with links to each sketch.
+- `/gus` - glossy `GUS` wordmark. Drag anywhere on the page to turn the name.
+- `/ferrofluid` - audio-reactive ferrofluid sketch for microphone, YouTube playback, or uploaded audio.
 
 ## Local Development
 
 ```sh
-python3 scripts/build.py
-python3 -m http.server 8080 -d _site 
+npm install
+npm run dev
 ```
 
 ## Build
 
 ```sh
-python3 scripts/build.py
+npm run build
 ```
 
-## GitHub Pages
+## Deploy
 
-The workflow in `.github/workflows/pages.yml` builds the static site and deploys `_site` to GitHub Pages.
-
-After the first deployment, confirm Pages is configured to use **GitHub Actions** as the source in the repository settings.
+Deploy as a standard Next.js app on Vercel.
 
 ## Custom Domain Later
 
 When a domain is ready:
 
 1. Open repository settings.
-2. Go to **Pages**.
+2. Go to the project domain settings.
 3. Add the custom domain.
-4. Create the DNS records GitHub shows for the domain.
+4. Create the DNS records Vercel shows for the domain.
 5. Enable HTTPS after DNS verifies.
