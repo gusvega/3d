@@ -274,6 +274,8 @@ export default function FerrofluidScene() {
     const spikeGain = new Float32Array(SPIKE_COUNT);
     const spikeSpring = new Float32Array(SPIKE_COUNT);
     const spikeDamping = new Float32Array(SPIKE_COUNT);
+    const spikeLastLevel = new Float32Array(SPIKE_COUNT);
+    const spikeMotion = new Float32Array(SPIKE_COUNT);
     const spikeLowWeight = new Float32Array(SPIKE_COUNT);
     const spikeMidWeight = new Float32Array(SPIKE_COUNT);
     const spikeHighWeight = new Float32Array(SPIKE_COUNT);
@@ -550,7 +552,7 @@ export default function FerrofluidScene() {
     function updateGeometry() {
       const n = freqData ? freqData.length : 0;
       for (let k = 0; k < SPIKE_COUNT; k++) {
-        let spectralLevel = 0;
+        let spectralMotion = 0;
         if (audioActive && n) {
           const lo = Math.max(1, Math.min(n - 1, Math.round((spikeF0[k] / (audioCtx.sampleRate / 2)) * n)));
           const hi = Math.max(lo + 1, Math.min(n, Math.round((spikeF1[k] / (audioCtx.sampleRate / 2)) * n)));
@@ -558,27 +560,30 @@ export default function FerrofluidScene() {
           for (let b = lo; b < hi; b++) {
             sum += freqData[b];
           }
-          spectralLevel = Math.pow(Math.min(1, Math.max(0, sum / (hi - lo) / 255 - 0.025) * spikeGain[k]), 0.72);
+          const spectralLevel = Math.pow(
+            Math.min(1, Math.max(0, sum / (hi - lo) / 255 - 0.025) * spikeGain[k]),
+            0.72
+          );
+          const rising = Math.max(0, spectralLevel - spikeLastLevel[k] * 0.92);
+          spikeMotion[k] = Math.max(spikeMotion[k] * 0.74, rising * 3.8);
+          spikeLastLevel[k] += (spectralLevel - spikeLastLevel[k]) * 0.18;
+          spectralMotion = Math.min(1, spikeMotion[k]);
+        } else {
+          spikeMotion[k] *= 0.72;
+          spikeLastLevel[k] *= 0.92;
         }
 
         const wobble =
           Math.sin(time * (1.2 + spikeSeed[k] * 1.8) + spikeSeed[k] * 12.4) *
           (0.008 + bands.high * 0.018);
-        const globalLift = bands.level * 0.18 + pump * 0.12 + bands.transient * 0.1;
+        const motionLift = pump * 0.14 + bands.transient * 0.18;
         const magnetic =
-          globalLift +
-          bands.sub * spikeLowWeight[k] * 0.72 +
-          bands.bass * spikeLowWeight[k] * 0.94 +
-          bands.lowMid * spikeMidWeight[k] * 0.56 +
-          bands.mid * spikeMidWeight[k] * 0.68 +
-          bands.high * spikeHighWeight[k] * 0.5 +
-          bands.presence * spikeHighWeight[k] * 0.42 +
-          spectralLevel * 0.88 +
-          pump * spikeLowWeight[k] * 0.7 +
-          bands.transient * spikeHighWeight[k] * 0.5;
+          motionLift +
+          pump * spikeLowWeight[k] * 0.92 +
+          bands.transient * spikeHighWeight[k] * 0.78 +
+          spectralMotion * 1.05;
 
-        const idleNeedle = audioActive ? 0.006 + spikeSeed[k] * 0.006 : 0;
-        spikeTarget[k] = Math.min(1.45, idleNeedle + magnetic + wobble) * SPIKE_MAX;
+        spikeTarget[k] = Math.min(1.35, magnetic + wobble) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
