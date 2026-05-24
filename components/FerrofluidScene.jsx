@@ -74,7 +74,7 @@ export default function FerrofluidScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 2.2;
+    renderer.toneMappingExposure = 2.45;
     renderer.setClearColor(0xffffff, 1);
     renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -142,7 +142,7 @@ export default function FerrofluidScene() {
     const envTex = makeEnvironment();
     scene.environment = envTex;
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 7.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 8.4);
     keyLight.position.set(-3.6, 8.5, 4.5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
@@ -156,25 +156,31 @@ export default function FerrofluidScene() {
     keyLight.shadow.radius = 4;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 6.4);
+    const rimLight = new THREE.DirectionalLight(0xffffff, 7.2);
     rimLight.position.set(5.5, 2, -5);
     scene.add(rimLight);
-    const fillFront = new THREE.DirectionalLight(0xffffff, 1.65);
+    const fillFront = new THREE.DirectionalLight(0xffffff, 3.2);
     fillFront.position.set(0, 1.5, 9);
     scene.add(fillFront);
-    const fillLeft = new THREE.DirectionalLight(0xeef2ff, 2.1);
+    const fillLeft = new THREE.DirectionalLight(0xffffff, 3.1);
     fillLeft.position.set(-8, 1, 2);
     scene.add(fillLeft);
-    const fillRight = new THREE.DirectionalLight(0xeef2ff, 2.1);
+    const fillRight = new THREE.DirectionalLight(0xffffff, 3.1);
     fillRight.position.set(8, 1, 2);
     scene.add(fillRight);
-    const glintLight = new THREE.PointLight(0xffffff, 54, 50, 2);
+    const glintLight = new THREE.PointLight(0xffffff, 62, 50, 2);
     glintLight.position.set(-1.8, 5.2, 4.2);
     scene.add(glintLight);
-    const topLight = new THREE.PointLight(0xffffff, 24, 30, 2);
+    const topLight = new THREE.PointLight(0xffffff, 34, 30, 2);
     topLight.position.set(0, 5.6, 2.7);
     scene.add(topLight);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x1a1a1d, 0.82));
+    const lowerFill = new THREE.PointLight(0xffffff, 18, 28, 2);
+    lowerFill.position.set(0, -4.2, 4.5);
+    scene.add(lowerFill);
+    const rearFill = new THREE.DirectionalLight(0xffffff, 2.8);
+    rearFill.position.set(0, 2.6, -8);
+    scene.add(rearFill);
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x5f636b, 1.18));
 
     const RADIUS = 1.42;
     const raw = new THREE.IcosahedronGeometry(RADIUS, isMobile ? 5 : 6);
@@ -571,14 +577,14 @@ export default function FerrofluidScene() {
           pump * spikeLowWeight[k] * 0.7 +
           bands.transient * spikeHighWeight[k] * 0.5;
 
-        const idleNeedle = 0.05 + spikeSeed[k] * 0.025;
+        const idleNeedle = audioActive ? 0.006 + spikeSeed[k] * 0.006 : 0;
         spikeTarget[k] = Math.min(1.45, idleNeedle + magnetic + wobble) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
         const force = (spikeTarget[k] - spikeHeight[k]) * spikeSpring[k];
         spikeVelocity[k] = (spikeVelocity[k] + force) * spikeDamping[k];
-        spikeHeight[k] = Math.max(0.02, spikeHeight[k] + spikeVelocity[k]);
+        spikeHeight[k] = Math.max(0, spikeHeight[k] + spikeVelocity[k]);
       }
 
       const pulse = 1 + 0.006 * Math.sin(time * 0.8) + bands.sub * 0.035 + pump * 0.075;
@@ -588,7 +594,7 @@ export default function FerrofluidScene() {
         const owner = vOwner[i];
         const cellWeight = vCellWeight[i];
         const height = spikeHeight[owner];
-        const baseLift = Math.min(0.07, height * 0.16);
+        const baseLift = Math.min(0.035, height * 0.08);
         const roundedPeak = baseLift + height * cellWeight;
         const directionY = base[o + 1];
         const sphereBalance = 0.9 + THREE.MathUtils.smoothstep(directionY, -0.74, 0.18) * 0.1;
