@@ -266,6 +266,13 @@ export default function FerrofluidScene() {
 
     const vOwner = new Uint16Array(vertexCount);
     const vCellWeight = new Float32Array(vertexCount);
+    // Per-vertex push direction: a blend of the cell axis and the vertex's own
+    // radial. Pure cell-axis converges every vertex to one point (sharp tip);
+    // mixing in the radial lets off-centre vertices bulge outward -> rounded tips.
+    const vPushX = new Float32Array(vertexCount);
+    const vPushY = new Float32Array(vertexCount);
+    const vPushZ = new Float32Array(vertexCount);
+    const TIP_BLEND = 0.5; // 1 = pointy (cell axis), 0 = round dome (radial)
     for (let i = 0; i < vertexCount; i++) {
       const bx = base[i * 3];
       const by = base[i * 3 + 1];
@@ -292,6 +299,17 @@ export default function FerrofluidScene() {
       const falloff = u >= 1 ? 0 : (1 - u * u);
       vOwner[i] = bestK;
       vCellWeight[i] = Math.pow(falloff, 1.35);
+
+      const ox = spikeDirs[bestK * 3];
+      const oy = spikeDirs[bestK * 3 + 1];
+      const oz = spikeDirs[bestK * 3 + 2];
+      let px = ox * TIP_BLEND + bx * (1 - TIP_BLEND);
+      let py = oy * TIP_BLEND + by * (1 - TIP_BLEND);
+      let pz = oz * TIP_BLEND + bz * (1 - TIP_BLEND);
+      const pInv = 1 / (Math.hypot(px, py, pz) || 1);
+      vPushX[i] = px * pInv;
+      vPushY[i] = py * pInv;
+      vPushZ[i] = pz * pInv;
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
@@ -720,9 +738,7 @@ export default function FerrofluidScene() {
               profile.shimmer *
               sensitivity
             : 0;
-        const ownerX = spikeDirs[owner * 3];
         const ownerY = spikeDirs[owner * 3 + 1];
-        const ownerZ = spikeDirs[owner * 3 + 2];
         const roundedPeak = (idleOrganic + activeShimmer + height * cellWeight) *
           (0.92 + THREE.MathUtils.smoothstep(ownerY, -0.72, 0.22) * 0.08);
         const r = RADIUS * pulse;
@@ -731,9 +747,10 @@ export default function FerrofluidScene() {
         const leanX = magneticField.x - base[o] * dot;
         const leanY = magneticField.y - base[o + 1] * dot;
         const leanZ = magneticField.z - base[o + 2] * dot;
-        arr[o] = base[o] * r + ownerX * roundedPeak + leanX * leanAmount;
-        arr[o + 1] = base[o + 1] * r + ownerY * roundedPeak + leanY * leanAmount;
-        arr[o + 2] = base[o + 2] * r + ownerZ * roundedPeak + leanZ * leanAmount;
+        // push along the blended direction so off-centre vertices bulge (round tip)
+        arr[o] = base[o] * r + vPushX[i] * roundedPeak + leanX * leanAmount;
+        arr[o + 1] = base[o + 1] * r + vPushY[i] * roundedPeak + leanY * leanAmount;
+        arr[o + 2] = base[o + 2] * r + vPushZ[i] * roundedPeak + leanZ * leanAmount;
       }
       posAttr.needsUpdate = true;
       geometry.computeVertexNormals();
