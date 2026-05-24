@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function FerrofluidPage() {
   return (
-    <main className="experience-page">
+    <main className="experience-page ferrofluid-page">
       <FerrofluidScene />
       <Link className="back-link" href="/" aria-label="Back to sketch index">
         Index

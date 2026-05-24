@@ -153,6 +153,11 @@ input {
   background: #ffffff;
 }
 
+.ferrofluid-page {
+  background: #020203;
+  color: #f6f7fb;
+}
+
 .back-link {
   position: fixed;
   top: calc(18px + env(safe-area-inset-top, 0px));
@@ -200,6 +205,7 @@ input {
 .fluid-canvas {
   position: fixed;
   inset: 0;
+  background: #020203;
   cursor: grab;
   touch-action: none;
 }
@@ -208,7 +214,7 @@ input {
   cursor: grabbing;
 }
 
-.panel {
+.ferrofluid-page .panel {
   position: fixed;
   left: 50%;
   bottom: calc(clamp(12px, 3vh, 36px) + env(safe-area-inset-bottom, 0px));
@@ -221,46 +227,46 @@ input {
   gap: 10px;
   padding: 16px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(10, 11, 14, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.36);
   transition:
     opacity 0.6s ease,
     transform 0.6s ease;
 }
 
-body.immersive .panel {
+body.immersive .ferrofluid-page .panel {
   opacity: 0;
   transform: translateX(-50%) translateY(14px);
   pointer-events: none;
 }
 
-body.immersive.reveal .panel {
+body.immersive.reveal .ferrofluid-page .panel {
   opacity: 1;
   transform: translateX(-50%);
   pointer-events: auto;
 }
 
-.yt-form,
-.btn-row {
+.ferrofluid-page .yt-form,
+.ferrofluid-page .btn-row {
   display: flex;
   gap: 8px;
 }
 
-.btn-row > * {
+.ferrofluid-page .btn-row > * {
   flex: 1;
 }
 
-.upload-btn {
+.ferrofluid-page .upload-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  background: #ffffff;
-  color: #16181d;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+  color: #111318;
   font-size: 14px;
   font-weight: 650;
   padding: 10px 14px;
@@ -269,31 +275,31 @@ body.immersive.reveal .panel {
   transition: background 0.15s ease;
 }
 
-.upload-btn:hover {
-  background: #f0f1f4;
+.ferrofluid-page .upload-btn:hover {
+  background: #ffffff;
 }
 
-.yt-form input {
+.ferrofluid-page .yt-form input {
   flex: 1;
   min-width: 0;
   padding: 11px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  background: #ffffff;
-  color: #16181d;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.9);
+  color: #111318;
   font-size: 16px;
   outline: none;
 }
 
-.yt-form input:focus {
-  border-color: rgba(40, 90, 200, 0.7);
+.ferrofluid-page .yt-form input:focus {
+  border-color: rgba(255, 255, 255, 0.78);
 }
 
-.panel button {
+.ferrofluid-page .panel button {
   appearance: none;
-  border: 1px solid rgba(0, 0, 0, 0.16);
-  background: #16181d;
-  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #f3f5f8;
+  color: #101116;
   font-size: 14px;
   font-weight: 650;
   padding: 10px 14px;
@@ -305,83 +311,83 @@ body.immersive.reveal .panel {
     opacity 0.15s ease;
 }
 
-.panel button:hover {
-  background: #2c2f38;
+.ferrofluid-page .panel button:hover {
+  background: #ffffff;
 }
 
-.panel button:disabled {
+.ferrofluid-page .panel button:disabled {
   opacity: 0.45;
   cursor: default;
 }
 
 #mic-btn.active {
-  background: #1f8f4d;
-  border-color: #1f8f4d;
+  background: #d9fff0;
+  border-color: #d9fff0;
 }
 
-.status {
+.ferrofluid-page .status {
   margin: 0;
   font-size: 12.5px;
   line-height: 1.4;
-  color: #555b66;
+  color: rgba(246, 247, 251, 0.76);
 }
 
-.transport {
+.ferrofluid-page .transport {
   display: flex;
   flex-direction: column;
   gap: 9px;
   padding: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.62);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.transport[hidden] {
+.ferrofluid-page .transport[hidden] {
   display: none;
 }
 
-.track-row {
+.ferrofluid-page .track-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
 }
 
-.track-name {
+.ferrofluid-page .track-name {
   min-width: 0;
   overflow: hidden;
-  color: #16181d;
+  color: #f7f8fb;
   font-size: 13px;
   font-weight: 700;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.time-readout {
+.ferrofluid-page .time-readout {
   flex: 0 0 auto;
-  color: #626873;
+  color: rgba(246, 247, 251, 0.72);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
 }
 
-.seek-slider {
+.ferrofluid-page .seek-slider {
   width: 100%;
-  accent-color: #16181d;
+  accent-color: #f6f7fb;
 }
 
-.transport-buttons {
+.ferrofluid-page .transport-buttons {
   display: grid;
   grid-template-columns: 0.74fr 0.96fr 0.74fr 1.05fr 0.82fr;
   gap: 8px;
 }
 
-.transport-buttons button {
+.ferrofluid-page .transport-buttons button {
   min-width: 0;
   padding-inline: 8px;
   white-space: nowrap;
 }
 
-.yt-embed {
+.ferrofluid-page .yt-embed {
   display: none;
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -389,11 +395,11 @@ body.immersive.reveal .panel {
   overflow: hidden;
 }
 
-.yt-embed.loaded {
+.ferrofluid-page .yt-embed.loaded {
   display: block;
 }
 
-.yt-embed iframe {
+.ferrofluid-page .yt-embed iframe {
   width: 100%;
   height: 100%;
   border: 0;
@@ -420,7 +426,7 @@ body.immersive.reveal .panel {
     left: calc(12px + env(safe-area-inset-left, 0px));
   }
 
-  .panel {
+  .ferrofluid-page .panel {
     width: 100%;
     padding: 12px;
     gap: 8px;
@@ -431,34 +437,34 @@ body.immersive.reveal .panel {
     padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   }
 
-  body.immersive .panel {
+  body.immersive .ferrofluid-page .panel {
     transform: translateY(16px);
   }
 
-  body.immersive.reveal .panel {
+  body.immersive.reveal .ferrofluid-page .panel {
     transform: none;
   }
 
-  .panel button,
-  .upload-btn {
+  .ferrofluid-page .panel button,
+  .ferrofluid-page .upload-btn {
     padding: 13px 12px;
   }
 
-  .status {
+  .ferrofluid-page .status {
     font-size: 12px;
   }
 
-  .track-row {
+  .ferrofluid-page .track-row {
     align-items: flex-start;
     flex-direction: column;
     gap: 4px;
   }
 
-  .transport-buttons {
+  .ferrofluid-page .transport-buttons {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .transport-buttons button {
+  .ferrofluid-page .transport-buttons button {
     font-size: 12px;
   }
 }

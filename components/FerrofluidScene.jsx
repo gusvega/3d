@@ -71,15 +71,15 @@ export default function FerrofluidScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.4;
-    renderer.setClearColor(0xffffff, 1);
+    renderer.toneMappingExposure = 1.85;
+    renderer.setClearColor(0x020203, 1);
     renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xffffff);
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-    camera.position.set(0, 0, 12);
+    scene.background = new THREE.Color(0x020203);
+    const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+    camera.position.set(0, 0.38, 7.6);
 
     function makeEnvironment() {
       const w = 1024;
@@ -89,20 +89,22 @@ export default function FerrofluidScene() {
       c.height = h;
       const ctx = c.getContext("2d");
       const grad = ctx.createLinearGradient(0, 0, 0, h);
-      grad.addColorStop(0.0, "#ffffff");
-      grad.addColorStop(0.18, "#f2f4f8");
-      grad.addColorStop(0.34, "#878d99");
-      grad.addColorStop(0.58, "#5c616c");
-      grad.addColorStop(1.0, "#474c57");
+      grad.addColorStop(0.0, "#f9fbff");
+      grad.addColorStop(0.12, "#d9dee8");
+      grad.addColorStop(0.23, "#1f232b");
+      grad.addColorStop(0.58, "#050507");
+      grad.addColorStop(1.0, "#000000");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      const softbox = (x, y, rx, ry, a) => {
-        const g = ctx.createRadialGradient(x, y, 0, x, y, Math.max(rx, ry));
+      const softbox = (x, y, rx, ry, a, angle = 0) => {
+        const g = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(rx, ry));
         g.addColorStop(0, `rgba(255,255,255,${a})`);
+        g.addColorStop(0.28, `rgba(255,255,255,${a * 0.8})`);
         g.addColorStop(1, "rgba(255,255,255,0)");
         ctx.save();
         ctx.translate(x, y);
+        ctx.rotate(angle);
         ctx.scale(rx / Math.max(rx, ry), ry / Math.max(rx, ry));
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -110,15 +112,18 @@ export default function FerrofluidScene() {
         ctx.fill();
         ctx.restore();
       };
-      softbox(w * 0.3, h * 0.16, 240, 110, 1);
-      softbox(w * 0.74, h * 0.12, 200, 90, 0.95);
+      softbox(w * 0.28, h * 0.13, 260, 36, 1, -0.15);
+      softbox(w * 0.58, h * 0.1, 360, 42, 1, 0.08);
+      softbox(w * 0.86, h * 0.18, 220, 30, 0.92, 0.2);
+      softbox(w * 0.18, h * 0.54, 130, 22, 0.55, -0.8);
+      softbox(w * 0.8, h * 0.46, 140, 24, 0.5, 0.75);
 
-      const warm = ctx.createLinearGradient(0, h * 0.44, 0, h * 0.64);
-      warm.addColorStop(0, "rgba(214,120,40,0)");
-      warm.addColorStop(0.5, "rgba(220,130,50,0.22)");
-      warm.addColorStop(1, "rgba(180,90,30,0)");
+      const warm = ctx.createLinearGradient(0, h * 0.38, 0, h * 0.7);
+      warm.addColorStop(0, "rgba(255,255,255,0)");
+      warm.addColorStop(0.46, "rgba(105,115,135,0.28)");
+      warm.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = warm;
-      ctx.fillRect(w * 0.1, h * 0.44, w * 0.42, h * 0.2);
+      ctx.fillRect(0, h * 0.38, w, h * 0.32);
 
       const tex = new THREE.CanvasTexture(c);
       tex.mapping = THREE.EquirectangularReflectionMapping;
@@ -130,8 +135,8 @@ export default function FerrofluidScene() {
     const envTex = makeEnvironment();
     scene.environment = envTex;
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.8);
-    keyLight.position.set(-4, 8, 6);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 4.8);
+    keyLight.position.set(-3.6, 8.5, 4.5);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.set(2048, 2048);
     keyLight.shadow.camera.near = 1;
@@ -144,10 +149,10 @@ export default function FerrofluidScene() {
     keyLight.shadow.radius = 4;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 2.0);
-    rimLight.position.set(5, -2, -5);
+    const rimLight = new THREE.DirectionalLight(0xffffff, 4.2);
+    rimLight.position.set(5.5, 2, -5);
     scene.add(rimLight);
-    const fillFront = new THREE.DirectionalLight(0xffffff, 1.7);
+    const fillFront = new THREE.DirectionalLight(0xbfc7d8, 0.55);
     fillFront.position.set(0, 1.5, 9);
     scene.add(fillFront);
     const fillLeft = new THREE.DirectionalLight(0xeef2ff, 1.2);
@@ -156,12 +161,12 @@ export default function FerrofluidScene() {
     const fillRight = new THREE.DirectionalLight(0xeef2ff, 1.2);
     fillRight.position.set(8, 1, 2);
     scene.add(fillRight);
-    const glintLight = new THREE.PointLight(0xffffff, 16, 50, 2);
-    glintLight.position.set(-2, 5, 5);
+    const glintLight = new THREE.PointLight(0xffffff, 34, 50, 2);
+    glintLight.position.set(-1.8, 5.2, 4.2);
     scene.add(glintLight);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x80858f, 0.8));
+    scene.add(new THREE.HemisphereLight(0xb7c1d6, 0x000000, 0.35));
 
-    const RADIUS = 1.35;
+    const RADIUS = 1.72;
     const raw = new THREE.IcosahedronGeometry(RADIUS, isMobile ? 5 : 6);
     const rawPos = raw.attributes.position.array;
     const keyToIndex = new Map();
@@ -202,11 +207,11 @@ export default function FerrofluidScene() {
     geometry.setIndex(indices);
     const posAttr = geometry.attributes.position;
 
-    const SPIKE_COUNT = 64;
-    const SPIKE_MAX = 0.5;
-    const SPIKE_NEAR = 5;
+    const SPIKE_COUNT = isMobile ? 118 : 172;
+    const SPIKE_MAX = isMobile ? 0.78 : 0.94;
+    const SPIKE_NEAR = 8;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
-    const SPIKE_SIGMA = SPIKE_SPACING * 0.31;
+    const SPIKE_SIGMA = SPIKE_SPACING * 0.38;
     const INV_2S2 = 1 / (2 * SPIKE_SIGMA * SPIKE_SIGMA);
     const spikeDirs = new Float32Array(SPIKE_COUNT * 3);
     const golden = Math.PI * (3 - Math.sqrt(5));
@@ -253,39 +258,86 @@ export default function FerrofluidScene() {
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
+    const spikeVelocity = new Float32Array(SPIKE_COUNT);
+    const spikeTarget = new Float32Array(SPIKE_COUNT);
     const spikeF0 = new Float32Array(SPIKE_COUNT);
     const spikeF1 = new Float32Array(SPIKE_COUNT);
     const spikeGain = new Float32Array(SPIKE_COUNT);
-    const spikeAttack = new Float32Array(SPIKE_COUNT);
-    const spikeRelease = new Float32Array(SPIKE_COUNT);
+    const spikeSpring = new Float32Array(SPIKE_COUNT);
+    const spikeDamping = new Float32Array(SPIKE_COUNT);
     const spikeLowWeight = new Float32Array(SPIKE_COUNT);
+    const spikeMidWeight = new Float32Array(SPIKE_COUNT);
+    const spikeHighWeight = new Float32Array(SPIKE_COUNT);
+    const spikeSeed = new Float32Array(SPIKE_COUNT);
+    const spikeNeighbors = new Uint16Array(SPIKE_COUNT * 4);
     for (let k = 0; k < SPIKE_COUNT; k++) {
       const fr = (k * 0.61803398875) % 1;
-      const fn = Math.pow(fr, 1.7);
-      const center = fn * 0.55;
-      spikeF0[k] = Math.max(0, center - 0.012);
-      spikeF1[k] = center + 0.012;
-      spikeGain[k] = 1.0 + fn * 2.2;
-      spikeAttack[k] = 0.45 + fn * 0.4;
-      spikeRelease[k] = 0.06 + fn * 0.22;
-      spikeLowWeight[k] = 1 - fn;
+      const fn = Math.pow(fr, 1.45);
+      const y = spikeDirs[k * 3 + 1] * 0.5 + 0.5;
+      const side = Math.abs(spikeDirs[k * 3]);
+      const center = 42 + Math.pow(fn, 1.18) * 7200;
+      const bandwidth = 18 + center * 0.13;
+      spikeF0[k] = Math.max(20, center - bandwidth);
+      spikeF1[k] = center + bandwidth;
+      spikeGain[k] = 0.82 + fn * 2.5 + y * 0.35;
+      spikeSpring[k] = 0.04 + fn * 0.04;
+      spikeDamping[k] = 0.78 - fn * 0.08;
+      spikeLowWeight[k] = Math.max(0, 1 - fn * 1.3) * (0.75 + y * 0.45);
+      spikeMidWeight[k] = Math.max(0, 1 - Math.abs(fn - 0.42) * 2.25) * (0.82 + side * 0.22);
+      spikeHighWeight[k] = Math.pow(fn, 1.28) * (0.82 + (1 - y) * 0.32);
+      spikeSeed[k] = ((Math.sin(k * 127.1) * 43758.5453) % 1 + 1) % 1;
+    }
+
+    for (let k = 0; k < SPIKE_COUNT; k++) {
+      const best = [
+        { dot: -2, index: k },
+        { dot: -2, index: k },
+        { dot: -2, index: k },
+        { dot: -2, index: k },
+      ];
+      const ax = spikeDirs[k * 3];
+      const ay = spikeDirs[k * 3 + 1];
+      const az = spikeDirs[k * 3 + 2];
+      for (let j = 0; j < SPIKE_COUNT; j++) {
+        if (j === k) {
+          continue;
+        }
+        const dot =
+          ax * spikeDirs[j * 3] +
+          ay * spikeDirs[j * 3 + 1] +
+          az * spikeDirs[j * 3 + 2];
+        if (dot > best[3].dot) {
+          let p = 3;
+          while (p > 0 && dot > best[p - 1].dot) {
+            best[p] = best[p - 1];
+            p--;
+          }
+          best[p] = { dot, index: j };
+        }
+      }
+      for (let j = 0; j < 4; j++) {
+        spikeNeighbors[k * 4 + j] = best[j].index;
+      }
     }
 
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0x121317,
+      color: 0x050507,
       metalness: 0,
-      roughness: 0.18,
+      roughness: 0.085,
       clearcoat: 1,
-      clearcoatRoughness: 0.07,
-      reflectivity: 0.7,
-      ior: 1.5,
-      envMapIntensity: 2.3,
+      clearcoatRoughness: 0.025,
+      reflectivity: 1,
+      ior: 1.62,
+      envMapIntensity: 5.2,
       sheen: 0,
     });
     const blob = new THREE.Mesh(geometry, material);
     blob.frustumCulled = false;
     blob.castShadow = true;
     blob.receiveShadow = true;
+    blob.position.set(0, -1.15, 0);
+    blob.scale.set(1.34, 1.34, 1.34);
+    blob.rotation.x = -0.18;
     scene.add(blob);
 
     let audioCtx = null;
@@ -298,8 +350,18 @@ export default function FerrofluidScene() {
     let micSource = null;
     let micStream = null;
     let objectUrl = "";
-    const bands = { bass: 0, mid: 0, treble: 0, level: 0 };
+    const bands = {
+      sub: 0,
+      bass: 0,
+      lowMid: 0,
+      mid: 0,
+      high: 0,
+      presence: 0,
+      level: 0,
+      transient: 0,
+    };
     let bassSlow = 0;
+    let levelSlow = 0;
     let pump = 0;
 
     function ensureAnalyser() {
@@ -405,29 +467,54 @@ export default function FerrofluidScene() {
 
     function sampleAudio() {
       if (!audioActive) {
+        bands.sub *= 0.94;
+        bands.bass *= 0.94;
+        bands.lowMid *= 0.94;
+        bands.mid *= 0.94;
+        bands.high *= 0.94;
+        bands.presence *= 0.94;
+        bands.level *= 0.94;
+        bands.transient *= 0.88;
+        pump *= 0.88;
         return;
       }
       analyser.getByteFrequencyData(freqData);
       const n = freqData.length;
-      const avg = (a, b) => {
+      const hzToBin = (hz) => Math.max(1, Math.min(n - 1, Math.round((hz / (audioCtx.sampleRate / 2)) * n)));
+      const avgBins = (a, b) => {
         let sum = 0;
         for (let i = a; i < b; i++) {
           sum += freqData[i];
         }
         return sum / (b - a) / 255;
       };
-      const bass = avg(1, Math.floor(n * 0.04));
-      const mid = avg(Math.floor(n * 0.04), Math.floor(n * 0.18));
-      const treble = avg(Math.floor(n * 0.18), Math.floor(n * 0.55));
+      const avgHz = (lo, hi) => avgBins(hzToBin(lo), Math.max(hzToBin(lo) + 1, hzToBin(hi)));
       const lerp = (a, b, t) => a + (b - a) * t;
-      bands.bass = lerp(bands.bass, bass, 0.4);
-      bands.mid = lerp(bands.mid, mid, 0.45);
-      bands.treble = lerp(bands.treble, treble, 0.5);
-      bands.level = lerp(bands.level, (bass + mid + treble) / 3, 0.4);
+      const shape = (value, gain = 1, power = 0.82) =>
+        Math.pow(Math.min(1, Math.max(0, value) * gain), power);
 
-      bassSlow = lerp(bassSlow, bass, 0.06);
-      const kick = Math.max(0, bass - bassSlow * 1.5 - 0.02);
-      pump = Math.max(pump * 0.85, Math.min(1, kick * 4.5));
+      const sub = shape(avgHz(24, 68), 1.35, 0.78);
+      const bass = shape(avgHz(55, 150), 1.25, 0.76);
+      const lowMid = shape(avgHz(140, 420), 1.12, 0.82);
+      const mid = shape(avgHz(380, 1450), 1.18, 0.86);
+      const high = shape(avgHz(1400, 5200), 1.55, 0.74);
+      const presence = shape(avgHz(4800, 12000), 2.25, 0.64);
+      const instantLevel = sub * 0.22 + bass * 0.24 + lowMid * 0.15 + mid * 0.16 + high * 0.15 + presence * 0.08;
+
+      bands.sub = lerp(bands.sub, sub, 0.34);
+      bands.bass = lerp(bands.bass, bass, 0.38);
+      bands.lowMid = lerp(bands.lowMid, lowMid, 0.32);
+      bands.mid = lerp(bands.mid, mid, 0.36);
+      bands.high = lerp(bands.high, high, 0.54);
+      bands.presence = lerp(bands.presence, presence, 0.62);
+      bands.level = lerp(bands.level, instantLevel, 0.36);
+
+      bassSlow = lerp(bassSlow, bass + sub * 0.55, 0.045);
+      levelSlow = lerp(levelSlow, instantLevel, 0.055);
+      const kick = Math.max(0, bass + sub * 0.65 - bassSlow * 1.38 - 0.015);
+      const transient = Math.max(0, instantLevel - levelSlow * 1.26 - 0.012);
+      pump = Math.max(pump * 0.84, Math.min(1, kick * 4.8 + transient * 1.9));
+      bands.transient = Math.max(bands.transient * 0.72, Math.min(1, transient * 5.2 + presence * 0.25));
     }
 
     let rotX = 0;
@@ -479,36 +566,70 @@ export default function FerrofluidScene() {
     function updateGeometry() {
       const n = freqData ? freqData.length : 0;
       for (let k = 0; k < SPIKE_COUNT; k++) {
-        let tgt = 0;
+        let spectralLevel = 0;
         if (audioActive && n) {
-          const lo = Math.floor(spikeF0[k] * n);
-          const hi = Math.max(lo + 1, Math.floor(spikeF1[k] * n));
+          const lo = Math.max(1, Math.min(n - 1, Math.round((spikeF0[k] / (audioCtx.sampleRate / 2)) * n)));
+          const hi = Math.max(lo + 1, Math.min(n, Math.round((spikeF1[k] / (audioCtx.sampleRate / 2)) * n)));
           let sum = 0;
           for (let b = lo; b < hi; b++) {
             sum += freqData[b];
           }
-          let level = sum / (hi - lo) / 255;
-          level = Math.max(0, level - 0.05);
-          level = Math.pow(Math.min(1, level * spikeGain[k]), 0.85);
-          const react = bands.level * 0.55 + level * 1.1 + pump * spikeLowWeight[k] * 0.7;
-          tgt = Math.min(1.3, react) * SPIKE_MAX;
+          spectralLevel = Math.pow(Math.min(1, Math.max(0, sum / (hi - lo) / 255 - 0.025) * spikeGain[k]), 0.72);
         }
-        const rate = tgt > spikeHeight[k] ? spikeAttack[k] : spikeRelease[k];
-        spikeHeight[k] += (tgt - spikeHeight[k]) * rate;
+
+        const wobble =
+          Math.sin(time * (1.2 + spikeSeed[k] * 1.8) + spikeSeed[k] * 12.4) *
+          (0.008 + bands.high * 0.018);
+        const magnetic =
+          bands.sub * spikeLowWeight[k] * 0.72 +
+          bands.bass * spikeLowWeight[k] * 0.94 +
+          bands.lowMid * spikeMidWeight[k] * 0.56 +
+          bands.mid * spikeMidWeight[k] * 0.68 +
+          bands.high * spikeHighWeight[k] * 0.5 +
+          bands.presence * spikeHighWeight[k] * 0.42 +
+          spectralLevel * 0.88 +
+          pump * spikeLowWeight[k] * 0.7 +
+          bands.transient * spikeHighWeight[k] * 0.5;
+
+        const neighborAvg =
+          (spikeHeight[spikeNeighbors[k * 4]] +
+            spikeHeight[spikeNeighbors[k * 4 + 1]] +
+            spikeHeight[spikeNeighbors[k * 4 + 2]] +
+            spikeHeight[spikeNeighbors[k * 4 + 3]]) *
+          0.25;
+        const idleNeedle = 0.055 + spikeSeed[k] * 0.035;
+        spikeTarget[k] = Math.min(1.45, idleNeedle + magnetic + neighborAvg * 0.12 + wobble) * SPIKE_MAX;
       }
 
-      const pulse = 1 + 0.006 * Math.sin(time * 0.8) + pump * 0.05;
+      for (let k = 0; k < SPIKE_COUNT; k++) {
+        const force = (spikeTarget[k] - spikeHeight[k]) * spikeSpring[k];
+        spikeVelocity[k] = (spikeVelocity[k] + force) * spikeDamping[k];
+        spikeHeight[k] = Math.max(0.02, spikeHeight[k] + spikeVelocity[k]);
+      }
+
+      const pulse = 1 + 0.006 * Math.sin(time * 0.8) + bands.sub * 0.035 + pump * 0.075;
       const arr = posAttr.array;
       for (let i = 0; i < vertexCount; i++) {
         const o = i * 3;
         const m = i * SPIKE_NEAR;
         let h = 0;
+        let crown = 0;
+        let weightSum = 0;
         for (let j = 0; j < SPIKE_NEAR; j++) {
-          h += vWt[m + j] * spikeHeight[vIdx[m + j]];
+          const weight = vWt[m + j];
+          const height = spikeHeight[vIdx[m + j]];
+          h += weight * height;
+          crown += weight * weight * height;
+          weightSum += weight;
         }
-        const r = RADIUS * pulse + h;
+        const normalized = weightSum > 0 ? h / weightSum : h;
+        const roundedPeak = normalized * 0.72 + crown * 0.36;
+        const directionY = base[o + 1];
+        const moundMask = THREE.MathUtils.smoothstep(directionY, -0.82, 0.32);
+        const lowerCompression = directionY < -0.2 ? (directionY + 0.2) * 0.3 : 0;
+        const r = RADIUS * pulse + roundedPeak * moundMask + lowerCompression;
         arr[o] = base[o] * r;
-        arr[o + 1] = base[o + 1] * r;
+        arr[o + 1] = base[o + 1] * r - Math.max(0, -base[o + 1] - 0.2) * 0.34;
         arr[o + 2] = base[o + 2] * r;
       }
       posAttr.needsUpdate = true;
@@ -520,7 +641,9 @@ export default function FerrofluidScene() {
       const h = window.innerHeight;
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
-      camera.position.z = w / h < 0.9 ? 15 : 12;
+      const portrait = w / h < 0.9;
+      camera.position.z = portrait ? 10.2 : 7.6;
+      camera.position.y = portrait ? 0.55 : 0.38;
       camera.updateProjectionMatrix();
     }
 
@@ -529,14 +652,14 @@ export default function FerrofluidScene() {
       time += 0.016;
       sampleAudio();
       if (!dragging) {
-        rotY += velX + 0.0011 + bands.level * 0.004;
-        rotX += velY + 0.00045;
+        rotY += velX + 0.00062 + bands.level * 0.0024;
+        rotX += velY + 0.00022;
         velX *= 0.94;
         velY *= 0.94;
       }
       blob.rotation.y = rotY;
-      blob.rotation.x = rotX;
-      blob.rotation.z = Math.sin(time * 0.08) * 0.06;
+      blob.rotation.x = -0.18 + rotX;
+      blob.rotation.z = Math.sin(time * 0.08) * 0.035;
       updateGeometry();
       renderer.render(scene, camera);
     }
