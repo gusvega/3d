@@ -245,7 +245,7 @@ export default function FerrofluidScene() {
     const posAttr = geometry.attributes.position;
 
     const SPIKE_COUNT = isMobile ? 126 : 196;
-    const SPIKE_MAX = isMobile ? 0.58 : 0.72;
+    const SPIKE_MAX = isMobile ? 0.4 : 0.5;
     const SPIKE_NEAR = 1;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
     const CELL_RADIUS = SPIKE_SPACING * 0.9;
@@ -690,7 +690,7 @@ export default function FerrofluidScene() {
           keyHit * (0.28 + spikeSeed[k] * 0.18) +
           spectralMotion * 1.32 * profile.motion;
 
-        spikeTarget[k] = Math.min(1.85, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
+        spikeTarget[k] = Math.min(1.05, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -726,7 +726,7 @@ export default function FerrofluidScene() {
         const roundedPeak = (idleOrganic + activeShimmer + height * cellWeight) *
           (0.92 + THREE.MathUtils.smoothstep(ownerY, -0.72, 0.22) * 0.08);
         const r = RADIUS * pulse;
-        const leanAmount = height * cellWeight * 0.055;
+        const leanAmount = height * cellWeight * 0.018;
         const dot = base[o] * magneticField.x + base[o + 1] * magneticField.y + base[o + 2] * magneticField.z;
         const leanX = magneticField.x - base[o] * dot;
         const leanY = magneticField.y - base[o + 1] * dot;
