@@ -249,6 +249,10 @@ export default function FerrofluidScene() {
     const SPIKE_NEAR = 1;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
     const CELL_RADIUS = SPIKE_SPACING * 0.9;
+    // Fraction of the cell that actually lifts. The lifted radius is kept below
+    // the cell's inradius (~half the spacing) so every bump rises from a fixed
+    // ring of original sphere — bases stay anchored and neighbours never merge.
+    const CELL_FILL = 0.52;
     const spikeDirs = new Float32Array(SPIKE_COUNT * 3);
     const golden = Math.PI * (3 - Math.sqrt(5));
     for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -279,12 +283,15 @@ export default function FerrofluidScene() {
         }
       }
       const ang = Math.acos(Math.min(1, Math.max(-1, bestDot)));
-      const cellT = Math.min(1, ang / CELL_RADIUS);
-      const shoulder = Math.max(0, 1 - cellT);
-      const edgeLock = 1 - THREE.MathUtils.smoothstep(cellT, 0.76, 1);
-      const roundedTop = Math.pow(shoulder, 0.72) * edgeLock;
+      // Normalised distance from the cell centre. Only the inner CELL_FILL of the
+      // cell lifts; outside it the weight is exactly 0, so those vertices stay on
+      // the original sphere (anchored base). (1 - u^2)^2 gives a rounded top (zero
+      // slope at the centre) and a smooth join to the base (zero slope at u = 1),
+      // so the centre rises into a rounded peak while the rim never moves.
+      const u = ang / (CELL_RADIUS * CELL_FILL);
+      const falloff = u >= 1 ? 0 : (1 - u * u);
       vOwner[i] = bestK;
-      vCellWeight[i] = Math.sin(roundedTop * Math.PI * 0.5);
+      vCellWeight[i] = falloff * falloff;
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
