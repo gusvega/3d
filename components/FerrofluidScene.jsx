@@ -120,6 +120,7 @@ export default function FerrofluidScene() {
       softbox(w * 0.58, h * 0.1, 360, 42, 1, 0.08);
       softbox(w * 0.86, h * 0.18, 220, 30, 0.92, 0.2);
       softbox(w * 0.52, h * 0.32, 560, 28, 0.72, -0.04);
+      softbox(w * 0.5, h * 0.72, 620, 44, 0.5, 0.03);
       softbox(w * 0.08, h * 0.28, 170, 24, 0.62, -0.5);
       softbox(w * 0.95, h * 0.34, 170, 24, 0.62, 0.5);
       softbox(w * 0.18, h * 0.54, 130, 22, 0.55, -0.8);
@@ -191,6 +192,20 @@ export default function FerrofluidScene() {
     scene.add(rearFill);
     scene.add(new THREE.HemisphereLight(0xffffff, 0x5f636b, 1.18));
 
+    const contactShadow = new THREE.Mesh(
+      new THREE.CircleGeometry(1.95, 96),
+      new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        transparent: true,
+        opacity: 0.055,
+        depthWrite: false,
+      })
+    );
+    contactShadow.rotation.x = -Math.PI / 2;
+    contactShadow.position.set(0, -1.78, 0.18);
+    contactShadow.scale.set(1.16, 0.42, 1);
+    scene.add(contactShadow);
+
     const RADIUS = 1.42;
     const raw = new THREE.IcosahedronGeometry(RADIUS, isMobile ? 5 : 6);
     const rawPos = raw.attributes.position.array;
@@ -250,6 +265,7 @@ export default function FerrofluidScene() {
 
     const vOwner = new Uint16Array(vertexCount);
     const vCellWeight = new Float32Array(vertexCount);
+    const vBaseWeight = new Float32Array(vertexCount);
     for (let i = 0; i < vertexCount; i++) {
       const bx = base[i * 3];
       const by = base[i * 3 + 1];
@@ -273,11 +289,13 @@ export default function FerrofluidScene() {
       const roundedTop = Math.sin(centerPeak * Math.PI * 0.5);
       vOwner[i] = bestK;
       vCellWeight[i] = roundedTop * THREE.MathUtils.smoothstep(1 - cellT, 0.04, 0.22);
+      vBaseWeight[i] = THREE.MathUtils.smoothstep(cellT, 0.42, 0.86) * THREE.MathUtils.smoothstep(1 - cellT, 0.02, 0.22);
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
     const spikeVelocity = new Float32Array(SPIKE_COUNT);
     const spikeTarget = new Float32Array(SPIKE_COUNT);
+    const spikeBaseWave = new Float32Array(SPIKE_COUNT);
     const spikeF0 = new Float32Array(SPIKE_COUNT);
     const spikeF1 = new Float32Array(SPIKE_COUNT);
     const spikeGain = new Float32Array(SPIKE_COUNT);
@@ -575,10 +593,12 @@ export default function FerrofluidScene() {
           );
           const rising = Math.max(0, spectralLevel - spikeLastLevel[k] * 0.92);
           spikeMotion[k] = Math.max(spikeMotion[k] * 0.74, rising * 3.8);
+          spikeBaseWave[k] = Math.max(spikeBaseWave[k] * 0.86, rising * 0.5);
           spikeLastLevel[k] += (spectralLevel - spikeLastLevel[k]) * 0.18;
           spectralMotion = Math.min(1, spikeMotion[k]);
         } else {
           spikeMotion[k] *= 0.72;
+          spikeBaseWave[k] *= 0.82;
           spikeLastLevel[k] *= 0.92;
         }
 
@@ -609,7 +629,15 @@ export default function FerrofluidScene() {
         const cellWeight = vCellWeight[i];
         const height = spikeHeight[owner];
         const baseLift = Math.min(0.035, height * 0.08);
-        const roundedPeak = baseLift + height * cellWeight;
+        const tensionBase = spikeBaseWave[owner] * vBaseWeight[i] * 0.12;
+        const activeShimmer =
+          audioActive && cellWeight > 0.08
+            ? Math.sin(time * (5.5 + spikeSeed[owner] * 2.5) + spikeSeed[owner] * 18) *
+              bands.presence *
+              cellWeight *
+              0.012
+            : 0;
+        const roundedPeak = baseLift + tensionBase + activeShimmer + height * cellWeight;
         const directionY = base[o + 1];
         const sphereBalance = 0.9 + THREE.MathUtils.smoothstep(directionY, -0.74, 0.18) * 0.1;
         const r = RADIUS * pulse + roundedPeak * sphereBalance;
