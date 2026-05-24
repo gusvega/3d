@@ -245,10 +245,10 @@ export default function FerrofluidScene() {
     const posAttr = geometry.attributes.position;
 
     const SPIKE_COUNT = isMobile ? 126 : 196;
-    const SPIKE_MAX = isMobile ? 0.46 : 0.56;
+    const SPIKE_MAX = isMobile ? 0.58 : 0.72;
     const SPIKE_NEAR = 1;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
-    const CELL_RADIUS = SPIKE_SPACING * 0.64;
+    const CELL_RADIUS = SPIKE_SPACING * 0.78;
     const spikeDirs = new Float32Array(SPIKE_COUNT * 3);
     const golden = Math.PI * (3 - Math.sqrt(5));
     for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -282,11 +282,11 @@ export default function FerrofluidScene() {
       const ang = Math.acos(Math.min(1, Math.max(-1, bestDot)));
       const cellT = Math.min(1, ang / CELL_RADIUS);
       const shoulder = Math.max(0, 1 - cellT);
-      const centerPeak = Math.pow(shoulder, 1.9);
+      const centerPeak = Math.pow(shoulder, 1.18);
       const roundedTop = Math.sin(centerPeak * Math.PI * 0.5);
       vOwner[i] = bestK;
-      vCellWeight[i] = roundedTop * THREE.MathUtils.smoothstep(1 - cellT, 0.04, 0.22);
-      vBaseWeight[i] = THREE.MathUtils.smoothstep(cellT, 0.42, 0.86) * THREE.MathUtils.smoothstep(1 - cellT, 0.02, 0.22);
+      vCellWeight[i] = roundedTop * THREE.MathUtils.smoothstep(1 - cellT, 0.03, 0.34);
+      vBaseWeight[i] = THREE.MathUtils.smoothstep(cellT, 0.36, 0.9) * THREE.MathUtils.smoothstep(1 - cellT, 0.02, 0.28);
     }
 
     const spikeHeight = new Float32Array(SPIKE_COUNT);
@@ -304,6 +304,8 @@ export default function FerrofluidScene() {
     const spikeMidWeight = new Float32Array(SPIKE_COUNT);
     const spikeHighWeight = new Float32Array(SPIKE_COUNT);
     const spikeSeed = new Float32Array(SPIKE_COUNT);
+    const spikeIdleAmp = new Float32Array(SPIKE_COUNT);
+    const spikeIdleRate = new Float32Array(SPIKE_COUNT);
     for (let k = 0; k < SPIKE_COUNT; k++) {
       const fr = (k * 0.61803398875) % 1;
       const fn = Math.pow(fr, 1.45);
@@ -320,6 +322,8 @@ export default function FerrofluidScene() {
       spikeMidWeight[k] = Math.max(0, 1 - Math.abs(fn - 0.42) * 2.05) * (0.96 + side * 0.12);
       spikeHighWeight[k] = Math.pow(fn, 1.18) * (0.94 + (1 - y) * 0.12);
       spikeSeed[k] = ((Math.sin(k * 127.1) * 43758.5453) % 1 + 1) % 1;
+      spikeIdleAmp[k] = 0.012 + spikeSeed[k] * 0.026;
+      spikeIdleRate[k] = 0.18 + spikeSeed[k] * 0.24;
     }
 
     const material = new THREE.MeshPhysicalMaterial({
@@ -607,8 +611,8 @@ export default function FerrofluidScene() {
             0.72
           );
           const rising = Math.max(0, spectralLevel - spikeLastLevel[k] * 0.92);
-          spikeMotion[k] = Math.max(spikeMotion[k] * profile.hold, rising * 3.8 * sensitivity);
-          spikeBaseWave[k] = Math.max(spikeBaseWave[k] * 0.86, rising * 0.5 * profile.base);
+          spikeMotion[k] = Math.max(spikeMotion[k] * profile.hold, rising * 4.65 * sensitivity);
+          spikeBaseWave[k] = Math.max(spikeBaseWave[k] * 0.86, rising * 0.62 * profile.base);
           spikeLastLevel[k] += (spectralLevel - spikeLastLevel[k]) * 0.18;
           spectralMotion = Math.min(1, spikeMotion[k]);
         } else {
@@ -620,14 +624,16 @@ export default function FerrofluidScene() {
         const wobble =
           Math.sin(time * (1.2 + spikeSeed[k] * 1.8) + spikeSeed[k] * 12.4) *
           (0.008 + bands.high * 0.018);
-        const motionLift = pump * 0.14 * profile.pump + bands.transient * 0.18 * profile.transient;
+        const keyHit = Math.max(pump * profile.pump, bands.transient * profile.transient);
+        const motionLift = pump * 0.16 * profile.pump + bands.transient * 0.22 * profile.transient;
         const magnetic =
           motionLift +
-          pump * spikeLowWeight[k] * 0.92 * profile.pump +
-          bands.transient * spikeHighWeight[k] * 0.78 * profile.transient +
-          spectralMotion * 1.05 * profile.motion;
+          pump * spikeLowWeight[k] * 1.08 * profile.pump +
+          bands.transient * spikeHighWeight[k] * 0.92 * profile.transient +
+          keyHit * (0.18 + spikeSeed[k] * 0.12) +
+          spectralMotion * 1.18 * profile.motion;
 
-        spikeTarget[k] = Math.min(1.35, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
+        spikeTarget[k] = Math.min(1.55, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -645,6 +651,10 @@ export default function FerrofluidScene() {
         const height = spikeHeight[owner];
         const baseLift = Math.min(0.035, height * 0.08);
         const tensionBase = spikeBaseWave[owner] * vBaseWeight[i] * 0.12;
+        const idleOrganic =
+          (Math.sin(time * spikeIdleRate[owner] + spikeSeed[owner] * 20.1) * 0.5 + 0.5) *
+          spikeIdleAmp[owner] *
+          (0.35 + vBaseWeight[i] * 0.5 + cellWeight * 0.15);
         const activeShimmer =
           audioActive && cellWeight > 0.08
             ? Math.sin(time * (5.5 + spikeSeed[owner] * 2.5) + spikeSeed[owner] * 18) *
@@ -654,7 +664,7 @@ export default function FerrofluidScene() {
               profile.shimmer *
               sensitivity
             : 0;
-        const roundedPeak = baseLift + tensionBase + activeShimmer + height * cellWeight;
+        const roundedPeak = idleOrganic + baseLift + tensionBase + activeShimmer + height * cellWeight;
         const directionY = base[o + 1];
         const sphereBalance = 0.9 + THREE.MathUtils.smoothstep(directionY, -0.74, 0.18) * 0.1;
         const r = RADIUS * pulse + roundedPeak * sphereBalance;
