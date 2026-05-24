@@ -244,7 +244,7 @@ export default function FerrofluidScene() {
     geometry.setIndex(indices);
     const posAttr = geometry.attributes.position;
 
-    const SPIKE_COUNT = isMobile ? 80 : 120;
+    const SPIKE_COUNT = isMobile ? 64 : 90;
     const SPIKE_MAX = isMobile ? 0.4 : 0.5;
     const SPIKE_NEAR = 1;
     const SPIKE_SPACING = Math.sqrt((8 * Math.PI) / (SPIKE_COUNT * Math.sqrt(3)));
