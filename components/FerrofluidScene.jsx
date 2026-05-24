@@ -21,6 +21,9 @@ export default function FerrofluidScene() {
   const timeRef = useRef(null);
   const trackRef = useRef(null);
   const audioRef = useRef(null);
+  const sensitivityRef = useRef(null);
+  const decayRef = useRef(null);
+  const modeRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,6 +43,9 @@ export default function FerrofluidScene() {
     const timeReadout = timeRef.current;
     const trackName = trackRef.current;
     const audioElement = audioRef.current;
+    const sensitivityControl = sensitivityRef.current;
+    const decayControl = decayRef.current;
+    const modeControl = modeRef.current;
     if (
       !canvas ||
       !ytForm ||
@@ -57,7 +63,10 @@ export default function FerrofluidScene() {
       !seek ||
       !timeReadout ||
       !trackName ||
-      !audioElement
+      !audioElement ||
+      !sensitivityControl ||
+      !decayControl ||
+      !modeControl
     ) {
       return undefined;
     }
@@ -121,6 +130,8 @@ export default function FerrofluidScene() {
       softbox(w * 0.86, h * 0.18, 220, 30, 0.92, 0.2);
       softbox(w * 0.52, h * 0.32, 560, 28, 0.72, -0.04);
       softbox(w * 0.5, h * 0.72, 620, 44, 0.5, 0.03);
+      softbox(w * 0.28, h * 0.72, 260, 34, 0.48, -0.2);
+      softbox(w * 0.74, h * 0.7, 260, 34, 0.48, 0.2);
       softbox(w * 0.08, h * 0.28, 170, 24, 0.62, -0.5);
       softbox(w * 0.95, h * 0.34, 170, 24, 0.62, 0.5);
       softbox(w * 0.18, h * 0.54, 130, 22, 0.55, -0.8);
@@ -330,6 +341,21 @@ export default function FerrofluidScene() {
     blob.scale.set(1, 1, 1);
     blob.rotation.x = -0.08;
     scene.add(blob);
+
+    const modeProfiles = {
+      balanced: { motion: 1, pump: 1, transient: 1, shimmer: 1, hold: 0.74, base: 1 },
+      bass: { motion: 0.82, pump: 1.42, transient: 0.82, shimmer: 0.72, hold: 0.78, base: 1.25 },
+      detail: { motion: 1.18, pump: 0.78, transient: 1.42, shimmer: 1.45, hold: 0.68, base: 0.82 },
+    };
+    const controls = {
+      sensitivity: Number(sensitivityControl.value),
+      decay: Number(decayControl.value),
+      mode: modeControl.value,
+    };
+    const magneticField = new THREE.Vector3(-0.32, 0.72, 0.22).normalize();
+    let adaptivePixelRatio = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
+    let frameWindowStarted = performance.now();
+    let frameCount = 0;
 
     let audioCtx = null;
     let analyser = null;
@@ -564,6 +590,9 @@ export default function FerrofluidScene() {
 
     function updateGeometry() {
       const n = freqData ? freqData.length : 0;
+      const profile = modeProfiles[controls.mode] || modeProfiles.balanced;
+      const sensitivity = controls.sensitivity;
+      const release = 0.62 + controls.decay * 0.26;
       for (let k = 0; k < SPIKE_COUNT; k++) {
         let spectralMotion = 0;
         if (audioActive && n) {
@@ -578,27 +607,27 @@ export default function FerrofluidScene() {
             0.72
           );
           const rising = Math.max(0, spectralLevel - spikeLastLevel[k] * 0.92);
-          spikeMotion[k] = Math.max(spikeMotion[k] * 0.74, rising * 3.8);
-          spikeBaseWave[k] = Math.max(spikeBaseWave[k] * 0.86, rising * 0.5);
+          spikeMotion[k] = Math.max(spikeMotion[k] * profile.hold, rising * 3.8 * sensitivity);
+          spikeBaseWave[k] = Math.max(spikeBaseWave[k] * 0.86, rising * 0.5 * profile.base);
           spikeLastLevel[k] += (spectralLevel - spikeLastLevel[k]) * 0.18;
           spectralMotion = Math.min(1, spikeMotion[k]);
         } else {
-          spikeMotion[k] *= 0.72;
-          spikeBaseWave[k] *= 0.82;
+          spikeMotion[k] *= release;
+          spikeBaseWave[k] *= 0.78 + controls.decay * 0.16;
           spikeLastLevel[k] *= 0.92;
         }
 
         const wobble =
           Math.sin(time * (1.2 + spikeSeed[k] * 1.8) + spikeSeed[k] * 12.4) *
           (0.008 + bands.high * 0.018);
-        const motionLift = pump * 0.14 + bands.transient * 0.18;
+        const motionLift = pump * 0.14 * profile.pump + bands.transient * 0.18 * profile.transient;
         const magnetic =
           motionLift +
-          pump * spikeLowWeight[k] * 0.92 +
-          bands.transient * spikeHighWeight[k] * 0.78 +
-          spectralMotion * 1.05;
+          pump * spikeLowWeight[k] * 0.92 * profile.pump +
+          bands.transient * spikeHighWeight[k] * 0.78 * profile.transient +
+          spectralMotion * 1.05 * profile.motion;
 
-        spikeTarget[k] = Math.min(1.35, magnetic + wobble) * SPIKE_MAX;
+        spikeTarget[k] = Math.min(1.35, (magnetic + wobble) * sensitivity) * SPIKE_MAX;
       }
 
       for (let k = 0; k < SPIKE_COUNT; k++) {
@@ -621,15 +650,22 @@ export default function FerrofluidScene() {
             ? Math.sin(time * (5.5 + spikeSeed[owner] * 2.5) + spikeSeed[owner] * 18) *
               bands.presence *
               cellWeight *
-              0.012
+              0.012 *
+              profile.shimmer *
+              sensitivity
             : 0;
         const roundedPeak = baseLift + tensionBase + activeShimmer + height * cellWeight;
         const directionY = base[o + 1];
         const sphereBalance = 0.9 + THREE.MathUtils.smoothstep(directionY, -0.74, 0.18) * 0.1;
         const r = RADIUS * pulse + roundedPeak * sphereBalance;
-        arr[o] = base[o] * r;
-        arr[o + 1] = base[o + 1] * r;
-        arr[o + 2] = base[o + 2] * r;
+        const leanAmount = height * cellWeight * 0.12;
+        const dot = base[o] * magneticField.x + base[o + 1] * magneticField.y + base[o + 2] * magneticField.z;
+        const leanX = magneticField.x - base[o] * dot;
+        const leanY = magneticField.y - base[o + 1] * dot;
+        const leanZ = magneticField.z - base[o + 2] * dot;
+        arr[o] = base[o] * r + leanX * leanAmount;
+        arr[o + 1] = base[o + 1] * r + leanY * leanAmount;
+        arr[o + 2] = base[o + 2] * r + leanZ * leanAmount;
       }
       posAttr.needsUpdate = true;
       geometry.computeVertexNormals();
@@ -638,6 +674,7 @@ export default function FerrofluidScene() {
     function resize() {
       const w = window.innerWidth;
       const h = window.innerHeight;
+      renderer.setPixelRatio(adaptivePixelRatio);
       renderer.setSize(w, h, false);
       camera.aspect = w / h;
       const portrait = w / h < 0.9;
@@ -649,6 +686,17 @@ export default function FerrofluidScene() {
     function animate() {
       frame = requestAnimationFrame(animate);
       time += 0.016;
+      frameCount++;
+      const now = performance.now();
+      if (now - frameWindowStarted > 2200) {
+        const fps = (frameCount * 1000) / (now - frameWindowStarted);
+        if (fps < 42 && adaptivePixelRatio > 1) {
+          adaptivePixelRatio = Math.max(1, adaptivePixelRatio - 0.25);
+          renderer.setPixelRatio(adaptivePixelRatio);
+        }
+        frameWindowStarted = now;
+        frameCount = 0;
+      }
       sampleAudio();
       if (!dragging) {
         rotY += velX + 0.00062 + bands.level * 0.0024;
@@ -661,6 +709,18 @@ export default function FerrofluidScene() {
       blob.rotation.z = Math.sin(time * 0.08) * 0.035;
       updateGeometry();
       renderer.render(scene, camera);
+    }
+
+    function updateSensitivity() {
+      controls.sensitivity = Number(sensitivityControl.value);
+    }
+
+    function updateDecay() {
+      controls.decay = Number(decayControl.value);
+    }
+
+    function updateMode() {
+      controls.mode = modeControl.value;
     }
 
     function parseYouTubeId(raw) {
@@ -913,6 +973,9 @@ export default function FerrofluidScene() {
     backBtn.addEventListener("click", rewindTrack);
     forwardBtn.addEventListener("click", forwardTrack);
     seek.addEventListener("input", onSeekInput);
+    sensitivityControl.addEventListener("input", updateSensitivity);
+    decayControl.addEventListener("input", updateDecay);
+    modeControl.addEventListener("change", updateMode);
 
     resize();
     animate();
@@ -939,6 +1002,9 @@ export default function FerrofluidScene() {
       backBtn.removeEventListener("click", rewindTrack);
       forwardBtn.removeEventListener("click", forwardTrack);
       seek.removeEventListener("input", onSeekInput);
+      sensitivityControl.removeEventListener("input", updateSensitivity);
+      decayControl.removeEventListener("input", updateDecay);
+      modeControl.removeEventListener("change", updateMode);
       if (mediaElement) {
         mediaElement.removeEventListener("loadedmetadata", updateTransport);
         mediaElement.removeEventListener("timeupdate", updateTransport);
@@ -1023,6 +1089,24 @@ export default function FerrofluidScene() {
               Stop
             </button>
           </div>
+        </div>
+        <div className="physics-controls" aria-label="Ferrofluid response controls">
+          <label>
+            <span>Sensitivity</span>
+            <input ref={sensitivityRef} type="range" min="0.6" max="1.8" step="0.05" defaultValue="1" />
+          </label>
+          <label>
+            <span>Decay</span>
+            <input ref={decayRef} type="range" min="0" max="1" step="0.05" defaultValue="0.45" />
+          </label>
+          <label>
+            <span>Mode</span>
+            <select ref={modeRef} defaultValue="balanced">
+              <option value="balanced">Balanced</option>
+              <option value="bass">Bass</option>
+              <option value="detail">Detail</option>
+            </select>
+          </label>
         </div>
         <p ref={statusRef} className="status">
           Upload an audio file, or load a YouTube song and press Listen via mic so the fluid

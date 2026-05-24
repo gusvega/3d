@@ -383,6 +383,45 @@ body.immersive.reveal .ferrofluid-page .panel {
   accent-color: #f6f7fb;
 }
 
+.ferrofluid-page .physics-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.05fr;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ferrofluid-page .physics-controls label {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: rgba(246, 247, 251, 0.72);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ferrofluid-page .physics-controls input,
+.ferrofluid-page .physics-controls select {
+  width: 100%;
+}
+
+.ferrofluid-page .physics-controls input {
+  accent-color: #f6f7fb;
+}
+
+.ferrofluid-page .physics-controls select {
+  min-height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #101116;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .ferrofluid-page .transport-buttons {
   display: grid;
   grid-template-columns: 0.74fr 0.96fr 0.74fr 1.05fr 0.82fr;
@@ -474,5 +513,9 @@ body.immersive.reveal .ferrofluid-page .panel {
 
   .ferrofluid-page .transport-buttons button {
     font-size: 12px;
+  }
+
+  .ferrofluid-page .physics-controls {
+    grid-template-columns: 1fr;
   }
 }
