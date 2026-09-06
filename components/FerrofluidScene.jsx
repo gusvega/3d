@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AudioSession } from "@/lib/audio-session.mjs";
 import { parseYouTubeId } from "@/lib/youtube.mjs";
 import SceneCanvas from "./SceneCanvas";
+import AudioSpectrum from "./AudioSpectrum";
 import { useMotion } from "./use-motion";
 
 const initial = {
@@ -22,12 +23,16 @@ export default function FerrofluidScene() {
   const fileRef = useRef(null);
   const panelRef = useRef(null);
   const focusRef = useRef(null);
+  const wasFocused = useRef(false);
   const [audio, setAudio] = useState(initial);
   const [position, setPosition] = useState(0);
   const [volume, setVolume] = useState(0.65);
   const [sensitivity, setSensitivity] = useState(1);
   const [decay, setDecay] = useState(0.45);
   const [mode, setMode] = useState("balanced");
+  const [field, setField] = useState(0.8);
+  const [finish, setFinish] = useState("obsidian");
+  const [dropActive, setDropActive] = useState(false);
   const [focus, setFocus] = useState(false);
   const [video, setVideo] = useState(null);
   const [videoError, setVideoError] = useState("");
@@ -61,6 +66,11 @@ export default function FerrofluidScene() {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    if (wasFocused.current && !focus) panelRef.current?.focus();
+    wasFocused.current = focus;
+  }, [focus]);
+
   function source(action) {
     setVideo(null);
     action();
@@ -68,7 +78,6 @@ export default function FerrofluidScene() {
   function setFocusMode(value) {
     setFocus(value);
     if (value) focusRef.current?.focus();
-    else requestAnimationFrame(() => panelRef.current?.focus());
   }
   function submitVideo(event) {
     event.preventDefault();
@@ -99,6 +108,22 @@ export default function FerrofluidScene() {
     <section
       className={`fluid-experience ${focus ? "is-focused" : ""}`}
       aria-labelledby="fluid-title"
+      onDragOver={(event) => {
+        if (event.dataTransfer.types.includes("Files")) {
+          event.preventDefault();
+          setDropActive(true);
+        }
+      }}
+      onDragLeave={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setDropActive(false);
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        setDropActive(false);
+        const file = event.dataTransfer.files?.[0];
+        if (file) source(() => sessionRef.current?.loadFile(file));
+      }}
       onKeyDown={(event) => {
         if (event.key === "Escape" && focus) setFocusMode(false);
       }}
@@ -106,19 +131,29 @@ export default function FerrofluidScene() {
       <div className="scene-caption">
         <span className="eyebrow">02 / Sound study</span>
         <h1 id="fluid-title">
-          Sound,
-          <br />
-          given shape.
+          Ferrofluid<span aria-hidden="true">.</span>
         </h1>
-        <p>A liquid surface that listens.</p>
+        <p>Sound into matter.</p>
       </div>
       <div className="fluid-stage">
+        <div className="surface-label" aria-hidden="true">
+          <span>MAGNETIC MATTER</span>
+          <span>{audio.playing ? "AUDIO REACTIVE" : "AMBIENT FIELD"}</span>
+        </div>
         <SceneCanvas
           kind="fluid"
           audioRef={sessionRef}
-          settings={{ paused, reset, sensitivity, decay, mode }}
+          settings={{ paused, reset, sensitivity, decay, mode, field, finish }}
         />
+        <div className="surface-hint">
+          Drag to orbit <span>·</span> Focus the surface, then scroll to zoom
+        </div>
       </div>
+      {dropActive ? (
+        <div className="audio-drop-overlay">
+          Drop your sound.<span>Audio stays on your device.</span>
+        </div>
+      ) : null}
       <button
         ref={focusRef}
         className="focus-toggle"
@@ -139,8 +174,8 @@ export default function FerrofluidScene() {
       >
         <header className="panel-heading">
           <div>
-            <span className="eyebrow">Ferrofluid</span>
-            <h2>Make it move.</h2>
+            <span className="eyebrow">Sound source</span>
+            <h2>Give it a pulse.</h2>
           </div>
           <span
             className={`signal ${audio.playing ? "active" : ""}`}
@@ -192,6 +227,7 @@ export default function FerrofluidScene() {
         >
           {status}
         </p>
+        <AudioSpectrum sessionRef={sessionRef} />
         {audio.mode === "file" ? (
           <div className="transport">
             <div className="track-line">
@@ -314,6 +350,38 @@ export default function FerrofluidScene() {
             />
           </label>
         </div>
+        <div className="material-controls">
+          <div className="section-label">Material</div>
+          <div
+            className="mode-selector"
+            role="group"
+            aria-label="Surface material"
+          >
+            {["obsidian", "mercury"].map((value) => (
+              <button
+                key={value}
+                aria-pressed={finish === value}
+                onClick={() => setFinish(value)}
+              >
+                {value === "obsidian" ? "Black chrome" : "Mercury"}
+              </button>
+            ))}
+          </div>
+          <label className="range-row">
+            <span>
+              Magnetism <output>{Math.round(field * 100)}%</output>
+            </span>
+            <input
+              aria-label="Magnetism"
+              type="range"
+              min="0"
+              max="1.4"
+              step="0.05"
+              value={field}
+              onChange={(event) => setField(Number(event.target.value))}
+            />
+          </label>
+        </div>
         <details className="youtube-section">
           <summary>Play a YouTube video</summary>
           <p>
@@ -367,7 +435,7 @@ export default function FerrofluidScene() {
         <p className="privacy-note">
           Files & microphone stay on your device.
           <br />
-          Up to 64 MB / 20 minutes. Drag or use arrow keys to rotate.
+          Drop a file anywhere. Up to 64 MB / 20 minutes.
         </p>
       </aside>
       {focus && audio.mode === "mic" ? (

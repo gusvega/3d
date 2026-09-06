@@ -8,7 +8,7 @@ Two interactive studies in sound, light, and form.
 
 - `/` — static gallery with previews captured from the actual scenes. No WebGL is loaded on the index.
 - `/gus` — glossy letterforms with drag, keyboard rotation, reset, and motion pause.
-- `/ferrofluid` — a reflective surface driven by a built-in sound demo, local audio file, or microphone. Includes transport, volume, sensitivity, decay, response modes, and an optional focus view.
+- `/ferrofluid` — a GPU-sculpted liquid-metal surface driven by a built-in sound demo, local audio file, or microphone. Includes transport, volume, sensitivity, decay, response modes, two metal finishes, adjustable magnetism, a live spectrum, drag-and-drop audio, pinch/keyboard zoom, and an optional focus view.
 
 YouTube videos can be embedded as a secondary source. The microphone hears speaker playback; the site does not access the iframe's audio stream. Local files feed the analyser directly. Files and microphone audio are processed in-browser and never uploaded. Files are limited to 64 MB and 20 minutes; decoding requires additional memory.
 
@@ -33,7 +33,7 @@ To refresh the gallery's real scene previews, start the built site on port 3104,
 ## Architecture
 
 - `lib/audio-session.mjs` owns the audio graph, playback state, and async request cancellation. The microphone never connects to the speaker output.
-- `lib/fluid-scene.js` and `lib/gus-scene.js` own GPU resources and input listeners. Both run a bounded 60 Hz simulation, stop rendering while hidden, and avoid repeated GPU draws while paused.
+- `lib/fluid-scene.js` and `lib/gus-scene.js` own GPU resources and input listeners. Both stop rendering while hidden and avoid repeated GPU draws while paused. GUS uses a fixed-step simulation; Ferrofluid uses time-based, critically damped audio envelopes and GPU deformation.
 - `components/SceneCanvas.jsx` lazily loads the renderers and provides WebGL failure/recovery UI.
 - `components/FerrofluidScene.jsx` owns the accessible audio and scene interface.
 - `lib/youtube.mjs` validates supported URLs and IDs. React renders the iframe; user input never enters an HTML string.
@@ -46,3 +46,11 @@ The system reduced-motion preference starts scenes paused. Users may explicitly 
 GitHub `main` is the production branch for Vercel project `3d` in `gusvegas-projects`. `vercel.json` selects Next.js. The committed lockfile makes dependency resolution reproducible. No environment variables are required.
 
 CI runs formatting, unit tests, production build, and browser tests. Production headers restrict embedded frames to YouTube's privacy-enhanced domain and disable camera/geolocation access.
+
+## Ferrofluid renderer
+
+The surface uses 64 magnetic cells, with the nearest three cells bound to each vertex once at initialization. The vertex shader computes both displacement and analytical normals; no vertex buffers or normals are rebuilt per frame. Desktop starts with 97,792 triangles; mobile starts with 35,520. Resolution and mesh detail adapt downward under sustained slow frames, with conservative recovery.
+
+Studio reflections are prefiltered into an environment map. Black chrome and mercury use separate physical material settings. A quiet magnetic form remains visible without audio; magnetism controls its strength. Pointer proximity locally attracts the surface, dragging or arrow keys orbit, and pinch or focused wheel/plus/minus zoom.
+
+`lib/fluid-response.mjs` maps a 1,024-point FFT into 64 logarithmic bands with fast attack, adjustable release, spectral transients, and restrained loudness normalization. `tests/fluid.test.mjs` checks bass response within 100 ms, sustained tones, decay, frame-rate consistency, and stable cell binding. These are response-model tests, not an end-to-end audio latency guarantee.

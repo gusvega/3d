@@ -21,7 +21,7 @@ test("both scenes render, keyboard motion controls work, and routes stay clean",
   for (const route of ["/gus", "/ferrofluid"]) {
     await page.goto(route);
     await expect(page.locator("[data-ready=true]")).toBeVisible();
-    await page.locator("canvas").focus();
+    await page.locator(".scene-surface canvas").focus();
     await page.keyboard.press("ArrowRight");
     await page.keyboard.press("Home");
     await page
@@ -234,7 +234,7 @@ test("lost WebGL context can be replaced without reloading the page", async ({
   await page.goto("/gus");
   await expect(page.locator("[data-ready=true]")).toBeVisible();
   await page
-    .locator("canvas")
+    .locator(".scene-surface canvas")
     .evaluate((canvas) =>
       canvas
         .getContext("webgl2")
@@ -244,4 +244,107 @@ test("lost WebGL context can be replaced without reloading the page", async ({
   await expect(page.locator(".scene-fallback")).toContainText("interrupted");
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.locator("[data-ready=true]")).toBeVisible();
+});
+
+test("GPU surface responds to sound with materially denser geometry", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("console", (message) => {
+    if (message.type() === "error") errors.push(message.text());
+  });
+  await page.goto("/ferrofluid");
+  const canvas = page.locator(".scene-surface canvas");
+  await expect
+    .poll(() => canvas.getAttribute("data-triangles").then(Number))
+    .toBeGreaterThan(20000);
+  await page.getByRole("button", { name: "Play sound demo" }).click();
+  await expect
+    .poll(() => canvas.getAttribute("data-audio-energy").then(Number))
+    .toBeGreaterThan(0.05);
+  await expect
+    .poll(() => canvas.getAttribute("data-peak-height").then(Number))
+    .toBeGreaterThan(0.45);
+  expect(errors).toEqual([]);
+});
+
+test("finish, keyboard zoom and magnetism change a paused surface without animation", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/ferrofluid");
+  await expect(page.locator("[data-ready=true]")).toBeVisible();
+  const canvas = page.locator(".scene-surface canvas");
+  const before = await canvas.screenshot();
+  await page.getByRole("button", { name: "Mercury", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Mercury", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  let mercury;
+  await expect
+    .poll(async () => {
+      mercury = await canvas.screenshot();
+      return mercury.equals(before);
+    })
+    .toBe(false);
+  await canvas.focus();
+  await page.keyboard.press("=");
+  let zoomed;
+  await expect
+    .poll(async () => {
+      zoomed = await canvas.screenshot();
+      return zoomed.equals(mercury);
+    })
+    .toBe(false);
+  await page.getByRole("slider", { name: "Magnetism", exact: true }).fill("0");
+  await expect
+    .poll(async () => {
+      const flat = await canvas.screenshot();
+      return flat.equals(zoomed);
+    })
+    .toBe(false);
+});
+
+test("dropping audio starts playback and dismisses the drop surface", async ({
+  page,
+}) => {
+  await page.goto("/ferrofluid");
+  // Establish an audio gesture before a synthetic drop in automation.
+  await page.getByRole("button", { name: "Play sound demo" }).click();
+  await expect(
+    page.getByRole("button", { name: "Pause", exact: true }),
+  ).toBeVisible();
+  const transfer = await page.evaluateHandle(() => {
+    const bytes = new ArrayBuffer(44 + 16000 * 2),
+      view = new DataView(bytes);
+    const text = (at, value) => {
+      for (let i = 0; i < value.length; i++)
+        view.setUint8(at + i, value.charCodeAt(i));
+    };
+    text(0, "RIFF");
+    view.setUint32(4, bytes.byteLength - 8, true);
+    text(8, "WAVEfmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, 8000, true);
+    view.setUint32(28, 16000, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    text(36, "data");
+    view.setUint32(40, 32000, true);
+    const transfer = new DataTransfer();
+    transfer.items.add(new File([bytes], "dropped.wav", { type: "audio/wav" }));
+    return transfer;
+  });
+  await page
+    .locator(".fluid-experience")
+    .dispatchEvent("dragover", { dataTransfer: transfer });
+  await expect(page.locator(".audio-drop-overlay")).toBeVisible();
+  await page
+    .locator(".fluid-experience")
+    .dispatchEvent("drop", { dataTransfer: transfer });
+  await expect(page.locator(".track-line strong")).toHaveText("dropped.wav");
+  await expect(page.locator(".audio-drop-overlay")).toHaveCount(0);
+  await page.getByRole("button", { name: "Unload audio" }).click();
 });

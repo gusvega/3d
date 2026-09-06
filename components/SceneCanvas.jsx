@@ -60,7 +60,7 @@ export default function SceneCanvas({ kind, settings, audioRef }) {
         ref={canvasRef}
         hidden={!!error}
         tabIndex={0}
-        aria-label={`${kind === "fluid" ? "Ferrofluid sphere" : "GUS wordmark"}. Drag or use arrow keys to rotate. Home resets the view.`}
+        aria-label={`${kind === "fluid" ? "Ferrofluid sphere" : "GUS wordmark"}. Drag or use arrow keys to rotate. Home resets the view.${kind === "fluid" ? " Plus and minus zoom." : ""}`}
       />
       {!ready && !error ? (
         <div className="scene-loading" role="status">
