@@ -49,7 +49,7 @@ CI runs formatting, unit tests, production build, and browser tests. Production 
 
 ## Ferrofluid renderer
 
-The surface uses 64 magnetic cells, with the nearest four cells bound to each vertex once at initialization. The vertex shader computes both displacement and analytical normals; no vertex buffers or normals are rebuilt per frame. Desktop starts with 97,792 triangles; mobile starts with 35,520. Resolution and mesh detail adapt downward under sustained slow frames, with conservative recovery.
+The surface uses 192 magnetic cells, with the nearest four cells bound to each vertex once at initialization. The vertex shader computes both displacement and analytical normals; no vertex buffers or normals are rebuilt per frame. Desktop starts with 97,792 triangles; mobile starts with 35,520. Resolution and mesh detail adapt downward under sustained slow frames, with conservative recovery.
 
 Studio reflections are prefiltered into an environment map. Black chrome and mercury use separate physical material settings. A quiet magnetic form remains visible without audio; magnetism controls its strength. Pointer proximity locally attracts the surface, dragging or arrow keys orbit, and pinch or focused wheel/plus/minus zoom.
 
