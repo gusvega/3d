@@ -847,19 +847,19 @@ button:focus-visible {
 
 /* Ferrofluid studio: a dedicated material-viewing environment. */
 .ferrofluid-page {
-  --ink: #ececec;
-  --muted: #a5a5a5;
-  --line: #323232;
-  --paper: #151515;
-  --accent: #dedede;
-  background: #0c0c0c;
+  --ink: #131313;
+  --muted: #5a5a5a;
+  --line: #cdcdcd;
+  --paper: #eaeaea;
+  --accent: #212121;
+  background: #f3f3f3;
   color: var(--ink);
-  color-scheme: dark;
+  color-scheme: light;
 }
 .ferrofluid-page .back-link {
-  color: #bfbfbf;
-  border-color: #313131;
-  background: #171717c9;
+  color: #404040;
+  border-color: #cecece;
+  background: #e8e8e8c9;
   top: 24px;
   left: 28px;
 }
@@ -867,9 +867,9 @@ button:focus-visible {
   min-height: 100svh;
   background: radial-gradient(
     ellipse at 32% 43%,
-    #212121 0%,
-    #111111 42%,
-    #0c0c0c 76%
+    #dedede 0%,
+    #eeeeee 42%,
+    #f3f3f3 76%
   );
   grid-template-columns: minmax(0, 1fr) 336px;
   gap: 20px;
@@ -894,21 +894,21 @@ button:focus-visible {
   font-weight: 500;
 }
 .fluid-experience .scene-caption h1 span {
-  color: #dedede;
+  color: #212121;
 }
 .fluid-experience .scene-caption p {
   font-size: 11px;
-  color: #868686;
+  color: #797979;
   letter-spacing: 0.01em;
 }
 .fluid-stage {
   position: relative;
   height: calc(100svh - 112px);
   min-height: 480px;
-  border: 1px solid #32323280;
+  border: 1px solid #cdcdcd80;
   border-radius: 24px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 43%, #30303035, #0d0d0d00 65%);
+  background: radial-gradient(ellipse at 50% 43%, #cfcfcf35, #f2f2f200 65%);
 }
 .fluid-stage .scene-surface {
   background: transparent;
@@ -927,12 +927,12 @@ button:focus-visible {
     9px ui-monospace,
     monospace;
   letter-spacing: 0.12em;
-  color: #7b7b7b;
+  color: #848484;
   z-index: 2;
   pointer-events: none;
 }
 .surface-label span:last-child {
-  color: #a4a4a4;
+  color: #5b5b5b;
 }
 .surface-hint {
   position: absolute;
@@ -943,21 +943,21 @@ button:focus-visible {
   font:
     10px ui-monospace,
     monospace;
-  color: #8c8c8c;
+  color: #737373;
   pointer-events: none;
 }
 .surface-hint span {
   margin: 0 12px;
-  color: #545454;
+  color: #ababab;
 }
 .fluid-experience .sound-panel {
   max-height: calc(100svh - 112px);
-  background: linear-gradient(140deg, #1e1e1eec, #181818ed);
-  border: 1px solid #343434;
+  background: linear-gradient(140deg, #e1e1e1ec, #e7e7e7ed);
+  border: 1px solid #cbcbcb;
   border-radius: 20px;
   padding: 23px 20px;
-  box-shadow: 0 20px 60px #00000022;
-  scrollbar-color: #454545 transparent;
+  box-shadow: 0 20px 60px #ffffff22;
+  scrollbar-color: #bababa transparent;
   scrollbar-width: thin;
 }
 .fluid-experience .panel-heading {
@@ -970,43 +970,43 @@ button:focus-visible {
 }
 .fluid-experience .panel-heading .eyebrow {
   font-size: 9px;
-  color: #9b9b9b;
+  color: #646464;
 }
 .fluid-experience .signal {
-  background: #444444;
+  background: #bbbbbb;
 }
 .fluid-experience .signal.active {
-  background: #dedede;
+  background: #212121;
   box-shadow:
-    0 0 16px #d7d7d744,
-    0 0 0 4px #dedede0c;
+    0 0 16px #28282844,
+    0 0 0 4px #2121210c;
 }
 .fluid-experience button {
-  background: #252525;
-  border-color: #3e3e3e;
-  color: #d2d2d2;
+  background: #dadada;
+  border-color: #c1c1c1;
+  color: #2d2d2d;
   border-radius: 9px;
   font-size: 12px;
   min-height: 42px;
 }
 .fluid-experience button:hover {
-  background: #333333;
-  border-color: #6b6b6b;
-  color: #f5f5f5;
+  background: #cccccc;
+  border-color: #949494;
+  color: #0a0a0a;
 }
 .fluid-experience button.primary {
-  background: #dedede;
-  border-color: #dedede;
-  color: #202020;
+  background: #212121;
+  border-color: #212121;
+  color: #dfdfdf;
   font-weight: 650;
 }
 .fluid-experience button.primary:hover {
-  background: #ececec;
+  background: #131313;
 }
 .fluid-experience button[aria-pressed="true"] {
-  background: #404040;
-  border-color: #5e5e5e;
-  color: #eaeaea;
+  background: #bfbfbf;
+  border-color: #a1a1a1;
+  color: #151515;
 }
 .fluid-experience .source-buttons {
   gap: 7px;
@@ -1017,17 +1017,17 @@ button:focus-visible {
   padding: 11px 13px;
 }
 .fluid-experience .source-buttons button:not(.primary) {
-  background: #212121;
+  background: #dedede;
 }
 .fluid-experience .audio-status {
   margin: 14px 0 0;
   font-size: 11px;
   line-height: 1.65;
   min-height: 35px;
-  color: #9e9e9e;
+  color: #616161;
 }
 .fluid-experience .error {
-  color: #b7b7b7 !important;
+  color: #484848 !important;
 }
 .spectrum-wrap {
   padding: 14px 0 2px;
@@ -1035,7 +1035,7 @@ button:focus-visible {
 .spectrum-label {
   display: flex;
   justify-content: space-between;
-  color: #7f7f7f;
+  color: #808080;
   font:
     8px ui-monospace,
     monospace;
@@ -1050,22 +1050,22 @@ button:focus-visible {
 .fluid-experience .transport,
 .fluid-experience .response-controls,
 .fluid-experience .material-controls {
-  border-top: 1px solid #363636;
+  border-top: 1px solid #c9c9c9;
   margin-top: 18px;
   padding-top: 18px;
 }
 .fluid-experience .track-line strong {
-  color: #e5e5e5;
+  color: #1a1a1a;
   font-size: 11px;
 }
 .fluid-experience .time-line {
   font-size: 9px;
-  color: #9f9f9f;
+  color: #606060;
 }
 .fluid-experience .text-button {
   background: none;
   border: 0;
-  color: #c5c5c5;
+  color: #3a3a3a;
   min-height: 28px;
 }
 .fluid-experience .transport-buttons {
@@ -1077,17 +1077,17 @@ button:focus-visible {
   min-height: 35px;
 }
 .fluid-experience .transport-buttons .play-button {
-  background: #cdcdcd;
-  color: #272727;
+  background: #323232;
+  color: #d8d8d8;
 }
 .fluid-experience .section-label {
   font-size: 9px;
-  color: #9b9b9b;
+  color: #646464;
   letter-spacing: 0.07em;
 }
 .fluid-experience .mode-selector {
-  background: #181818;
-  border: 1px solid #363636;
+  background: #e7e7e7;
+  border: 1px solid #c9c9c9;
   margin: 11px 0 16px;
   padding: 3px;
   gap: 3px;
@@ -1099,18 +1099,18 @@ button:focus-visible {
   padding: 7px 4px;
   background: transparent;
   border: 0;
-  color: #959595;
+  color: #6a6a6a;
 }
 .fluid-experience .mode-selector button[aria-pressed="true"] {
-  background: #383838;
-  color: #e2e2e2;
-  box-shadow: 0 2px 8px #00000022;
+  background: #c7c7c7;
+  color: #1d1d1d;
+  box-shadow: 0 2px 8px #ffffff22;
 }
 .fluid-experience .material-controls .mode-selector {
   grid-template-columns: 1fr 1fr;
 }
 .fluid-experience input[type="range"] {
-  accent-color: #cdcdcd;
+  accent-color: #323232;
   height: 22px;
   margin: 6px 0 0;
 }
@@ -1119,33 +1119,33 @@ button:focus-visible {
 }
 .fluid-experience .range-row > span {
   font-size: 11px;
-  color: #c5c5c5;
+  color: #3a3a3a;
 }
 .fluid-experience .range-row output {
-  color: #939393;
+  color: #6c6c6c;
   font-size: 9px;
 }
 .fluid-experience .youtube-section {
-  border-color: #363636;
+  border-color: #c9c9c9;
   margin-top: 18px;
   padding-top: 12px;
 }
 .fluid-experience .youtube-section summary {
   font-size: 11px;
-  color: #a3a3a3;
+  color: #5c5c5c;
 }
 .fluid-experience .youtube-section p {
   font-size: 10px;
-  color: #989898;
+  color: #676767;
 }
 .fluid-experience input:not([type="range"]):not([type="file"]) {
-  background: #151515;
-  color: #e3e3e3;
-  border-color: #434343;
+  background: #eaeaea;
+  color: #1c1c1c;
+  border-color: #bcbcbc;
   font-size: 11px;
 }
 .fluid-experience .panel-footer {
-  border-color: #363636;
+  border-color: #c9c9c9;
   margin-top: 13px;
   padding-top: 14px;
 }
@@ -1154,13 +1154,13 @@ button:focus-visible {
   font-size: 10px;
 }
 .fluid-experience .privacy-note {
-  color: #7f7f7f;
+  color: #808080;
   font-size: 9px;
   line-height: 1.7;
   margin-bottom: 0;
 }
 .ferrofluid-page :focus-visible {
-  outline-color: #d1d1d1;
+  outline-color: #2e2e2e;
 }
 .fluid-experience .focus-toggle {
   position: absolute;
@@ -1168,9 +1168,9 @@ button:focus-visible {
   right: 26px;
   bottom: auto;
   left: auto;
-  background: #1f1f1f;
-  border: 1px solid #4b4b4b;
-  color: #d1d1d1;
+  background: #e0e0e0;
+  border: 1px solid #b4b4b4;
+  color: #2e2e2e;
   border-radius: 99px;
   min-height: 37px;
   font-size: 10px;
@@ -1191,28 +1191,28 @@ button:focus-visible {
   bottom: 24px;
 }
 .fluid-experience .scene-loading {
-  background: #181818;
-  color: #a8a8a8;
+  background: #e7e7e7;
+  color: #575757;
 }
 .fluid-experience .scene-fallback {
-  background: #181818;
-  color: #dedede;
+  background: #e7e7e7;
+  color: #212121;
 }
 .fluid-experience .scene-fallback p {
-  color: #9d9d9d;
+  color: #626262;
 }
 .fluid-experience .mic-stop-floating {
-  background: #353535;
-  border-color: #666666;
-  color: #e9e9e9;
+  background: #cacaca;
+  border-color: #999999;
+  color: #161616;
 }
 .audio-drop-overlay {
   position: fixed;
   inset: 12px;
   z-index: 50;
-  border: 1px dashed #dedede;
+  border: 1px dashed #212121;
   border-radius: 24px;
-  background: #191919ed;
+  background: #e6e6e6ed;
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
@@ -1225,7 +1225,7 @@ button:focus-visible {
 .audio-drop-overlay span {
   font-size: 13px;
   letter-spacing: 0;
-  color: #a1a1a1;
+  color: #5e5e5e;
   margin-top: 20px;
 }
 @media (max-width: 1100px) {
@@ -1376,24 +1376,134 @@ button:focus-visible {
 }
 
 .fluid-preview {
-  background: #131313;
+  background: #ececec;
 }
 .fluid-preview img {
   object-fit: cover;
 }
 .fluid-preview .preview-number {
-  color: #aeaeae;
+  color: #515151;
 }
 .fluid-preview .preview-badge {
-  background: #252525cc;
-  color: #d5d5d5;
-  border-color: #595959;
+  background: #dadadacc;
+  color: #2a2a2a;
+  border-color: #a6a6a6;
 }
 
 .ferrofluid-page ::selection {
-  background: #dedede;
+  background: #212121;
   color: #111;
 }
 .fluid-experience iframe {
   filter: grayscale(1);
+}
+
+/* White gallery with a neutral liquid-metal subject. */
+.ferrofluid-page,
+.fluid-experience {
+  background: #fff;
+}
+.fluid-stage {
+  background: #fff;
+  border-color: #ededed;
+}
+.fluid-experience .sound-panel {
+  background: #fafafa;
+  border-color: #e7e7e7;
+  box-shadow: none;
+}
+.fluid-experience button.primary,
+.fluid-experience .transport-buttons .play-button {
+  background: #171717;
+  color: #fff;
+  border-color: #171717;
+}
+.fluid-experience button.primary:hover {
+  background: #333;
+}
+.fluid-experience .signal.active {
+  background: #333;
+  box-shadow: 0 0 0 4px #00000008;
+}
+.fluid-preview {
+  background: #fff;
+}
+.audio-output {
+  padding-top: 15px;
+}
+.output-reading {
+  display: flex;
+  justify-content: space-between;
+  color: #666;
+  font:
+    9px ui-monospace,
+    monospace;
+}
+.output-meter {
+  height: 2px;
+  background: #e5e5e5;
+  margin: 9px 0;
+}
+.output-meter span {
+  display: block;
+  height: 100%;
+  background: #333;
+  transition: width 150ms linear;
+}
+.sound-help {
+  color: #666;
+  font-size: 10px;
+  line-height: 1.6;
+}
+.sound-help summary {
+  cursor: pointer;
+}
+.sound-help p {
+  margin: 8px 0;
+}
+.fluid-experience .sound-help button {
+  min-height: 30px;
+  padding: 4px 10px;
+  font-size: 10px;
+}
+
+.fluid-experience button,
+.fluid-experience .source-buttons button:not(.primary) {
+  background: #fff;
+  border-color: #dedede;
+  color: #333;
+}
+.fluid-experience button:hover {
+  background: #f2f2f2;
+  border-color: #aaa;
+  color: #111;
+}
+.fluid-experience button.primary,
+.fluid-experience .transport-buttons .play-button {
+  background: #171717;
+  color: #fff;
+  border-color: #171717;
+}
+.fluid-experience button.primary:hover,
+.fluid-experience .transport-buttons .play-button:hover {
+  background: #333;
+}
+.fluid-experience .mode-selector {
+  background: #efefef;
+  border-color: #e8e8e8;
+}
+.fluid-experience .mode-selector button {
+  background: transparent;
+  color: #666;
+}
+.fluid-experience .mode-selector button[aria-pressed="true"] {
+  background: #fff;
+  color: #171717;
+  box-shadow: 0 1px 4px #00000012;
+}
+.ferrofluid-page .back-link,
+.fluid-experience .focus-toggle {
+  background: #fff;
+  border-color: #e2e2e2;
+  color: #333;
 }
