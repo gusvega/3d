@@ -19,7 +19,7 @@ for (const [route, name] of [
   await page.locator("[data-ready=true]").waitFor();
   await page.addStyleTag({
     content:
-      ".scene-caption,.scene-toolbar,.back-link,.focus-toggle,.sound-panel,.surface-label,.surface-hint{display:none!important}.fluid-experience{display:block!important;padding:0!important}.fluid-stage{height:100vh!important}.scene-surface canvas{width:100%!important;height:100%!important}",
+      ".gus-finishes,.scene-caption,.scene-toolbar,.back-link,.focus-toggle,.sound-panel,.surface-label,.surface-hint{display:none!important}.fluid-experience{display:block!important;padding:0!important}.fluid-stage{height:100vh!important}.scene-surface canvas{width:100%!important;height:100%!important}",
   });
   await page.waitForTimeout(300);
   await page

@@ -1507,3 +1507,142 @@ button:focus-visible {
   border-color: #e2e2e2;
   color: #333;
 }
+
+/* GUS material studies — the sculpture is the interface's visual center. */
+.gus-experience {
+  --gus-ink: #302d29;
+  --gus-muted: #716b62;
+  color: var(--gus-ink);
+}
+.gus-experience[data-finish="silver"],
+.gus-experience[data-finish="glass"] {
+  --gus-ink: #eeeff1;
+  --gus-muted: #a3acb8;
+}
+.gus-experience .scene-caption {
+  top: 100px;
+  left: 4vw;
+}
+.gus-experience .scene-caption h1 {
+  font-size: clamp(28px, 3vw, 42px);
+  margin: 12px 0;
+}
+.gus-experience .scene-caption p,
+.gus-experience .eyebrow,
+.gus-experience .scene-toolbar p {
+  color: var(--gus-muted);
+}
+.gus-finishes {
+  position: absolute;
+  z-index: 3;
+  bottom: 106px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid #8b8b8b40;
+  border-radius: 18px;
+  background: #ffffff10;
+  backdrop-filter: blur(18px);
+}
+.gus-finishes button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--gus-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+.gus-finishes button:hover {
+  background: #88888818;
+  color: var(--gus-ink);
+}
+.gus-finishes button[aria-pressed="true"] {
+  background: #88888820;
+  border-color: #88888850;
+  color: var(--gus-ink);
+}
+.gus-finishes small {
+  font:
+    9px ui-monospace,
+    monospace;
+  opacity: 0.6;
+  margin-left: 10px;
+}
+.finish-swatch {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #e9dfd1;
+  border: 1px solid #aaa7;
+}
+.finish-swatch.silver {
+  background: #c3c8ce;
+}
+.finish-swatch.glass {
+  background: #455569;
+}
+.gus-experience .scene-toolbar button {
+  background: #88888812;
+  border-color: #88888840;
+  color: var(--gus-ink);
+}
+.gus-experience :focus-visible {
+  outline-color: var(--gus-ink);
+}
+.gus-page:has([data-finish="silver"]) .back-link,
+.gus-page:has([data-finish="glass"]) .back-link {
+  background: #1d2532dd;
+  color: #eeeff1;
+  border-color: #ffffff30;
+}
+@media (max-width: 700px) {
+  .gus-experience .scene-caption {
+    top: 95px;
+    left: 24px;
+  }
+  .gus-finishes {
+    bottom: 145px;
+    gap: 2px;
+    padding: 5px;
+    width: calc(100% - 32px);
+    justify-content: center;
+  }
+  .gus-finishes button {
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 5px;
+    font-size: 10px;
+  }
+  .gus-finishes small {
+    display: none;
+  }
+}
+
+.gus-download {
+  border: 1px solid #88888840;
+  background: #88888812;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.gus-experience .scene-toolbar {
+  flex-wrap: wrap;
+}
+@media (max-width: 700px) {
+  .gus-download {
+    font-size: 11px;
+  }
+  .gus-experience .scene-toolbar {
+    justify-content: center;
+  }
+}

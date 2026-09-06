@@ -6,8 +6,8 @@ Two interactive studies in sound, light, and form.
 
 ## Explore
 
-- `/` — static gallery with previews captured from the actual scenes. No WebGL is loaded on the index.
-- `/gus` — glossy letterforms with drag, keyboard rotation, reset, and motion pause.
+- `/` — static gallery with the original GUS artwork and a captured Ferrofluid scene. No WebGL is loaded on the index.
+- `/gus` — interactive pearl, silver, and smoked-glass finishes with drag, keyboard rotation, reset, and motion pause. Original concept images are available through Design reference; they never replace the interactive canvas.
 - `/ferrofluid` — a GPU-sculpted liquid-metal surface driven by a built-in sound demo, local audio file, or microphone. Includes transport, volume, sensitivity, decay, response modes, two metal finishes, adjustable magnetism, a live spectrum, drag-and-drop audio, pinch/keyboard zoom, and an optional focus view.
 
 YouTube videos can be embedded as a secondary source. The microphone hears speaker playback; the site does not access the iframe's audio stream. Local files feed the analyser directly. Files and microphone audio are processed in-browser and never uploaded. Files are limited to 64 MB and 20 minutes; decoding requires additional memory.

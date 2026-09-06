@@ -5,9 +5,9 @@ const sketches = [
     title: "GUS",
     number: "01",
     type: "Name study",
-    badge: "Drag to explore",
+    badge: "Three finishes",
     description:
-      "A familiar name, with a softer side. Glossy letterforms with weight, light, and a little momentum.",
+      "Pearl, silver, and smoked glass. Turn the sculpture and watch each finish catch the light.",
     image: "/gus-preview.png",
   },
   {
