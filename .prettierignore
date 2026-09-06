@@ -1,9 +1,7 @@
+src/vendor/
 node_modules/
 .next/
-out/
-_site/
-.DS_Store
-
+package-lock.json
 test-results/
 playwright-report/
 .vercel/
