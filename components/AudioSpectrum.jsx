@@ -46,7 +46,7 @@ export default function AudioSpectrum({ sessionRef }) {
         bars[i] += (value - bars[i]) * (value > bars[i] ? 0.65 : 0.18);
         const x = (i * width) / bars.length,
           barHeight = Math.max(2, bars[i] * (height - 4));
-        context.fillStyle = audio?.active ? "#dedede" : "#3e3e3e";
+        context.fillStyle = audio?.active ? "#333333" : "#d5d5d5";
         context.beginPath();
         context.roundRect(
           x,

@@ -348,3 +348,51 @@ test("dropping audio starts playback and dismisses the drop surface", async ({
   await expect(page.locator(".audio-drop-overlay")).toHaveCount(0);
   await page.getByRole("button", { name: "Unload audio" }).click();
 });
+
+test("demo reaches the speaker destination, mute silences it, and resume restores output", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const connect = AudioNode.prototype.connect;
+    AudioNode.prototype.connect = function (destination, ...args) {
+      if (destination instanceof AudioDestinationNode) {
+        const meter = this.context.createAnalyser();
+        meter.fftSize = 1024;
+        connect.call(this, meter);
+        window.speakerTap = meter;
+        window.speakerContext = this.context;
+      }
+      return connect.call(this, destination, ...args);
+    };
+    window.speakerRms = () => {
+      if (!window.speakerTap) return 0;
+      const samples = new Float32Array(1024);
+      window.speakerTap.getFloatTimeDomainData(samples);
+      return Math.sqrt(
+        samples.reduce((sum, value) => sum + value * value, 0) / samples.length,
+      );
+    };
+  });
+  await page.goto("/ferrofluid");
+  await page.getByRole("button", { name: "Play sound demo" }).click();
+  await expect
+    .poll(() => page.evaluate(() => window.speakerRms()))
+    .toBeGreaterThan(0.025);
+  await page.getByRole("slider", { name: "Volume", exact: true }).fill("0");
+  await expect
+    .poll(() => page.evaluate(() => window.speakerRms()))
+    .toBeLessThan(0.0001);
+  await page.getByRole("button", { name: "Resume sound", exact: true }).click();
+  await expect
+    .poll(() => page.evaluate(() => window.speakerRms()))
+    .toBeGreaterThan(0.025);
+  await page.evaluate(() => window.speakerContext.suspend());
+  await expect(page.locator(".audio-status")).toContainText("interrupted");
+  await page.getByRole("button", { name: "Resume sound", exact: true }).click();
+  await expect
+    .poll(() => page.evaluate(() => window.speakerContext.state))
+    .toBe("running");
+  await expect
+    .poll(() => page.evaluate(() => window.speakerRms()))
+    .toBeGreaterThan(0.025);
+});

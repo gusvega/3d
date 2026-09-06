@@ -49,8 +49,10 @@ CI runs formatting, unit tests, production build, and browser tests. Production 
 
 ## Ferrofluid renderer
 
-The surface uses 64 magnetic cells, with the nearest three cells bound to each vertex once at initialization. The vertex shader computes both displacement and analytical normals; no vertex buffers or normals are rebuilt per frame. Desktop starts with 97,792 triangles; mobile starts with 35,520. Resolution and mesh detail adapt downward under sustained slow frames, with conservative recovery.
+The surface uses 64 magnetic cells, with the nearest four cells bound to each vertex once at initialization. The vertex shader computes both displacement and analytical normals; no vertex buffers or normals are rebuilt per frame. Desktop starts with 97,792 triangles; mobile starts with 35,520. Resolution and mesh detail adapt downward under sustained slow frames, with conservative recovery.
 
 Studio reflections are prefiltered into an environment map. Black chrome and mercury use separate physical material settings. A quiet magnetic form remains visible without audio; magnetism controls its strength. Pointer proximity locally attracts the surface, dragging or arrow keys orbit, and pinch or focused wheel/plus/minus zoom.
 
 `lib/fluid-response.mjs` maps a 1,024-point FFT into 64 logarithmic bands with fast attack, adjustable release, spectral transients, and restrained loudness normalization. `tests/fluid.test.mjs` checks bass response within 100 ms, sustained tones, decay, frame-rate consistency, and stable cell binding. These are response-model tests, not an end-to-end audio latency guarantee.
+
+The white, grayscale studio uses irregularly spaced magnetic cells, independently varying lobe widths/sharpness, and three broad analytic flow fields. A support-coverage test checks that four-cell vertex binding does not truncate overlapping lobes. The local stereo demo includes midrange material for small speakers. A separate post-volume meter measures the signal sent to the browser output; interrupted playback and zero volume have a Resume sound action. Microphone input remains analysis-only to avoid speaker feedback. Speaker-destination browser tests verify nonzero output, mute, unmute, suspension, and recovery; they cannot verify external hardware routing or physical audibility.

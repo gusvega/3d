@@ -62,11 +62,32 @@ test("surface binding is normalized and stable across duplicated sphere seams", 
     new Float32Array([1, 0, 0, 2, 0, 0, 0, 1, 0]),
     cells,
   );
-  assert.deepEqual([...owners.slice(0, 3)], [...owners.slice(3, 6)]);
+  assert.deepEqual([...owners.slice(0, 4)], [...owners.slice(4, 8)]);
   assert.ok(
     [...owners].every(
       (value) => Number.isInteger(value) && value >= 0 && value < CELL_COUNT,
     ),
   );
-  assert.equal(new Set(owners.slice(0, 3)).size, 3);
+  assert.equal(new Set(owners.slice(0, 4)).size, 4);
+});
+
+test("irregular surface support fits its four-cell binding without cut seams", () => {
+  const cells = magneticCells();
+  for (let i = 0; i < 20000; i++) {
+    const y = 1 - (i + 0.5) / 10000;
+    const r = Math.sqrt(1 - y * y);
+    const x = Math.cos(i * 2.3999632297) * r;
+    const z = Math.sin(i * 2.3999632297) * r;
+    let overlaps = 0;
+    for (let cell = 0; cell < CELL_COUNT; cell++) {
+      if (
+        x * cells[cell * 3] +
+          y * cells[cell * 3 + 1] +
+          z * cells[cell * 3 + 2] >
+        1 - 0.056
+      )
+        overlaps++;
+    }
+    assert.ok(overlaps <= 4, `${overlaps} overlapping supports`);
+  }
 });

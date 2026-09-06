@@ -4,6 +4,7 @@ import { AudioSession } from "@/lib/audio-session.mjs";
 import { parseYouTubeId } from "@/lib/youtube.mjs";
 import SceneCanvas from "./SceneCanvas";
 import AudioSpectrum from "./AudioSpectrum";
+import AudioOutput from "./AudioOutput";
 import { useMotion } from "./use-motion";
 
 const initial = {
@@ -94,10 +95,13 @@ export default function FerrofluidScene() {
   }
   const status =
     audio.error ||
+    (audio.interrupted && audio.playing
+      ? "Audio was interrupted. Tap Resume sound below."
+      : "") ||
     (audio.mode === "loading"
       ? `Preparing ${audio.name}…`
       : audio.mode === "mic"
-        ? "Microphone is listening. Audio stays in this browser."
+        ? "Microphone is listening. Speaker monitoring is off."
         : audio.mode === "file"
           ? audio.playing
             ? "Sound is shaping the surface."
@@ -228,6 +232,20 @@ export default function FerrofluidScene() {
           {status}
         </p>
         <AudioSpectrum sessionRef={sessionRef} />
+        {audio.mode === "file" ? (
+          <AudioOutput
+            sessionRef={sessionRef}
+            volume={volume}
+            interrupted={audio.interrupted}
+            onResume={() => {
+              if (!volume) {
+                setVolume(0.65);
+                sessionRef.current?.setVolume(0.65);
+              }
+              sessionRef.current?.resumeOutput();
+            }}
+          />
+        ) : null}
         {audio.mode === "file" ? (
           <div className="transport">
             <div className="track-line">
