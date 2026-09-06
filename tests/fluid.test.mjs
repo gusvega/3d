@@ -84,7 +84,7 @@ test("irregular surface support fits its four-cell binding without cut seams", (
         x * cells[cell * 3] +
           y * cells[cell * 3 + 1] +
           z * cells[cell * 3 + 2] >
-        1 - 0.056
+        1 - 0.018
       )
         overlaps++;
     }
