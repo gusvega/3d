@@ -54,7 +54,9 @@ export default function HomePage() {
             className="sketch-card"
             prefetch={false}
           >
-            <div className="sketch-preview">
+            <div
+              className={`sketch-preview ${sketch.number === "02" ? "fluid-preview" : ""}`}
+            >
               <span className="preview-number">{sketch.number} /</span>
               <img src={sketch.image} alt="" width="800" height="500" />
               <span className="preview-badge">{sketch.badge}</span>

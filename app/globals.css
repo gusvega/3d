@@ -844,3 +844,548 @@ button:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* Ferrofluid studio: a dedicated material-viewing environment. */
+.ferrofluid-page {
+  --ink: #e6eee9;
+  --muted: #9aa9a3;
+  --line: #293532;
+  --paper: #101715;
+  --accent: #c9e7bd;
+  background: #080d0d;
+  color: var(--ink);
+  color-scheme: dark;
+}
+.ferrofluid-page .back-link {
+  color: #b5c2bd;
+  border-color: #283331;
+  background: #101917c9;
+  top: 24px;
+  left: 28px;
+}
+.fluid-experience {
+  min-height: 100svh;
+  background: radial-gradient(
+    ellipse at 32% 43%,
+    #172422 0%,
+    #0c1312 42%,
+    #080d0d 76%
+  );
+  grid-template-columns: minmax(0, 1fr) 336px;
+  gap: 20px;
+  padding: 88px 24px 24px;
+}
+.fluid-experience .scene-caption {
+  top: 29px;
+  left: 150px;
+  display: flex;
+  gap: 22px;
+  align-items: baseline;
+  pointer-events: none;
+}
+.fluid-experience .scene-caption .eyebrow {
+  display: none;
+}
+.fluid-experience .scene-caption h1 {
+  font-size: 25px;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  margin: 0;
+  font-weight: 500;
+}
+.fluid-experience .scene-caption h1 span {
+  color: #c9e7bd;
+}
+.fluid-experience .scene-caption p {
+  font-size: 11px;
+  color: #788b81;
+  letter-spacing: 0.01em;
+}
+.fluid-stage {
+  position: relative;
+  height: calc(100svh - 112px);
+  min-height: 480px;
+  border: 1px solid #27353180;
+  border-radius: 24px;
+  overflow: hidden;
+  background: radial-gradient(ellipse at 50% 43%, #25332f35, #090e0c00 65%);
+}
+.fluid-stage .scene-surface {
+  background: transparent;
+}
+.fluid-stage .scene-surface canvas {
+  background: transparent;
+}
+.surface-label {
+  position: absolute;
+  top: 25px;
+  left: 26px;
+  right: 26px;
+  display: flex;
+  justify-content: space-between;
+  font:
+    9px ui-monospace,
+    monospace;
+  letter-spacing: 0.12em;
+  color: #698078;
+  z-index: 2;
+  pointer-events: none;
+}
+.surface-label span:last-child {
+  color: #9aa89b;
+}
+.surface-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font:
+    10px ui-monospace,
+    monospace;
+  color: #7c9186;
+  pointer-events: none;
+}
+.surface-hint span {
+  margin: 0 12px;
+  color: #45594e;
+}
+.fluid-experience .sound-panel {
+  max-height: calc(100svh - 112px);
+  background: linear-gradient(140deg, #16201cec, #111a17ed);
+  border: 1px solid #293731;
+  border-radius: 20px;
+  padding: 23px 20px;
+  box-shadow: 0 20px 60px #00000022;
+  scrollbar-color: #344b3c transparent;
+  scrollbar-width: thin;
+}
+.fluid-experience .panel-heading {
+  margin-bottom: 19px;
+}
+.fluid-experience .panel-heading h2 {
+  font-size: 24px;
+  letter-spacing: -0.05em;
+  margin-top: 7px;
+}
+.fluid-experience .panel-heading .eyebrow {
+  font-size: 9px;
+  color: #8f9f94;
+}
+.fluid-experience .signal {
+  background: #38483d;
+}
+.fluid-experience .signal.active {
+  background: #c9e7bd;
+  box-shadow:
+    0 0 16px #b2e89644,
+    0 0 0 4px #c9e7bd0c;
+}
+.fluid-experience button {
+  background: #1b2821;
+  border-color: #344238;
+  color: #c8d6cd;
+  border-radius: 9px;
+  font-size: 12px;
+  min-height: 42px;
+}
+.fluid-experience button:hover {
+  background: #26382c;
+  border-color: #59715e;
+  color: #f0f7ee;
+}
+.fluid-experience button.primary {
+  background: #c9e7bd;
+  border-color: #c9e7bd;
+  color: #162512;
+  font-weight: 650;
+}
+.fluid-experience button.primary:hover {
+  background: #def2d5;
+}
+.fluid-experience button[aria-pressed="true"] {
+  background: #334532;
+  border-color: #4b6647;
+  color: #e0eed9;
+}
+.fluid-experience .source-buttons {
+  gap: 7px;
+}
+.fluid-experience .source-buttons button {
+  min-height: 44px;
+  font-size: 12px;
+  padding: 11px 13px;
+}
+.fluid-experience .source-buttons button:not(.primary) {
+  background: #18241e;
+}
+.fluid-experience .audio-status {
+  margin: 14px 0 0;
+  font-size: 11px;
+  line-height: 1.65;
+  min-height: 35px;
+  color: #92a295;
+}
+.fluid-experience .error {
+  color: #f4a990 !important;
+}
+.spectrum-wrap {
+  padding: 14px 0 2px;
+}
+.spectrum-label {
+  display: flex;
+  justify-content: space-between;
+  color: #6f8578;
+  font:
+    8px ui-monospace,
+    monospace;
+  letter-spacing: 0.045em;
+}
+.spectrum-wrap canvas {
+  display: block;
+  height: 45px;
+  width: 100%;
+  margin-top: 10px;
+}
+.fluid-experience .transport,
+.fluid-experience .response-controls,
+.fluid-experience .material-controls {
+  border-top: 1px solid #2a3a2f;
+  margin-top: 18px;
+  padding-top: 18px;
+}
+.fluid-experience .track-line strong {
+  color: #d9e9dc;
+  font-size: 11px;
+}
+.fluid-experience .time-line {
+  font-size: 9px;
+  color: #93a48f;
+}
+.fluid-experience .text-button {
+  background: none;
+  border: 0;
+  color: #b9cca9;
+  min-height: 28px;
+}
+.fluid-experience .transport-buttons {
+  gap: 5px;
+}
+.fluid-experience .transport-buttons button {
+  font-size: 10px;
+  padding: 8px 4px;
+  min-height: 35px;
+}
+.fluid-experience .transport-buttons .play-button {
+  background: #b6d8a7;
+  color: #192d14;
+}
+.fluid-experience .section-label {
+  font-size: 9px;
+  color: #8da18e;
+  letter-spacing: 0.07em;
+}
+.fluid-experience .mode-selector {
+  background: #101b14;
+  border: 1px solid #283b2b;
+  margin: 11px 0 16px;
+  padding: 3px;
+  gap: 3px;
+  border-radius: 9px;
+}
+.fluid-experience .mode-selector button {
+  min-height: 31px;
+  font-size: 10px;
+  padding: 7px 4px;
+  background: transparent;
+  border: 0;
+  color: #839c83;
+}
+.fluid-experience .mode-selector button[aria-pressed="true"] {
+  background: #2a3d2b;
+  color: #d3e9c8;
+  box-shadow: 0 2px 8px #00000022;
+}
+.fluid-experience .material-controls .mode-selector {
+  grid-template-columns: 1fr 1fr;
+}
+.fluid-experience input[type="range"] {
+  accent-color: #b7d7a7;
+  height: 22px;
+  margin: 6px 0 0;
+}
+.fluid-experience .range-row {
+  margin-top: 13px;
+}
+.fluid-experience .range-row > span {
+  font-size: 11px;
+  color: #b8cbb6;
+}
+.fluid-experience .range-row output {
+  color: #819b7d;
+  font-size: 9px;
+}
+.fluid-experience .youtube-section {
+  border-color: #2a3a2f;
+  margin-top: 18px;
+  padding-top: 12px;
+}
+.fluid-experience .youtube-section summary {
+  font-size: 11px;
+  color: #93aa8e;
+}
+.fluid-experience .youtube-section p {
+  font-size: 10px;
+  color: #8a9e85;
+}
+.fluid-experience input:not([type="range"]):not([type="file"]) {
+  background: #0e1811;
+  color: #d8e8d0;
+  border-color: #304a32;
+  font-size: 11px;
+}
+.fluid-experience .panel-footer {
+  border-color: #2a3a2f;
+  margin-top: 13px;
+  padding-top: 14px;
+}
+.fluid-experience .panel-footer button {
+  min-height: 36px;
+  font-size: 10px;
+}
+.fluid-experience .privacy-note {
+  color: #70866c;
+  font-size: 9px;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+.fluid-experience :focus-visible {
+  outline-color: #b9dcaa;
+}
+.fluid-experience .focus-toggle {
+  position: absolute;
+  top: 23px;
+  right: 26px;
+  bottom: auto;
+  left: auto;
+  background: #15231a;
+  border: 1px solid #3c5140;
+  color: #c1d9b7;
+  border-radius: 99px;
+  min-height: 37px;
+  font-size: 10px;
+  padding: 9px 14px;
+}
+.fluid-experience.is-focused {
+  padding: 0;
+}
+.fluid-experience.is-focused .fluid-stage {
+  height: 100svh;
+  border: 0;
+  border-radius: 0;
+}
+.is-focused .surface-label {
+  top: 100px;
+}
+.is-focused .surface-hint {
+  bottom: 24px;
+}
+.fluid-experience .scene-loading {
+  background: #101a15;
+  color: #9aaf91;
+}
+.fluid-experience .scene-fallback {
+  background: #101a15;
+  color: #d3e3cc;
+}
+.fluid-experience .scene-fallback p {
+  color: #8fa384;
+}
+.fluid-experience .mic-stop-floating {
+  background: #253c22;
+  border-color: #4e7044;
+  color: #daf0ce;
+}
+.audio-drop-overlay {
+  position: fixed;
+  inset: 12px;
+  z-index: 50;
+  border: 1px dashed #c9e7bd;
+  border-radius: 24px;
+  background: #101c14ed;
+  backdrop-filter: blur(16px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(30px, 5vw, 70px);
+  letter-spacing: -0.055em;
+  pointer-events: none;
+}
+.audio-drop-overlay span {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: #8caa80;
+  margin-top: 20px;
+}
+@media (max-width: 1100px) {
+  .fluid-experience {
+    grid-template-columns: minmax(0, 1fr) 308px;
+    padding: 85px 16px 16px;
+    gap: 14px;
+  }
+  .fluid-stage {
+    height: calc(100svh - 101px);
+  }
+  .fluid-experience .sound-panel {
+    padding: 20px 16px;
+    max-height: calc(100svh - 101px);
+  }
+}
+@media (max-width: 700px) {
+  .ferrofluid-page .back-link {
+    top: 20px;
+    left: 16px;
+    min-height: 34px;
+    font-size: 10px;
+    padding: 7px 11px;
+  }
+  .fluid-experience {
+    display: flex;
+    padding: 77px 12px 20px;
+    gap: 14px;
+    min-height: 100svh;
+  }
+  .fluid-experience .scene-caption {
+    top: 28px;
+    left: 110px;
+  }
+  .fluid-experience .scene-caption h1 {
+    font-size: 20px;
+  }
+  .fluid-experience .scene-caption p {
+    display: none;
+  }
+  .fluid-experience .focus-toggle {
+    right: 16px;
+    top: 20px;
+    min-height: 34px;
+    font-size: 9px;
+    padding: 7px 10px;
+  }
+  .fluid-experience .focus-toggle span {
+    display: none;
+  }
+  .fluid-stage {
+    height: 55svh;
+    min-height: 370px;
+    width: 100%;
+    padding: 0;
+    border-radius: 18px;
+  }
+  .surface-label {
+    top: 20px;
+    left: 18px;
+    right: 18px;
+    font-size: 7px;
+    letter-spacing: 0.07em;
+  }
+  .surface-hint {
+    bottom: 19px;
+    font-size: 8px;
+    max-width: 250px;
+    margin: auto;
+    line-height: 1.8;
+  }
+  .surface-hint span {
+    margin: 0 5px;
+  }
+  .fluid-experience .sound-panel {
+    width: 100%;
+    margin: 0;
+    max-height: none;
+    padding: 22px;
+    border-radius: 18px;
+  }
+  .fluid-experience .panel-heading {
+    margin-bottom: 18px;
+  }
+  .fluid-experience .panel-heading h2 {
+    font-size: 25px;
+  }
+  .fluid-experience .source-buttons {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fluid-experience .source-buttons .primary {
+    grid-column: 1/-1;
+  }
+  .fluid-experience .audio-status {
+    min-height: 0;
+  }
+  .fluid-experience .response-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 18px;
+  }
+  .fluid-experience .response-controls > .section-label,
+  .fluid-experience .response-controls > .mode-selector {
+    grid-column: 1/-1;
+  }
+  .fluid-experience .response-controls > .mode-selector {
+    margin-bottom: 5px;
+  }
+  .fluid-experience .mode-selector button {
+    min-height: 38px;
+    font-size: 11px;
+  }
+  .fluid-experience .range-row > span {
+    font-size: 12px;
+  }
+  .fluid-experience .range-row output {
+    font-size: 10px;
+  }
+  .fluid-experience .panel-footer button {
+    font-size: 11px;
+    min-height: 40px;
+  }
+  .fluid-experience .privacy-note {
+    font-size: 10px;
+  }
+  .fluid-experience.is-focused {
+    padding: 0;
+  }
+  .fluid-experience.is-focused .fluid-stage {
+    padding-top: 0;
+    height: 100svh;
+  }
+  .is-focused .surface-label {
+    top: 82px;
+  }
+}
+@media (max-width: 360px) {
+  .fluid-experience .scene-caption {
+    left: 99px;
+  }
+  .fluid-experience .scene-caption h1 {
+    font-size: 17px;
+  }
+  .fluid-experience .focus-toggle {
+    font-size: 8px;
+    padding-inline: 8px;
+  }
+}
+
+.fluid-preview {
+  background: #0d1513;
+}
+.fluid-preview img {
+  object-fit: cover;
+}
+.fluid-preview .preview-number {
+  color: #a2b39f;
+}
+.fluid-preview .preview-badge {
+  background: #19291dcc;
+  color: #c9dbbf;
+  border-color: #486044;
+}
