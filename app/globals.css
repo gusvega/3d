@@ -389,9 +389,9 @@ button:focus-visible {
   border-radius: 50%;
   background: radial-gradient(
     circle at 35% 23%,
-    #f5f8fa 0%,
-    #7e8590 22%,
-    #16191e 60%,
+    #f8f8f8 0%,
+    #858585 22%,
+    #191919 60%,
     #000 100%
   );
 }
@@ -847,19 +847,19 @@ button:focus-visible {
 
 /* Ferrofluid studio: a dedicated material-viewing environment. */
 .ferrofluid-page {
-  --ink: #e6eee9;
-  --muted: #9aa9a3;
-  --line: #293532;
-  --paper: #101715;
-  --accent: #c9e7bd;
-  background: #080d0d;
+  --ink: #ececec;
+  --muted: #a5a5a5;
+  --line: #323232;
+  --paper: #151515;
+  --accent: #dedede;
+  background: #0c0c0c;
   color: var(--ink);
   color-scheme: dark;
 }
 .ferrofluid-page .back-link {
-  color: #b5c2bd;
-  border-color: #283331;
-  background: #101917c9;
+  color: #bfbfbf;
+  border-color: #313131;
+  background: #171717c9;
   top: 24px;
   left: 28px;
 }
@@ -867,9 +867,9 @@ button:focus-visible {
   min-height: 100svh;
   background: radial-gradient(
     ellipse at 32% 43%,
-    #172422 0%,
-    #0c1312 42%,
-    #080d0d 76%
+    #212121 0%,
+    #111111 42%,
+    #0c0c0c 76%
   );
   grid-template-columns: minmax(0, 1fr) 336px;
   gap: 20px;
@@ -894,21 +894,21 @@ button:focus-visible {
   font-weight: 500;
 }
 .fluid-experience .scene-caption h1 span {
-  color: #c9e7bd;
+  color: #dedede;
 }
 .fluid-experience .scene-caption p {
   font-size: 11px;
-  color: #788b81;
+  color: #868686;
   letter-spacing: 0.01em;
 }
 .fluid-stage {
   position: relative;
   height: calc(100svh - 112px);
   min-height: 480px;
-  border: 1px solid #27353180;
+  border: 1px solid #32323280;
   border-radius: 24px;
   overflow: hidden;
-  background: radial-gradient(ellipse at 50% 43%, #25332f35, #090e0c00 65%);
+  background: radial-gradient(ellipse at 50% 43%, #30303035, #0d0d0d00 65%);
 }
 .fluid-stage .scene-surface {
   background: transparent;
@@ -927,12 +927,12 @@ button:focus-visible {
     9px ui-monospace,
     monospace;
   letter-spacing: 0.12em;
-  color: #698078;
+  color: #7b7b7b;
   z-index: 2;
   pointer-events: none;
 }
 .surface-label span:last-child {
-  color: #9aa89b;
+  color: #a4a4a4;
 }
 .surface-hint {
   position: absolute;
@@ -943,21 +943,21 @@ button:focus-visible {
   font:
     10px ui-monospace,
     monospace;
-  color: #7c9186;
+  color: #8c8c8c;
   pointer-events: none;
 }
 .surface-hint span {
   margin: 0 12px;
-  color: #45594e;
+  color: #545454;
 }
 .fluid-experience .sound-panel {
   max-height: calc(100svh - 112px);
-  background: linear-gradient(140deg, #16201cec, #111a17ed);
-  border: 1px solid #293731;
+  background: linear-gradient(140deg, #1e1e1eec, #181818ed);
+  border: 1px solid #343434;
   border-radius: 20px;
   padding: 23px 20px;
   box-shadow: 0 20px 60px #00000022;
-  scrollbar-color: #344b3c transparent;
+  scrollbar-color: #454545 transparent;
   scrollbar-width: thin;
 }
 .fluid-experience .panel-heading {
@@ -970,43 +970,43 @@ button:focus-visible {
 }
 .fluid-experience .panel-heading .eyebrow {
   font-size: 9px;
-  color: #8f9f94;
+  color: #9b9b9b;
 }
 .fluid-experience .signal {
-  background: #38483d;
+  background: #444444;
 }
 .fluid-experience .signal.active {
-  background: #c9e7bd;
+  background: #dedede;
   box-shadow:
-    0 0 16px #b2e89644,
-    0 0 0 4px #c9e7bd0c;
+    0 0 16px #d7d7d744,
+    0 0 0 4px #dedede0c;
 }
 .fluid-experience button {
-  background: #1b2821;
-  border-color: #344238;
-  color: #c8d6cd;
+  background: #252525;
+  border-color: #3e3e3e;
+  color: #d2d2d2;
   border-radius: 9px;
   font-size: 12px;
   min-height: 42px;
 }
 .fluid-experience button:hover {
-  background: #26382c;
-  border-color: #59715e;
-  color: #f0f7ee;
+  background: #333333;
+  border-color: #6b6b6b;
+  color: #f5f5f5;
 }
 .fluid-experience button.primary {
-  background: #c9e7bd;
-  border-color: #c9e7bd;
-  color: #162512;
+  background: #dedede;
+  border-color: #dedede;
+  color: #202020;
   font-weight: 650;
 }
 .fluid-experience button.primary:hover {
-  background: #def2d5;
+  background: #ececec;
 }
 .fluid-experience button[aria-pressed="true"] {
-  background: #334532;
-  border-color: #4b6647;
-  color: #e0eed9;
+  background: #404040;
+  border-color: #5e5e5e;
+  color: #eaeaea;
 }
 .fluid-experience .source-buttons {
   gap: 7px;
@@ -1017,17 +1017,17 @@ button:focus-visible {
   padding: 11px 13px;
 }
 .fluid-experience .source-buttons button:not(.primary) {
-  background: #18241e;
+  background: #212121;
 }
 .fluid-experience .audio-status {
   margin: 14px 0 0;
   font-size: 11px;
   line-height: 1.65;
   min-height: 35px;
-  color: #92a295;
+  color: #9e9e9e;
 }
 .fluid-experience .error {
-  color: #f4a990 !important;
+  color: #b7b7b7 !important;
 }
 .spectrum-wrap {
   padding: 14px 0 2px;
@@ -1035,7 +1035,7 @@ button:focus-visible {
 .spectrum-label {
   display: flex;
   justify-content: space-between;
-  color: #6f8578;
+  color: #7f7f7f;
   font:
     8px ui-monospace,
     monospace;
@@ -1050,22 +1050,22 @@ button:focus-visible {
 .fluid-experience .transport,
 .fluid-experience .response-controls,
 .fluid-experience .material-controls {
-  border-top: 1px solid #2a3a2f;
+  border-top: 1px solid #363636;
   margin-top: 18px;
   padding-top: 18px;
 }
 .fluid-experience .track-line strong {
-  color: #d9e9dc;
+  color: #e5e5e5;
   font-size: 11px;
 }
 .fluid-experience .time-line {
   font-size: 9px;
-  color: #93a48f;
+  color: #9f9f9f;
 }
 .fluid-experience .text-button {
   background: none;
   border: 0;
-  color: #b9cca9;
+  color: #c5c5c5;
   min-height: 28px;
 }
 .fluid-experience .transport-buttons {
@@ -1077,17 +1077,17 @@ button:focus-visible {
   min-height: 35px;
 }
 .fluid-experience .transport-buttons .play-button {
-  background: #b6d8a7;
-  color: #192d14;
+  background: #cdcdcd;
+  color: #272727;
 }
 .fluid-experience .section-label {
   font-size: 9px;
-  color: #8da18e;
+  color: #9b9b9b;
   letter-spacing: 0.07em;
 }
 .fluid-experience .mode-selector {
-  background: #101b14;
-  border: 1px solid #283b2b;
+  background: #181818;
+  border: 1px solid #363636;
   margin: 11px 0 16px;
   padding: 3px;
   gap: 3px;
@@ -1099,18 +1099,18 @@ button:focus-visible {
   padding: 7px 4px;
   background: transparent;
   border: 0;
-  color: #839c83;
+  color: #959595;
 }
 .fluid-experience .mode-selector button[aria-pressed="true"] {
-  background: #2a3d2b;
-  color: #d3e9c8;
+  background: #383838;
+  color: #e2e2e2;
   box-shadow: 0 2px 8px #00000022;
 }
 .fluid-experience .material-controls .mode-selector {
   grid-template-columns: 1fr 1fr;
 }
 .fluid-experience input[type="range"] {
-  accent-color: #b7d7a7;
+  accent-color: #cdcdcd;
   height: 22px;
   margin: 6px 0 0;
 }
@@ -1119,33 +1119,33 @@ button:focus-visible {
 }
 .fluid-experience .range-row > span {
   font-size: 11px;
-  color: #b8cbb6;
+  color: #c5c5c5;
 }
 .fluid-experience .range-row output {
-  color: #819b7d;
+  color: #939393;
   font-size: 9px;
 }
 .fluid-experience .youtube-section {
-  border-color: #2a3a2f;
+  border-color: #363636;
   margin-top: 18px;
   padding-top: 12px;
 }
 .fluid-experience .youtube-section summary {
   font-size: 11px;
-  color: #93aa8e;
+  color: #a3a3a3;
 }
 .fluid-experience .youtube-section p {
   font-size: 10px;
-  color: #8a9e85;
+  color: #989898;
 }
 .fluid-experience input:not([type="range"]):not([type="file"]) {
-  background: #0e1811;
-  color: #d8e8d0;
-  border-color: #304a32;
+  background: #151515;
+  color: #e3e3e3;
+  border-color: #434343;
   font-size: 11px;
 }
 .fluid-experience .panel-footer {
-  border-color: #2a3a2f;
+  border-color: #363636;
   margin-top: 13px;
   padding-top: 14px;
 }
@@ -1154,13 +1154,13 @@ button:focus-visible {
   font-size: 10px;
 }
 .fluid-experience .privacy-note {
-  color: #70866c;
+  color: #7f7f7f;
   font-size: 9px;
   line-height: 1.7;
   margin-bottom: 0;
 }
-.fluid-experience :focus-visible {
-  outline-color: #b9dcaa;
+.ferrofluid-page :focus-visible {
+  outline-color: #d1d1d1;
 }
 .fluid-experience .focus-toggle {
   position: absolute;
@@ -1168,9 +1168,9 @@ button:focus-visible {
   right: 26px;
   bottom: auto;
   left: auto;
-  background: #15231a;
-  border: 1px solid #3c5140;
-  color: #c1d9b7;
+  background: #1f1f1f;
+  border: 1px solid #4b4b4b;
+  color: #d1d1d1;
   border-radius: 99px;
   min-height: 37px;
   font-size: 10px;
@@ -1191,28 +1191,28 @@ button:focus-visible {
   bottom: 24px;
 }
 .fluid-experience .scene-loading {
-  background: #101a15;
-  color: #9aaf91;
+  background: #181818;
+  color: #a8a8a8;
 }
 .fluid-experience .scene-fallback {
-  background: #101a15;
-  color: #d3e3cc;
+  background: #181818;
+  color: #dedede;
 }
 .fluid-experience .scene-fallback p {
-  color: #8fa384;
+  color: #9d9d9d;
 }
 .fluid-experience .mic-stop-floating {
-  background: #253c22;
-  border-color: #4e7044;
-  color: #daf0ce;
+  background: #353535;
+  border-color: #666666;
+  color: #e9e9e9;
 }
 .audio-drop-overlay {
   position: fixed;
   inset: 12px;
   z-index: 50;
-  border: 1px dashed #c9e7bd;
+  border: 1px dashed #dedede;
   border-radius: 24px;
-  background: #101c14ed;
+  background: #191919ed;
   backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
@@ -1225,7 +1225,7 @@ button:focus-visible {
 .audio-drop-overlay span {
   font-size: 13px;
   letter-spacing: 0;
-  color: #8caa80;
+  color: #a1a1a1;
   margin-top: 20px;
 }
 @media (max-width: 1100px) {
@@ -1376,16 +1376,24 @@ button:focus-visible {
 }
 
 .fluid-preview {
-  background: #0d1513;
+  background: #131313;
 }
 .fluid-preview img {
   object-fit: cover;
 }
 .fluid-preview .preview-number {
-  color: #a2b39f;
+  color: #aeaeae;
 }
 .fluid-preview .preview-badge {
-  background: #19291dcc;
-  color: #c9dbbf;
-  border-color: #486044;
+  background: #252525cc;
+  color: #d5d5d5;
+  border-color: #595959;
+}
+
+.ferrofluid-page ::selection {
+  background: #dedede;
+  color: #111;
+}
+.fluid-experience iframe {
+  filter: grayscale(1);
 }

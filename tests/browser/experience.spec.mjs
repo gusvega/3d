@@ -280,15 +280,29 @@ test("finish, keyboard zoom and magnetism change a paused surface without animat
   await expect(
     page.getByRole("button", { name: "Mercury", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
-  const mercury = await canvas.screenshot();
-  expect(mercury.equals(before)).toBe(false);
+  let mercury;
+  await expect
+    .poll(async () => {
+      mercury = await canvas.screenshot();
+      return mercury.equals(before);
+    })
+    .toBe(false);
   await canvas.focus();
   await page.keyboard.press("=");
-  const zoomed = await canvas.screenshot();
-  expect(zoomed.equals(mercury)).toBe(false);
+  let zoomed;
+  await expect
+    .poll(async () => {
+      zoomed = await canvas.screenshot();
+      return zoomed.equals(mercury);
+    })
+    .toBe(false);
   await page.getByRole("slider", { name: "Magnetism", exact: true }).fill("0");
-  const flat = await canvas.screenshot();
-  expect(flat.equals(zoomed)).toBe(false);
+  await expect
+    .poll(async () => {
+      const flat = await canvas.screenshot();
+      return flat.equals(zoomed);
+    })
+    .toBe(false);
 });
 
 test("dropping audio starts playback and dismisses the drop surface", async ({
