@@ -80,6 +80,8 @@ export function ProcessExplorer() {
 export function MusicExplorer() {
   const [selected, setSelected] = useState(0);
   const release = releases[selected];
+  const [showAll, setShowAll] = useState(false);
+  const [player, setPlayer] = useState(false);
   return (
     <div className="music-explorer">
       <figure className="release-feature">
@@ -119,10 +121,33 @@ export function MusicExplorer() {
             LISTEN ON SPOTIFY ↗
           </a>
         </figcaption>
+        <div className="release-player">
+          {player ? (
+            <>
+              <iframe
+                key={release.spotifyUrl}
+                title={`Listen to ${release.name} by Gus Vega`}
+                src={`https://open.spotify.com/embed/album/${release.spotifyUrl.split("/").pop()}?theme=0`}
+                width="100%"
+                height="152"
+                allow="encrypted-media; clipboard-write; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+              <button className="text-link" onClick={() => setPlayer(false)}>
+                CLOSE PLAYER ×
+              </button>
+            </>
+          ) : (
+            <button className="listen-here" onClick={() => setPlayer(true)}>
+              <span aria-hidden="true">▷</span> Listen here{" "}
+              <small>LOAD SPOTIFY PLAYER</small>
+            </button>
+          )}
+        </div>
       </figure>
       <div className="release-list">
         <div className="eyebrow">ALBUMS & SELECTED RELEASES</div>
-        {releases.map((item, i) => (
+        {releases.slice(0, showAll ? releases.length : 3).map((item, i) => (
           <div
             className="release-row"
             key={item.name}
@@ -142,8 +167,7 @@ export function MusicExplorer() {
               href={item.spotifyUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onFocus={() => setSelected(i)}
-              onMouseEnter={() => setSelected(i)}
+
               aria-label={`${item.name} on Spotify (opens in a new tab)`}
             >
               <span>
@@ -154,8 +178,15 @@ export function MusicExplorer() {
             </a>
           </div>
         ))}
+        <button
+          className="catalog-toggle text-link"
+          aria-expanded={showAll}
+          onClick={() => setShowAll(!showAll)}
+        >
+          {showAll ? "FEWER RELEASES −" : "ALL RELEASES +"}
+        </button>
         <p className="release-note">
-          Select a cover to look closer. Select a name to listen on Spotify.
+          Albums to spend time with. Sounds to carry forward.
         </p>
       </div>
     </div>

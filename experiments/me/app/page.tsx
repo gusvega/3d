@@ -25,21 +25,6 @@ function Label({
     </div>
   );
 }
-function Annotation({
-  children,
-  number,
-}: {
-  children: React.ReactNode;
-  number: string;
-}) {
-  return (
-    <div className="annotation">
-      <span className="annotation-point" />
-      <span>{children}</span>
-      <small>{number}</small>
-    </div>
-  );
-}
 export default function Home() {
   return (
     <>
@@ -53,27 +38,26 @@ export default function Home() {
           </div>
           <div className="hero-copy">
             <h1>
-              MUSIC.
-              <br />
-              TECHNOLOGY.
-              <br />
-              <span>
-                A MORE CREATIVE <br />
-                TOMORROW
-              </span>
-              <span className="heading-period">.</span>
-            </h1>
-            <p>
               I build the tools
               <br />I want to make
               <br />
-              the music I want
+              <span>
+                the music I want
+                <br />
+                to hear.
+              </span>
+            </h1>
+            <p>
+              Music, instruments and software.
               <br />
-              to hear.
+              One connected creative practice.
             </p>
+            <a href="#music" className="hero-listen text-link">
+              START WITH THE MUSIC <span>↗</span>
+            </a>
           </div>
           <div className="hero-object-label">
-            <span>01 — THE CREATIVE CORE</span>
+            <span>THE CREATIVE CORE / INSTRUMENT CONCEPT</span>
             <span>ARTIST / BUILDER / ENGINEER</span>
           </div>
           <a href="#explode" className="scroll-invitation">
@@ -106,16 +90,6 @@ export default function Home() {
               <br />
               An instrument becomes music.
             </p>
-            <p className="muted">
-              A closer look at the layers
-              <br />
-              of one creative practice.
-            </p>
-          </div>
-          <div className="object-annotations">
-            <Annotation number="01">CONTROL / INTERACTION</Annotation>
-            <Annotation number="02">SOUND / PROCESSING</Annotation>
-            <Annotation number="03">STRUCTURE / SYSTEMS</Annotation>
           </div>
         </section>
         <section id="music" className="music-section content-section">
@@ -143,43 +117,40 @@ export default function Home() {
             </div>
           </div>
           <MusicExplorer />
-          <div className="music-formats">
-            <div>
-              <span>01 / LISTEN</span>
-              <h3>
-                <a
-                  href="https://open.spotify.com/album/5JmPznW0ITbZRF2ML4FlWq"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Low Light ↗
-                </a>
-              </h3>
-              <p>The latest album. Listen on Spotify.</p>
-            </div>
-            <div>
-              <span>02 / EXPERIENCE</span>
-              <h3>No Direction</h3>
-              <p>Live sets. An open-ended journey.</p>
-            </div>
-            <div>
-              <span>03 / IN THE ROOM</span>
-              <h3>Studio performances</h3>
-              <p>Ideas in their most immediate form.</p>
-            </div>
+          <div className="music-afterword">
+            <p>
+              Before there is an instrument,
+              <br />
+              there is something I want to hear.
+            </p>
+            <a
+              className="text-link"
+              href="https://www.youtube.com/@gusvegamusic"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LIVE SETS & STUDIO PERFORMANCES ↗
+            </a>
+            <span className="eyebrow">
+              NO DIRECTION / EXPLORATIONS IN SOUND
+            </span>
           </div>
         </section>
         <section id="plugins" className="content-section plugins-section">
           <div className="section-intro">
             <div>
               <Label number="02">PLUG-INS</Label>
-              <h2>Made to make.</h2>
+              <h2>
+                Built for
+                <br />
+                the next idea.
+              </h2>
             </div>
             <div className="intro-copy">
               <span className="eyebrow">TOOLS FOR CREATORS</span>
               <p>
-                Effects, instruments and creative systems designed to inspire
-                new ideas and make the creative process flow.
+                These are working software projects, born from making music. The
+                physical forms below explore what those tools could become.
               </p>
             </div>
           </div>
@@ -202,12 +173,15 @@ export default function Home() {
               <br />
               <span>One instrument.</span>
             </p>
-            <p>A new way to create.</p>
+            <p className="astra-intention">
+              A performance instrument taking shape.
+              <br />
+              Separate voices. Shared movement. One place to play.
+            </p>
             <AstraEngines />
             <p className="astra-note">
-              Inspired by the immediacy of classic performance synthesizers.
-              <br />
-              Built for what comes next.
+              Architecture in development. The model shows the intended
+              relationship between engines, processing and performance controls.
             </p>
           </div>
           <div className="astra-annotation">
@@ -226,7 +200,7 @@ export default function Home() {
               </h2>
             </div>
             <div className="intro-copy">
-              <span className="eyebrow">THE SPACE</span>
+              <span className="eyebrow">MY STUDIO</span>
               <p>
                 A room for listening.
                 <br />A workbench for building.
@@ -277,37 +251,67 @@ export default function Home() {
               <br />
               the surface.
             </h2>
-            <p>
-              Good tools begin with
-              <br />
-              thoughtful systems.
-            </p>
-            <p className="muted">
-              Software engineering, audio DSP, AI-assisted systems and the
-              infrastructure that connects them.
-            </p>
-            <div className="engineering-stack">
-              {[
-                "PRODUCT",
-                "UI / INTERACTION",
-                "AUDIO ENGINE",
-                "DSP",
-                "AI SYSTEMS",
-                "INFRASTRUCTURE",
-                "CLOUD / AUTOMATION",
-              ].map((s, i) => (
-                <div key={s}>
-                  <span>0{i + 1}</span>
-                  <h3>{s}</h3>
-                  <span>↓</span>
+            <p>The engineering matters when it makes room for the music.</p>
+            <div className="engineering-stories">
+              <article>
+                <span className="eyebrow">01 / UMBRA</span>
+                <h3>
+                  Keep the sound.
+                  <br />
+                  Change its possibilities.
+                </h3>
+                <p>
+                  A portable audio engine sits beneath the interface. Controls
+                  and host synchronization connect the sound to the way an
+                  instrument is played.
+                </p>
+                <div className="signal-story" aria-label="UMBRA signal path">
+                  INPUT <span>→</span> AUDIO ENGINE <span>→</span> MUSICAL
+                  CONTROLS <span>→</span> OUTPUT
                 </div>
-              ))}
+                <a
+                  className="text-link"
+                  href="https://gusvega.dev/umbra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  INSIDE UMBRA ↗
+                </a>
+              </article>
+              <article>
+                <span className="eyebrow">02 / SPECTRA → FORMA</span>
+                <h3>
+                  From a recording
+                  <br />
+                  to something playable.
+                </h3>
+                <p>
+                  Separation runs in the background. Aligned stems feed the
+                  mixer, and a sound can move into FORMA for further
+                  exploration.
+                </p>
+                <div className="signal-story" aria-label="SPECTRA workflow">
+                  RECORDING <span>→</span> SEPARATION <span>→</span> STEMS{" "}
+                  <span>→</span> FORMA
+                </div>
+                <a
+                  className="text-link"
+                  href="https://gusvega.dev/spectra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  EXPLORE THE ARCHITECTURE ↗
+                </a>
+              </article>
             </div>
-            <p className="dev-technologies">
-              TERRAFORM · KUBERNETES · GITHUB
-              <br />
-              CI/CD · SOFTWARE ARCHITECTURE · AUDIO DSP
-            </p>
+            <a
+              className="engineering-more text-link"
+              href="https://gusvega.dev/#engineering"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              SOFTWARE, PLATFORM & CLOUD WORK ↗
+            </a>
           </div>
         </section>
         <section id="reconnect" className="scene-section reconnect-section">
@@ -318,13 +322,6 @@ export default function Home() {
               <br />
               <span>Same purpose.</span>
             </h2>
-            <div className="reconnect-disciplines">
-              MUSIC / PLUG-INS / ASTRA
-              <br />
-              STUDIO / HARDWARE / SOFTWARE
-              <br />
-              ENGINEERING
-            </div>
             <p className="reconnect-statement">
               I BUILD THE TOOLS
               <br />I WANT TO MAKE
@@ -353,15 +350,37 @@ export default function Home() {
               <h2>GUS VEGA</h2>
               <h3>ARTIST. BUILDER. ENGINEER.</h3>
               <p>
-                I make music and the tools that make it possible.
-                <br />
-                From a melody to an instrument.
-                <br />
-                From an idea to a working system.
+                I’m a Mexican music producer based in Seattle, building software
+                and instruments around the moments that happen in the studio.
+                Music is the starting point. Making the tools is part of the
+                same practice.
               </p>
-              <a className="text-link" href="#arrive">
-                BACK TO THE BEGINNING <span>↑</span>
-              </a>
+              <div className="closing-actions" aria-label="Continue exploring">
+                <a href="#music">
+                  <span>01</span>
+                  <strong>Listen to the music</strong>
+                  <span>↗</span>
+                </a>
+                <a
+                  href="https://www.gusvega.com/#products"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>02</span>
+                  <strong>Explore the tools</strong>
+                  <span>↗</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/gusvegamusic/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>03</span>
+                  <strong>Get in touch</strong>
+                  <span>↗</span>
+                  <small>Message me on Instagram</small>
+                </a>
+              </div>
             </div>
           </div>
           <footer>

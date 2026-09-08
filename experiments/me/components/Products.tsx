@@ -4,7 +4,11 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 const PluginViewer = dynamic(() => import("@/three/plugins/PluginViewer"), {
   ssr: false,
-  loading: () => <p className="availability">Loading instrument study…</p>,
+  loading: () => (
+    <div className="model-loading">
+      <p className="availability">Loading instrument study…</p>
+    </div>
+  ),
 });
 import { ArrowUpRight, X } from "lucide-react";
 import { plugins } from "@/data/content";
@@ -42,65 +46,91 @@ export default function Products() {
     <>
       <div className="plugin-model-showcase">
         <div className="plugin-model-heading">
-          <span className="eyebrow">
-            SOFTWARE INTO FORM / 3D INSTRUMENT STUDIES
-          </span>
-          <h3>Inside the tools.</h3>
+          <span className="eyebrow">WORKING SOFTWARE / PHYSICAL CONCEPT</span>
+          <h3>One sound. More possibilities.</h3>
         </div>
-        {plugins.map((plugin) => (
-          <section
-            key={plugin.name}
-            aria-label={`${plugin.name} exploded study`}
+        <div className="product-context">
+          <p>
+            UMBRA turns a moment of sound into atmosphere.
+            <br />
+            Scroll to look beneath its controls.
+          </p>
+          <a
+            className="text-link"
+            href="https://www.gusvega.com/umbra"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <PluginViewer name={plugin.name} />
-          </section>
-        ))}
+            EXPLORE THE SOFTWARE ↗
+          </a>
+          <button
+            className="text-link"
+            aria-label="Explore UMBRA"
+            onClick={() => {
+              setSelected(0);
+              setOpen(true);
+              dialog.current?.showModal();
+            }}
+          >
+            VIEW THE INTERFACE ↗
+          </button>
+        </div>
+        <section aria-label="UMBRA exploded study">
+          <PluginViewer name="UMBRA" />
+        </section>
       </div>
       <div className="plugin-grid">
-        {plugins.map((product, i) => (
-          <article
-            className={`plugin-card plugin-card-${i}`}
-            key={product.name}
-          >
-            <button
-              className="product-open"
-              aria-label={`Explore ${product.name}`}
-              onClick={() => {
-                setSelected(i);
-                setOpen(true);
-                dialog.current?.showModal();
-              }}
+        {plugins.slice(1).map((product, index) => {
+          const i = index + 1;
+          return (
+            <article
+              className={`plugin-card plugin-card-${i}`}
+              key={product.name}
             >
-              <div className="product-stage">
-                <span className="product-edition">
-                  {String(i + 1).padStart(2, "0")} / AUDIO SOFTWARE
-                </span>
-                <InstrumentUI name={product.name} />
-              </div>
-              <div className="product-copy">
-                <div className="product-summary">
-                  <div>
-                    <h3>{product.name}</h3>
-                    <p>{product.category}</p>
-                  </div>
-                  <ArrowUpRight size={22} strokeWidth={1} />
+              <button
+                className="product-open"
+                aria-label={`Explore ${product.name}`}
+                onClick={() => {
+                  setSelected(i);
+                  setOpen(true);
+                  dialog.current?.showModal();
+                }}
+              >
+                <div className="product-stage">
+                  <span className="product-edition">
+                    {String(i + 1).padStart(2, "0")} / AUDIO SOFTWARE
+                  </span>
+                  <InstrumentUI name={product.name} />
                 </div>
-                <p className="product-description">{product.description}</p>
-                {i === 0 && (
-                  <p className="product-feature-copy">
-                    A space for melodic memory, cinematic depth and slow
-                    transformation.
-                  </p>
-                )}
-                <span className="text-link">
-                  EXPLORE {product.name}
-                  <ArrowUpRight size={16} />
-                </span>
-              </div>
-            </button>
-          </article>
-        ))}
+                <div className="product-copy">
+                  <div className="product-summary">
+                    <div>
+                      <h3>{product.name}</h3>
+                      <p>{product.category}</p>
+                    </div>
+                    <ArrowUpRight size={22} strokeWidth={1} />
+                  </div>
+                  <p className="product-description">{product.description}</p>
+                  {i === 0 && (
+                    <p className="product-feature-copy">
+                      A space for melodic memory, cinematic depth and slow
+                      transformation.
+                    </p>
+                  )}
+                  <span className="text-link">
+                    EXPLORE {product.name}
+                    <ArrowUpRight size={16} />
+                  </span>
+                </div>
+              </button>
+            </article>
+          );
+        })}
       </div>
+      <p className="collection-note">
+        Each interface is real software. Explore a tool to see its own
+        scroll-driven physical study.
+      </p>
       <dialog
         ref={dialog}
         onClose={() => setOpen(false)}
@@ -119,7 +149,7 @@ export default function Products() {
           CLOSE
           <X size={18} />
         </button>
-        <span className="eyebrow">TOOLS FOR CREATORS</span>
+        <span className="eyebrow">SOFTWARE PROJECT / 3D HARDWARE CONCEPT</span>
         <h2 id="product-title">{p.name}</h2>
         {open && <PluginViewer key={p.name} name={p.name} />}
         <details className="plugin-software-reference">
@@ -129,8 +159,17 @@ export default function Products() {
         <p className="eyebrow">{p.category}</p>
         <p>{p.detail}</p>
         <p className="availability">
-          Interface preview. Downloads will be connected in a later release.
+          The software and this physical concept are different stages of the
+          same idea.
         </p>
+        <a
+          className="text-link"
+          href={`https://www.gusvega.com/${p.name.toLowerCase()}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          PRODUCT DETAILS & AVAILABILITY ↗
+        </a>
       </dialog>
     </>
   );

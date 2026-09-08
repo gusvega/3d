@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./editorial.css";
 import localFont from "next/font/local";
 const sans = localFont({
   src: "../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2",

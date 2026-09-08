@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { studioEquipment, equipmentBounds } from "@/data/studio";
 import { clamp, smooth } from "@/lib/timeline";
 
+const featured = [0, 1, 3];
 const photo = "/me/images/studio-original.webp";
 function PhotoPiece({ index }: { index: number }) {
   const item = studioEquipment[index],
@@ -33,8 +34,22 @@ export default function StudioEquipment() {
   const [mode, setMode] = useState<"scroll" | "open" | "closed">("scroll");
   const [selected, setSelected] = useState(0);
   const [equipmentPage, setEquipmentPage] = useState(0);
+  const [allEquipment, setAllEquipment] = useState(false);
+  const allRef = useRef(false);
+  function showCollection() {
+    allRef.current = !allRef.current;
+    setAllEquipment(allRef.current);
+    pageRef.current = 0;
+    setEquipmentPage(0);
+    setSelected(0);
+    changeMode("open");
+  }
   const pageRef = useRef(0);
   function selectEquipment(index: number) {
+    if (!featured.includes(index)) {
+      allRef.current = true;
+      setAllEquipment(true);
+    }
     setSelected(index);
     pageRef.current = Math.floor(index / 6);
     setEquipmentPage(pageRef.current);
@@ -89,15 +104,26 @@ export default function StudioEquipment() {
       const ox = (w - 1280 * scale) / 2,
         oy = (h - 960 * scale) / 2;
       const compact = w < 550;
-      const cols = compact ? 2 : 5,
-        rows = compact ? 3 : Math.ceil(studioEquipment.length / cols);
+      const cols = allRef.current ? (compact ? 2 : 5) : compact ? 1 : 3,
+        rows = allRef.current
+          ? compact
+            ? 3
+            : Math.ceil(studioEquipment.length / cols)
+          : compact
+            ? 3
+            : 1;
       const cw = w / cols,
         ch = h / rows;
       pieces.current.forEach((button, i) => {
         if (!button) return;
         const b = equipmentBounds(studioEquipment[i].points);
-        const slot = compact ? i - pageRef.current * 6 : i;
-        const excluded = compact && p > 0.65 && (slot < 0 || slot >= 6);
+        const slot = allRef.current
+          ? compact
+            ? i - pageRef.current * 6
+            : i
+          : featured.indexOf(i);
+        const excluded =
+          p > 0.25 && (slot < 0 || (allRef.current && compact && slot >= 6));
         button.style.visibility = excluded ? "hidden" : "visible";
         button.disabled = excluded;
         const tx = ((slot + cols * 20) % cols) * cw + 6,
@@ -155,7 +181,7 @@ export default function StudioEquipment() {
         <div className="studio-toolbar">
           <div>
             <span className="eyebrow">
-              THE REAL ROOM / 20 EQUIPMENT DETAILS
+              AT THE KEYS / IN THE SOUND / INTO THE TRACK
             </span>
             <p>One space. Every part connected.</p>
           </div>
@@ -181,29 +207,52 @@ export default function StudioEquipment() {
             )}
           </div>
         </div>
-        <div className="studio-mobile-pages" aria-label="Equipment pages">
-          <button
-            type="button"
-            onClick={() => turnPage(-1)}
-            disabled={equipmentPage === 0}
-            aria-label="Previous equipment"
-          >
-            ←
-          </button>
-          <span>
-            {String(equipmentPage * 6 + 1).padStart(2, "0")}–
-            {String(Math.min(20, equipmentPage * 6 + 6)).padStart(2, "0")} / 20
-            PIECES
-          </span>
-          <button
-            type="button"
-            onClick={() => turnPage(1)}
-            disabled={equipmentPage === 3}
-            aria-label="Next equipment"
-          >
-            →
+        <div
+          className="studio-featured-choices"
+          aria-label="Studio starting points"
+        >
+          {featured.map((index, i) => (
+            <button
+              key={index}
+              aria-pressed={selected === index}
+              onClick={() => selectEquipment(index)}
+            >
+              <span>0{i + 1}</span>
+              {["Find a melody", "Shape the sound", "Build the track"][i]}
+            </button>
+          ))}
+          <button onClick={showCollection} aria-expanded={allEquipment}>
+            {allEquipment
+              ? "Back to three starting points"
+              : "Explore all 20 pieces"}{" "}
+            ↗
           </button>
         </div>
+        {allEquipment && (
+          <div className="studio-mobile-pages" aria-label="Equipment pages">
+            <button
+              type="button"
+              onClick={() => turnPage(-1)}
+              disabled={equipmentPage === 0}
+              aria-label="Previous equipment"
+            >
+              ←
+            </button>
+            <span>
+              {String(equipmentPage * 6 + 1).padStart(2, "0")}–
+              {String(Math.min(20, equipmentPage * 6 + 6)).padStart(2, "0")} /
+              20 PIECES
+            </span>
+            <button
+              type="button"
+              onClick={() => turnPage(1)}
+              disabled={equipmentPage === 3}
+              aria-label="Next equipment"
+            >
+              →
+            </button>
+          </div>
+        )}
         <div className="studio-workspace">
           <div
             ref={stage}
@@ -270,6 +319,7 @@ export default function StudioEquipment() {
             </label>
             <select
               id="studio-item"
+              aria-label="Explore every piece"
               value={selected}
               onChange={(e) => {
                 selectEquipment(Number(e.target.value));

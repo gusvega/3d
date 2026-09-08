@@ -3,7 +3,7 @@
 export const studioEquipment = [
   {
     name: "88-key keyboard",
-    role: "The piano at the center of the room.",
+    role: "A place to find the melody before choosing the sound.",
     points: [
       [675, 566],
       [759, 587],
@@ -16,7 +16,7 @@ export const studioEquipment = [
   },
   {
     name: "Moog synthesizer",
-    role: "Hands-on synthesis on the upper tier.",
+    role: "Direct control of tone and movement. An immediate counterpoint to designing software.",
     points: [
       [855, 495],
       [1062, 554],
@@ -44,7 +44,7 @@ export const studioEquipment = [
   },
   {
     name: "Push controller",
-    role: "Pads and encoders for a hands-on production workflow.",
+    role: "The connection between an idea at the keys and building a track in Ableton.",
     points: [
       [887, 661],
       [1040, 643],

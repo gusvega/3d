@@ -75,7 +75,8 @@ export default function Astra() {
         m.position.x = i < 4 ? (i - 1.5) * (1.89 + e * 0.03) : (i - 4.5) * 3.3;
         m.position.z = i < 4 ? -0.9 : 0.25 - e * 0.1;
         const selected = narrative.astraSelection === i;
-        m.scale.setScalar(selected && e > 0.1 ? 1.04 : 1);
+        m.scale.setScalar(1);
+        if (selected && e > 0.1) m.position.z += e * 0.12;
       }
     });
     routing.current!.visible = e > 0.15;

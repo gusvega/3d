@@ -101,9 +101,9 @@ export default function Scene() {
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
     >
       <CameraRig />
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[-4, 7, 4]} intensity={2} />
-      <directionalLight position={[5, 2, -5]} intensity={2.5} />
+      <ambientLight intensity={0.85} />
+      <directionalLight position={[-4, 7, 4]} intensity={3} />
+      <directionalLight position={[5, 2, -5]} intensity={3} />
       <Environment resolution={128} frames={1}>
         <Lightformer
           form="rect"
