@@ -30,7 +30,35 @@ export default function PluginViewer({ name }: { name: string }) {
     [error, setError] = useState("");
   const model = useRef<Group>(null),
     host = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const track = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!track.current || reduced) return;
+        const rect = track.current.getBoundingClientRect();
+        const dialog = track.current.closest("dialog");
+        const top = dialog ? dialog.getBoundingClientRect().top + 60 : 76;
+        const viewport = dialog ? dialog.clientHeight : innerHeight;
+        setSpread(
+          Math.max(
+            0,
+            Math.min(1, (top - rect.top) / Math.max(1, rect.height - viewport)),
+          ),
+        );
+      });
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true, capture: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update, true);
+      window.removeEventListener("resize", update);
+    };
+  }, [reduced]);
   useEffect(() => {
     const media = matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReduced(media.matches);
@@ -97,99 +125,105 @@ export default function PluginViewer({ name }: { name: string }) {
     }
   }
   return (
-    <div className="plugin-model-viewer" ref={host}>
-      <div className="plugin-model-stage" aria-hidden="true">
-        {available ? (
-          <Canvas
-            key={name}
-            frameloop={visible ? "demand" : "never"}
-            dpr={[1, 1.5]}
-            camera={{ position: [3.5, 9.5, 10.5], fov: 32 }}
-            gl={{ antialias: true, alpha: true }}
-          >
-            <ResponsiveCamera />
-            <ambientLight intensity={1.6} />
-            <directionalLight position={[2, 8, 4]} intensity={3} />
-            <directionalLight position={[-5, 4, -3]} intensity={2} />
-            <Suspense fallback={null}>
-              <PluginAssembly
-                design={design}
-                spread={spread}
-                selected={selected}
-                reduced={reduced}
-                modelRef={model}
-                onReady={setReady}
-              />
-            </Suspense>
-          </Canvas>
-        ) : (
-          <img src={`/me/plugins/${name.toLowerCase()}.webp`} alt="" />
-        )}
-      </div>
-      <div className="plugin-model-controls">
-        <button type="button" onClick={() => setSpread(spread > 0.5 ? 0 : 1)}>
-          {spread > 0.5 ? "Assemble instrument" : "Explode instrument"}
-        </button>
-        <label>
-          Separation
-          <input
-            aria-label={`${name} assembly separation`}
-            type="range"
-            min="0"
-            max="1"
-            step=".01"
-            value={spread}
-            onChange={(e) => setSpread(Number(e.target.value))}
-          />
-        </label>
-        <button
-          type="button"
-          disabled={!available || !ready || exporting}
-          onClick={download}
-        >
-          {exporting ? "Exporting…" : "Download GLB"}
-        </button>
-      </div>
-      <div className="assembly-phases" aria-label="Explosion stages">
-        {["Enclosure", "Electronics", "Interface", "Fasteners"].map(
-          (label, i) => (
+    <div
+      className="plugin-scroll-track"
+      ref={track}
+      data-plugin={name}
+      data-spread={spread.toFixed(3)}
+    >
+      <div className="plugin-model-viewer" ref={host}>
+        <div className="plugin-scroll-title">
+          <h4>{name}</h4>
+          <span>SCROLL TO REVEAL / {design.sourceSize.join(" × ")}</span>
+        </div>
+        <div className="plugin-model-stage" aria-hidden="true">
+          {available && visible ? (
+            <Canvas
+              key={name}
+              frameloop={visible ? "demand" : "never"}
+              dpr={[1, 1.5]}
+              camera={{ position: [3.5, 9.5, 10.5], fov: 32 }}
+              gl={{ antialias: true, alpha: true }}
+            >
+              <ResponsiveCamera />
+              <ambientLight intensity={1.6} />
+              <directionalLight position={[2, 8, 4]} intensity={3} />
+              <directionalLight position={[-5, 4, -3]} intensity={2} />
+              <Suspense fallback={null}>
+                <PluginAssembly
+                  design={design}
+                  spread={spread}
+                  selected={selected}
+                  reduced={reduced}
+                  modelRef={model}
+                  onReady={setReady}
+                />
+              </Suspense>
+            </Canvas>
+          ) : (
+            <img src={`/me/plugins/${name.toLowerCase()}.webp`} alt="" />
+          )}
+        </div>
+        <div className="plugin-model-controls">
+          {reduced ? (
             <button
               type="button"
-              key={label}
-              aria-pressed={Math.abs(spread - [0.22, 0.48, 0.78, 1][i]) < 0.03}
-              onClick={() => setSpread([0.22, 0.48, 0.78, 1][i])}
+              onClick={() => setSpread(spread > 0.5 ? 0 : 1)}
             >
-              <span>0{i + 1}</span>
-              {label}
+              {spread > 0.5 ? "Assemble instrument" : "Reveal layers"}
             </button>
-          ),
-        )}
-      </div>
-      <p className="plugin-model-summary">{design.summary}</p>
-      <div
-        className="plugin-module-legend"
-        aria-label={`${name} assembly layers`}
-      >
-        {design.modules.map((m, i) => (
+          ) : (
+            <span className="eyebrow">
+              {String(Math.round(spread * 100)).padStart(3, "0")} / EXPLODED
+              VIEW
+            </span>
+          )}
           <button
             type="button"
-            key={m.name}
-            aria-pressed={selected === i}
-            onClick={() => {
-              setSelected(i);
-              setSpread(1);
-            }}
+            disabled={!available || !ready || exporting}
+            onClick={download}
           >
-            <span>{String(i + 1).padStart(2, "0")}</span>
-            {m.name}
+            {exporting ? "Exporting…" : "Download GLB"}
           </button>
-        ))}
+        </div>
+        <div className="assembly-phases" aria-label="Explosion stages">
+          {["Enclosure", "Electronics", "Interface", "Fasteners"].map(
+            (label, i) => (
+              <span
+                key={label}
+                data-active={spread >= [0.02, 0.12, 0.28, 0.72][i]}
+              >
+                <small>0{i + 1}</small> {label}
+              </span>
+            ),
+          )}
+        </div>
+        <p className="plugin-model-summary">{design.summary}</p>
+        <div
+          className="plugin-module-legend"
+          aria-label={`${name} assembly layers`}
+        >
+          {design.modules.map((m, i) => (
+            <button
+              type="button"
+              key={m.name}
+              aria-pressed={selected === i}
+              onClick={() => {
+                setSelected(i);
+                if (reduced) setSpread(1);
+              }}
+            >
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              {m.name}
+            </button>
+          ))}
+        </div>
+        <p className="availability">
+          3D concept derived from the software interface. Structural and
+          processing layers are visual metaphors.
+        </p>
+        {error && <p role="alert">{error}</p>}
       </div>
-      <p className="availability">
-        3D concept derived from the software interface. Structural and
-        processing layers are visual metaphors.
-      </p>
-      {error && <p role="alert">{error}</p>}
     </div>
   );
 }

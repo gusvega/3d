@@ -2362,3 +2362,104 @@ footer > span {
     grid-template-columns: 1fr 1fr;
   }
 }
+
+/* Each instrument occupies its own native-scroll assembly track. */
+.plugin-scroll-track {
+  height: 230svh;
+  position: relative;
+  border-top: 1px solid #303030;
+}
+.plugin-scroll-track .plugin-model-viewer {
+  position: sticky;
+  top: 76px;
+  padding-top: 16px;
+  background: #090909;
+}
+.plugin-scroll-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.plugin-scroll-title h4 {
+  font-size: 24px;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  margin: 0;
+}
+.plugin-scroll-title span {
+  font:
+    9px var(--font-mono),
+    monospace;
+  color: #aaa;
+}
+.plugin-scroll-track .plugin-model-stage {
+  height: clamp(210px, 48svh, 520px);
+}
+.plugin-scroll-track .plugin-model-controls {
+  padding: 8px 0;
+}
+.plugin-scroll-track .plugin-model-summary {
+  margin: 10px 0;
+}
+.assembly-phases > span {
+  padding: 10px 0;
+  border-top: 1px solid #444;
+  color: #aaa;
+  font:
+    10px var(--font-mono),
+    monospace;
+}
+.assembly-phases > span[data-active="true"] {
+  border-color: #eee;
+  color: #eee;
+}
+.assembly-phases small {
+  color: #999;
+}
+.plugin-scroll-track .assembly-phases {
+  margin: 8px 0;
+}
+.plugin-scroll-track .availability {
+  margin: 10px 0;
+}
+@media (max-width: 700px) {
+  .plugin-scroll-track {
+    height: 250svh;
+  }
+  .plugin-scroll-track .plugin-model-stage {
+    height: 32svh;
+  }
+  .plugin-scroll-track .plugin-module-legend {
+    display: flex;
+    gap: 4px;
+  }
+  .plugin-scroll-track .plugin-module-legend button {
+    font-size: 9px;
+    padding: 6px;
+  }
+  .plugin-scroll-title span {
+    max-width: 135px;
+    text-align: right;
+  }
+  .plugin-scroll-track .assembly-phases {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+  .assembly-phases > span {
+    font-size: 8px;
+  }
+  .plugin-scroll-track .availability {
+    font-size: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plugin-scroll-track {
+    height: auto;
+    margin-bottom: 60px;
+  }
+  .plugin-scroll-track .plugin-model-viewer {
+    position: relative;
+    top: auto;
+  }
+}

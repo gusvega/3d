@@ -6,7 +6,7 @@ export type ModuleSpec = {
 };
 export type PluginDesign = {
   name: string;
-  aspect: number;
+  sourceSize: [number, number];
   summary: string;
   modules: ModuleSpec[];
   knobs: [number, number][];
@@ -16,7 +16,7 @@ const row = (xs: number[], y: number): [number, number][] =>
 export const pluginDesigns: PluginDesign[] = [
   {
     name: "UMBRA",
-    aspect: 700 / 560,
+    sourceSize: [700, 560],
     summary:
       "A central texture field between two banks of five controls. The interaction panel lifts away from the memory and processing layers.",
     modules: [
@@ -47,7 +47,7 @@ export const pluginDesigns: PluginDesign[] = [
   },
   {
     name: "FORMA",
-    aspect: 920 / 580,
+    sourceSize: [920, 580],
     summary:
       "A wide sample viewport over an eight-control transformation bank. Sample discovery, slicing and instrument creation become separate physical layers.",
     modules: [
@@ -65,7 +65,7 @@ export const pluginDesigns: PluginDesign[] = [
   },
   {
     name: "SPECTRA",
-    aspect: 1040 / 810,
+    sourceSize: [1040, 810],
     summary:
       "Seven song stems above seven drum components. A separate MIDI extraction layer sits below the analysis and channel banks.",
     modules: [
@@ -99,7 +99,7 @@ export const pluginDesigns: PluginDesign[] = [
   },
   {
     name: "SEQUA",
-    aspect: 1200 / 754,
+    sourceSize: [1200, 754],
     summary:
       "The articulation curve floats above timing and voice controls. The live-performance bank separates toward the player.",
     modules: [
@@ -124,7 +124,7 @@ export const pluginDesigns: PluginDesign[] = [
   },
   {
     name: "LUMEN",
-    aspect: 1200 / 698,
+    sourceSize: [1200, 698],
     summary:
       "A modular synthesis surface: voice, pitch, dual oscillators, mixer and filter, followed by amplifier, stereo, effects and output.",
     modules: [

@@ -22,14 +22,24 @@ test("me is a separate gallery study with working assets and exploded plug-ins",
   await expect(page).toHaveTitle("me — Gus Vega");
   await expect(page.locator(".scene-container canvas")).toBeVisible();
   await page.getByRole("link", { name: "PLUG-INS", exact: true }).click();
-  await page.getByRole("button", { name: "SPECTRA", exact: true }).click();
-  await expect(page.locator(".plugin-model-showcase canvas")).toBeVisible();
-  await page
-    .getByRole("button", { name: "Explode instrument", exact: true })
-    .click();
-  await expect(
-    page.getByRole("slider", { name: "SPECTRA assembly separation" }),
-  ).toHaveValue("1");
-  await expect(page.getByRole("button", { name: "04Fasteners" })).toBeVisible();
+  const study = page.locator('[data-plugin="SPECTRA"]').first();
+  await study.evaluate((el) =>
+    window.scrollTo(0, el.getBoundingClientRect().top + scrollY - 76),
+  );
+  await expect(study.locator("canvas")).toBeVisible();
+  await study.evaluate((el) =>
+    window.scrollTo(
+      0,
+      el.getBoundingClientRect().top +
+        scrollY -
+        76 +
+        el.clientHeight -
+        innerHeight,
+    ),
+  );
+  await expect
+    .poll(async () => Number(await study.getAttribute("data-spread")))
+    .toBeGreaterThan(0.99);
+  await expect(study.getByRole("slider")).toHaveCount(0);
   expect(failures).toEqual([]);
 });

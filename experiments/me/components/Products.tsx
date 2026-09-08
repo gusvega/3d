@@ -8,15 +8,11 @@ const PluginViewer = dynamic(() => import("@/three/plugins/PluginViewer"), {
 });
 import { ArrowUpRight, X } from "lucide-react";
 import { plugins } from "@/data/content";
-const ratios: Record<string, [number, number]> = {
-  UMBRA: [700, 560],
-  FORMA: [920, 580],
-  SPECTRA: [1040, 810],
-  SEQUA: [1200, 754],
-  LUMEN: [2048, 1191],
-};
+import { pluginDesigns } from "@/data/plugin-models";
 export function InstrumentUI({ name }: { name: string }) {
-  const [width, height] = ratios[name];
+  const [width, height] = pluginDesigns.find(
+    (design) => design.name === name,
+  )!.sourceSize;
   return (
     <div className="instrument-image">
       <Image
@@ -41,52 +37,24 @@ export default function Products() {
       document.body.style.overflow = before;
     };
   }, [open]);
-  const [modelIndex, setModelIndex] = useState(0);
-  const [modelsVisible, setModelsVisible] = useState(false);
-  const modelSection = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setModelsVisible(entry.isIntersecting),
-      { rootMargin: "150px" },
-    );
-    if (modelSection.current) observer.observe(modelSection.current);
-    return () => observer.disconnect();
-  }, []);
   const p = plugins[selected];
   return (
     <>
-      <div className="plugin-model-showcase" ref={modelSection}>
+      <div className="plugin-model-showcase">
         <div className="plugin-model-heading">
           <span className="eyebrow">
             SOFTWARE INTO FORM / 3D INSTRUMENT STUDIES
           </span>
           <h3>Inside the tools.</h3>
         </div>
-        <div
-          className="plugin-model-tabs"
-          aria-label="Choose a 3D plugin design"
-        >
-          {plugins.map((plugin, i) => (
-            <button
-              key={plugin.name}
-              type="button"
-              aria-pressed={modelIndex === i}
-              onClick={() => setModelIndex(i)}
-            >
-              {plugin.name}
-            </button>
-          ))}
-        </div>
-        <div className="plugin-model-showcase-body">
-          {modelsVisible && !open ? (
-            <PluginViewer
-              key={plugins[modelIndex].name}
-              name={plugins[modelIndex].name}
-            />
-          ) : (
-            <div className="plugin-model-placeholder" />
-          )}
-        </div>
+        {plugins.map((plugin) => (
+          <section
+            key={plugin.name}
+            aria-label={`${plugin.name} exploded study`}
+          >
+            <PluginViewer name={plugin.name} />
+          </section>
+        ))}
       </div>
       <div className="plugin-grid">
         {plugins.map((product, i) => (

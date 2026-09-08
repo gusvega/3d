@@ -25,7 +25,7 @@ function SurfaceModule({
   const texture = useTexture(`/me/plugins/${design.name.toLowerCase()}.webp`);
   const [x, y, w, h] = module.rect,
     W = 7,
-    D = W / design.aspect;
+    D = (W * design.sourceSize[1]) / design.sourceSize[0];
   const face = useMemo(() => {
     const t = texture.clone();
     t.colorSpace = SRGBColorSpace;
@@ -48,13 +48,17 @@ function SurfaceModule({
       semanticLayer={module.name}
     >
       <Plate
-        width={w * W - 0.018}
-        depth={h * D - 0.018}
+        width={w * W}
+        depth={h * D}
         thickness={0.09}
         color={selected === index ? "#454545" : "#282828"}
       />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.047, 0]}>
-        <planeGeometry args={[w * W - 0.023, h * D - 0.023]} />
+      <mesh
+        name={`InterfaceFace_${index}`}
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0.047, 0]}
+      >
+        <planeGeometry args={[w * W, h * D]} />
         <meshBasicMaterial map={face} toneMapped={false} />
       </mesh>
       {[-1, 1].flatMap((sx) =>
@@ -150,11 +154,15 @@ export default function PluginAssembly({
     return () => onReady(false);
   }, [onReady]);
   const W = 7,
-    D = W / design.aspect;
+    D = (W * design.sourceSize[1]) / design.sourceSize[0];
   return (
     <group
       ref={modelRef}
       name={`${design.name}_exploded_assembly`}
+      userData={{
+        referencePixelSize: design.sourceSize,
+        faceplateDimensions: [W, D],
+      }}
       position={[0, -0.5, 0]}
     >
       <MechanicalPart
