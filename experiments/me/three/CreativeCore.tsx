@@ -17,7 +17,11 @@ export default function CreativeCore({ simple = false }: { simple?: boolean }) {
     const pose = getPose(narrative.chapter, narrative.local);
     root.current.visible = !pose.astra;
     const e =
-      (narrative.reduced ? 0.38 : pose.spread) * (narrative.mobile ? 0.68 : 1);
+      (narrative.reduced
+        ? narrative.chapter === 0 || narrative.chapter >= 8
+          ? 0
+          : 0.38
+        : pose.spread) * (narrative.mobile ? 0.68 : 1);
     root.current.rotation.y = narrative.reduced ? 0 : pose.turn;
     surface.current!.position.y = 0.27 + e * 1.35;
     board.current!.position.y = 0.01 + e * 0.24;
