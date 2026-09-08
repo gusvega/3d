@@ -7,3 +7,7 @@ _site/
 test-results/
 playwright-report/
 .vercel/
+
+public/me/
+
+*.tsbuildinfo

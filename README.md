@@ -56,3 +56,11 @@ Studio reflections are prefiltered into an environment map. Black chrome and mer
 `lib/fluid-response.mjs` maps a 1,024-point FFT into 64 logarithmic bands with fast attack, adjustable release, spectral transients, and restrained loudness normalization. `tests/fluid.test.mjs` checks bass response within 100 ms, sustained tones, decay, frame-rate consistency, and stable cell binding. These are response-model tests, not an end-to-end audio latency guarantee.
 
 The white, grayscale studio uses irregularly spaced magnetic cells, independently varying lobe widths/sharpness, and three broad analytic flow fields. A support-coverage test checks that four-cell vertex binding does not truncate overlapping lobes. The local stereo demo includes midrange material for small speakers. A separate post-volume meter measures the signal sent to the browser output; interrupted playback and zero volume have a Resume sound action. Microphone input remains analysis-only to avoid speaker feedback. Speaker-destination browser tests verify nonzero output, mute, unmute, suspension, and recovery; they cannot verify external hardware routing or physical audibility.
+
+## me — creative system study
+
+The third gallery entry, `/me`, contains Gus Vega's music, software, hardware and studio experience. Its source lives in `experiments/me/`. The main build exports that independent Next.js app with a `/me` base path and copies it into `public/me/`; the gallery rewrites `/me` to the exported document. Use a normal document navigation for this entry so its fonts, CSS and Three.js runtime remain isolated from GUS and Ferrofluid.
+
+The plug-in assemblies include enclosure rails, venting, standoffs, fasteners, encoder shafts/caps, pinned DSP components, capacitors and rear audio connectors. Four mechanical stages separate enclosure, electronics, interface and fasteners. GLB downloads embed component names, positions, phase timing and reversible assembly animations.
+
+Run `npm run build`, `npm test` and `npm run test:e2e` before publishing. `public/me/` is generated, not committed. Original studio photography and verified Spotify artwork are included in the me source asset folder.

@@ -1,6 +1,16 @@
 import Link from "next/link";
 const sketches = [
   {
+    href: "/me",
+    title: "me",
+    number: "03",
+    type: "Creative system",
+    badge: "Exploded instruments",
+    description:
+      "Music, software and hardware. Explore the layers of one connected creative practice.",
+    image: "/me-preview.webp",
+  },
+  {
     href: "/gus",
     title: "GUS",
     number: "01",
@@ -20,7 +30,7 @@ const sketches = [
       "Sound becomes a living surface. Play a pulse, bring a track, or let the world around you in.",
     image: "/fluid-preview.png",
   },
-];
+].sort((a, b) => Number(a.number) - Number(b.number));
 export default function HomePage() {
   return (
     <main className="landing-page">
@@ -42,37 +52,40 @@ export default function HomePage() {
           </h1>
         </div>
         <p>
-          Exploring the space between sound, light, and form. Two little worlds.
-          Yours to move.
+          Exploring the space between sound, light, and form. Three little
+          worlds. Yours to move.
         </p>
       </section>
       <div className="sketch-grid">
-        {sketches.map((sketch) => (
-          <Link
-            key={sketch.href}
-            href={sketch.href}
-            className="sketch-card"
-            prefetch={false}
-          >
-            <div
-              className={`sketch-preview ${sketch.number === "02" ? "fluid-preview" : ""}`}
+        {sketches.map((sketch) => {
+          const Card = sketch.href === "/me" ? "a" : Link;
+          return (
+            <Card
+              key={sketch.href}
+              href={sketch.href}
+              className="sketch-card"
+              {...(sketch.href === "/me" ? {} : { prefetch: false })}
             >
-              <span className="preview-number">{sketch.number} /</span>
-              <img src={sketch.image} alt="" width="800" height="500" />
-              <span className="preview-badge">{sketch.badge}</span>
-            </div>
-            <div className="sketch-content">
-              <div>
-                <span className="eyebrow">{sketch.type}</span>
-                <h2>{sketch.title}</h2>
-                <p>{sketch.description}</p>
+              <div
+                className={`sketch-preview ${sketch.number === "02" ? "fluid-preview" : ""}`}
+              >
+                <span className="preview-number">{sketch.number} /</span>
+                <img src={sketch.image} alt="" width="800" height="500" />
+                <span className="preview-badge">{sketch.badge}</span>
               </div>
-              <span className="open-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </div>
-          </Link>
-        ))}
+              <div className="sketch-content">
+                <div>
+                  <span className="eyebrow">{sketch.type}</span>
+                  <h2>{sketch.title}</h2>
+                  <p>{sketch.description}</p>
+                </div>
+                <span className="open-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </div>
+            </Card>
+          );
+        })}
       </div>
       <footer className="gallery-footer">
         <span>Built with curiosity. By Gus Vega.</span>

@@ -5,3 +5,7 @@ package-lock.json
 test-results/
 playwright-report/
 .vercel/
+
+public/me/
+experiments/me/out/
+experiments/me/package-lock.json

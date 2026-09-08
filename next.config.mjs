@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  async rewrites() {
+    return { beforeFiles: [{ source: "/me", destination: "/me/index.html" }] };
+  },
   async headers() {
     return [
       {
