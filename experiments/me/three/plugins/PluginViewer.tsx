@@ -8,6 +8,7 @@ import {
   PerspectiveCamera,
 } from "three";
 import PluginAssembly from "./PluginAssembly";
+import UmbraModel from "./UmbraModel";
 import { pluginDesigns } from "@/data/plugin-models";
 function ResponsiveCamera() {
   const { camera, size, invalidate } = useThree();
@@ -76,6 +77,13 @@ export default function PluginViewer({ name }: { name: string }) {
     return () => o.disconnect();
   }, []);
   async function download() {
+    if (name === "UMBRA") {
+      const a = document.createElement("a");
+      a.href = "/me/models/umbra-blender-desktop.glb";
+      a.download = "UMBRA-desktop.glb";
+      a.click();
+      return;
+    }
     if (!model.current) return;
     setExporting(true);
     setError("");
@@ -134,7 +142,10 @@ export default function PluginViewer({ name }: { name: string }) {
       <div className="plugin-model-viewer" ref={host}>
         <div className="plugin-scroll-title">
           <h4>{name}</h4>
-          <span>SCROLL TO REVEAL / {design.sourceSize.join(" × ")}</span>
+          <span>
+            SCROLL TO REVEAL /{" "}
+            {name === "UMBRA" ? "1087 × 865" : design.sourceSize.join(" × ")}
+          </span>
         </div>
         <div className="plugin-model-stage" aria-hidden="true">
           {available && visible ? (
@@ -146,18 +157,28 @@ export default function PluginViewer({ name }: { name: string }) {
               gl={{ antialias: true, alpha: true }}
             >
               <ResponsiveCamera />
-              <ambientLight intensity={1.6} />
-              <directionalLight position={[2, 8, 4]} intensity={3} />
-              <directionalLight position={[-5, 4, -3]} intensity={2} />
+              <ambientLight intensity={name === "UMBRA" ? 0.5 : 1.6} />
+              <directionalLight
+                position={[2, 8, 4]}
+                intensity={name === "UMBRA" ? 1.5 : 3}
+              />
+              <directionalLight
+                position={[-5, 4, -3]}
+                intensity={name === "UMBRA" ? 1 : 2}
+              />
               <Suspense fallback={null}>
-                <PluginAssembly
-                  design={design}
-                  spread={spread}
-                  selected={selected}
-                  reduced={reduced}
-                  modelRef={model}
-                  onReady={setReady}
-                />
+                {name === "UMBRA" ? (
+                  <UmbraModel spread={spread} onReady={setReady} />
+                ) : (
+                  <PluginAssembly
+                    design={design}
+                    spread={spread}
+                    selected={selected}
+                    reduced={reduced}
+                    modelRef={model}
+                    onReady={setReady}
+                  />
+                )}
               </Suspense>
             </Canvas>
           ) : (
@@ -187,36 +208,53 @@ export default function PluginViewer({ name }: { name: string }) {
           </button>
         </div>
         <div className="assembly-phases" aria-label="Explosion stages">
-          {["Enclosure", "Electronics", "Interface", "Fasteners"].map(
-            (label, i) => (
-              <span
-                key={label}
-                data-active={spread >= [0.02, 0.12, 0.28, 0.72][i]}
-              >
-                <small>0{i + 1}</small> {label}
-              </span>
-            ),
-          )}
+          {(name === "UMBRA"
+            ? ["Fasteners", "Controls", "Faceplate", "Electronics"]
+            : ["Enclosure", "Electronics", "Interface", "Fasteners"]
+          ).map((label, i) => (
+            <span
+              key={label}
+              data-active={
+                spread >=
+                (name === "UMBRA"
+                  ? [0, 0.12, 0.32, 0.64]
+                  : [0.02, 0.12, 0.28, 0.72])[i]
+              }
+            >
+              <small>0{i + 1}</small> {label}
+            </span>
+          ))}
         </div>
-        <p className="plugin-model-summary">{design.summary}</p>
+        <p className="plugin-model-summary">
+          {name === "UMBRA"
+            ? "A machined faceplate, removable controls, recessed display and two circuit-board assemblies. Built from the supplied UMBRA v1.6.2 reference."
+            : design.summary}
+        </p>
         <div
           className="plugin-module-legend"
           aria-label={`${name} assembly layers`}
         >
-          {design.modules.map((m, i) => (
-            <button
-              type="button"
-              key={m.name}
-              aria-pressed={selected === i}
-              onClick={() => {
-                setSelected(i);
-                if (reduced) setSpread(1);
-              }}
-            >
-              <span>{String(i + 1).padStart(2, "0")}</span>
-              {m.name}
-            </button>
-          ))}
+          {name === "UMBRA" ? (
+            <p className="availability">
+              FASTENERS / ENCODERS / FACEPLATE / DISPLAY / CONTROL PCB / DSP /
+              ENCLOSURE
+            </p>
+          ) : (
+            design.modules.map((m, i) => (
+              <button
+                type="button"
+                key={m.name}
+                aria-pressed={selected === i}
+                onClick={() => {
+                  setSelected(i);
+                  if (reduced) setSpread(1);
+                }}
+              >
+                <span>{String(i + 1).padStart(2, "0")}</span>
+                {m.name}
+              </button>
+            ))
+          )}
         </div>
         <p className="availability">
           3D concept derived from the software interface. Structural and

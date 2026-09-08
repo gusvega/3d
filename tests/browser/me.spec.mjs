@@ -22,24 +22,29 @@ test("me is a separate gallery study with working assets and exploded plug-ins",
   await expect(page).toHaveTitle("me — Gus Vega");
   await expect(page.locator(".scene-container canvas")).toBeVisible();
   await page.getByRole("link", { name: "PLUG-INS", exact: true }).click();
-  const study = page.locator('[data-plugin="SPECTRA"]').first();
-  await study.evaluate((el) =>
-    window.scrollTo(0, el.getBoundingClientRect().top + scrollY - 76),
-  );
-  await expect(study.locator("canvas")).toBeVisible();
-  await study.evaluate((el) =>
-    window.scrollTo(
-      0,
-      el.getBoundingClientRect().top +
-        scrollY -
-        76 +
-        el.clientHeight -
-        innerHeight,
-    ),
-  );
-  await expect
-    .poll(async () => Number(await study.getAttribute("data-spread")))
-    .toBeGreaterThan(0.99);
-  await expect(study.getByRole("slider")).toHaveCount(0);
+  for (const name of ["UMBRA", "SPECTRA"]) {
+    const study = page.locator(`[data-plugin="${name}"]`).first();
+    await study.evaluate((el) =>
+      window.scrollTo(0, el.getBoundingClientRect().top + scrollY - 76),
+    );
+    await expect(study.locator("canvas")).toBeVisible();
+    await expect(
+      study.getByRole("button", { name: "Download GLB" }),
+    ).toBeEnabled();
+    await study.evaluate((el) =>
+      window.scrollTo(
+        0,
+        el.getBoundingClientRect().top +
+          scrollY -
+          76 +
+          el.clientHeight -
+          innerHeight,
+      ),
+    );
+    await expect
+      .poll(async () => Number(await study.getAttribute("data-spread")))
+      .toBeGreaterThan(0.99);
+    await expect(study.getByRole("slider")).toHaveCount(0);
+  }
   expect(failures).toEqual([]);
 });
