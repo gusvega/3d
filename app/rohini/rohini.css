@@ -1,0 +1,1493 @@
+@font-face {
+  font-family: RohiniSans;
+  src: url("/rohini/fonts/dm-sans-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+.rohini-site {
+  --r-paper: #f5f2ec;
+  --r-ink: #272920;
+  --r-muted: #67675f;
+  --r-accent: #b64c32;
+  --r-line: #d9d6cc;
+  --gus-color-primary: 39 41 32;
+  --gus-color-primary-foreground: 255 255 255;
+  --gus-color-background: 245 242 236;
+  --gus-color-foreground: 39 41 32;
+  --gus-color-card: 245 242 236;
+  --gus-color-card-foreground: 39 41 32;
+  --gus-color-border: 217 214 204;
+  --gus-color-muted: 233 229 220;
+  --gus-color-muted-foreground: 103 103 95;
+  background: var(--r-paper);
+  color: var(--r-ink);
+  font-family: RohiniSans, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow: clip;
+}
+.rohini-site * {
+  box-sizing: border-box;
+}
+.rohini-site a {
+  color: inherit;
+  text-decoration: none;
+}
+.rohini-site button {
+  font-family: inherit;
+}
+.rohini-site img {
+  display: block;
+  max-width: 100%;
+}
+.rohini-site h1,
+.rohini-site h2,
+.rohini-site h3,
+.rohini-site p,
+.rohini-site figure {
+  margin: 0;
+}
+.rohini-site h1,
+.rohini-site h2,
+.rohini-site h3 {
+  font-weight: 500;
+}
+.rohini-site em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+.rohini-site a:focus-visible,
+.rohini-site button:focus-visible {
+  outline: 3px solid var(--r-accent);
+  outline-offset: 5px;
+}
+.rohini-site [id] {
+  scroll-margin-top: 110px;
+}
+.rohini-site a,
+.rohini-site button {
+  transition:
+    background 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+}
+.r-wrap {
+  max-width: 1320px;
+  margin: auto;
+  padding-left: 64px;
+  padding-right: 64px;
+}
+.r-header {
+  height: 110px;
+  max-width: 1440px;
+  margin: auto;
+  padding: 0 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  border-bottom: 1px solid var(--r-line);
+}
+.r-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+.r-monogram {
+  font-family: Georgia, serif;
+  font-size: 57px;
+  font-style: italic;
+  line-height: 1;
+}
+.r-monogram span {
+  color: var(--r-accent);
+}
+.r-desktop-nav {
+  display: flex;
+  gap: 38px;
+  align-items: center;
+  font-size: 13px;
+}
+.r-desktop-nav > a {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.r-desktop-nav > a:hover {
+  color: var(--r-accent);
+}
+.r-desktop-nav span {
+  font-size: 10px;
+  align-self: flex-start;
+  color: var(--r-muted);
+}
+.rohini-site .r-nav-resume {
+  font-size: 13px;
+  font-weight: 400;
+}
+.rohini-site .r-contact-pill {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  border: 1px solid var(--r-ink);
+  border-radius: 40px;
+  padding: 12px 22px;
+  font-size: 13px;
+}
+.r-contact-pill:hover {
+  background: var(--r-ink);
+  color: white;
+}
+.rohini-site .r-menu-button {
+  display: none;
+}
+.r-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.r-status-dot {
+  height: 6px;
+  width: 6px;
+  display: inline-block;
+  background: var(--r-accent);
+  border-radius: 50%;
+}
+.r-hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding-top: 82px;
+  padding-bottom: 65px;
+}
+.r-hero h1 {
+  font-size: clamp(56px, 6.6vw, 90px);
+  line-height: 1.07;
+  letter-spacing: -0.065em;
+  margin: 29px 0 25px;
+  position: relative;
+  white-space: nowrap;
+}
+.r-hero h1 em {
+  color: var(--r-accent);
+  font-size: 1.06em;
+}
+.r-spark {
+  color: var(--r-accent);
+  font-size: 50px;
+  display: inline-block;
+  vertical-align: top;
+  margin: 9px 0 0 22px;
+  font-weight: 400;
+}
+.r-hero-copy > p {
+  max-width: 420px;
+  color: var(--r-muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.r-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 32px;
+}
+.rohini-site .r-primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  background: var(--r-ink);
+  color: #fff;
+  border-radius: 3px;
+  padding: 15px 22px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.r-primary-link:hover {
+  background: var(--r-accent);
+}
+.rohini-site .r-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--r-line);
+  padding: 8px 0;
+}
+.r-text-link:hover {
+  color: var(--r-accent);
+}
+.r-hero-note {
+  margin-top: 51px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 10px;
+  color: var(--r-muted);
+  letter-spacing: 0.015em;
+}
+.r-note-line {
+  width: 32px;
+  height: 1px;
+  background: var(--r-muted);
+}
+.r-portrait-area {
+  padding: 0 8px 0 0;
+  position: relative;
+}
+.r-portrait-frame {
+  height: 420px;
+  position: relative;
+  border-radius: 150px 150px 4px 4px;
+  overflow: hidden;
+  background: #d0d7c7;
+}
+.r-portrait-frame img {
+  object-fit: cover;
+  object-position: 50% 43%;
+  filter: saturate(0.6);
+}
+.r-portrait-frame:after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(transparent, #18231d99);
+  pointer-events: none;
+}
+.r-portrait-label {
+  position: absolute;
+  bottom: 22px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 1;
+  color: white;
+  font-size: 8px;
+  letter-spacing: 0.15em;
+}
+.r-photo-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 10px 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--r-muted);
+  font-size: 15px;
+  line-height: 1.4;
+}
+.r-caption-arrow {
+  font-size: 35px;
+  color: var(--r-accent);
+}
+.r-practice-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding-top: 29px;
+  padding-bottom: 29px;
+  border-top: 1px solid var(--r-line);
+  border-bottom: 1px solid var(--r-line);
+}
+.r-practice-strip > span {
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--r-muted);
+}
+.r-practice-strip > p {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  font-size: 14px;
+}
+.r-practice-strip i {
+  height: 4px;
+  width: 4px;
+  background: var(--r-accent);
+  border-radius: 50%;
+}
+.r-work {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+.r-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+}
+.r-section-heading h2,
+.r-about-preview h2,
+.r-approach h2 {
+  font-size: 48px;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+  margin-top: 20px;
+}
+.r-section-heading > p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--r-muted);
+  padding-bottom: 6px;
+}
+.r-filters {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 35px 0;
+}
+.rohini-site .r-filter {
+  border: 1px solid transparent;
+  border-radius: 40px;
+  background: transparent;
+  min-height: 39px;
+  padding: 7px 17px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  gap: 7px;
+}
+.rohini-site .r-filter[aria-pressed="true"] {
+  color: white;
+  background: var(--r-ink);
+  border-color: var(--r-ink);
+}
+.rohini-site .r-filter:hover {
+  border-color: var(--r-ink);
+}
+.r-filter span {
+  font-size: 9px;
+  opacity: 0.7;
+}
+.r-project-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 46px 32px;
+}
+.rohini-site .r-project-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--r-ink);
+  min-width: 0;
+}
+.r-project-image {
+  height: 340px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px;
+}
+.r-project-image img {
+  object-fit: contain;
+  transition: transform 0.5s;
+}
+.r-project-link:hover .r-project-image img {
+  transform: scale(1.025);
+}
+.r-project-link:hover .r-card-arrow {
+  background: var(--r-accent);
+  color: #fff;
+}
+.rohini-site .r-project-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f9f7f1f2;
+  border: 0;
+  color: var(--r-ink);
+  padding: 6px 10px;
+  font-size: 9px;
+  font-weight: 500;
+}
+.r-card-arrow {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  background: #f9f7f1;
+  border-radius: 50%;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+.r-project-info {
+  padding-top: 23px;
+}
+.r-project-info .r-eyebrow {
+  font-size: 9px;
+  color: var(--r-muted);
+}
+.r-project-info h3 {
+  font-size: 26px;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+  margin-top: 9px;
+}
+.r-project-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 13px;
+  font-size: 10px;
+  color: var(--r-muted);
+}
+.r-project-bottom > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--r-ink);
+}
+.r-project-bottom svg {
+  width: 14px;
+  height: 14px;
+}
+.r-featured {
+  grid-column: 1/-1;
+}
+.r-featured .r-project-link {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  background: #eae7de;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.r-featured .r-project-image {
+  height: 395px;
+}
+.r-featured .r-project-info {
+  padding: 45px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.r-featured .r-project-info h3 {
+  font-size: 38px;
+  margin-top: 19px;
+  max-width: 380px;
+}
+.r-featured .r-project-info > p {
+  font-size: 13px;
+  color: var(--r-muted);
+  line-height: 1.8;
+  margin-top: 20px;
+}
+.r-featured .r-project-bottom {
+  margin-top: 27px;
+  flex-wrap: wrap;
+}
+.r-about-preview {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 75px;
+  align-items: center;
+  padding-top: 75px;
+  padding-bottom: 90px;
+  border-top: 1px solid var(--r-line);
+}
+.r-desk-photo {
+  position: relative;
+  height: 440px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.r-desk-photo img {
+  object-fit: cover;
+  object-position: 58%;
+  filter: saturate(0.65);
+}
+.r-desk-photo span {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  color: #fff;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+}
+.r-about-preview p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--r-muted);
+  margin-top: 22px;
+}
+.r-about-preview .r-text-link {
+  margin-top: 24px;
+}
+.r-footer {
+  padding: 65px max(64px, calc((100vw - 1192px) / 2)) 23px;
+  background: #282c24;
+  color: #f5f2ec;
+}
+.r-footer-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.r-footer .r-eyebrow {
+  color: #c2c7b7;
+  font-size: 9px;
+}
+.r-footer h2 {
+  font-size: 65px;
+  line-height: 1.06;
+  letter-spacing: -0.05em;
+  margin-top: 26px;
+}
+.r-footer h2 em {
+  color: #d9bba0;
+}
+.rohini-site .r-footer-arrow {
+  display: grid;
+  place-items: center;
+  color: #ece9df;
+  border: 1px solid #74786c;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  flex-shrink: 0;
+}
+.r-footer-arrow svg {
+  width: 40px;
+  height: 40px;
+}
+.r-footer-arrow:hover {
+  background: #495040;
+}
+.r-footer-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 47px 0 35px;
+  border-bottom: 1px solid #505348;
+  gap: 20px;
+}
+.rohini-site .r-footer-links a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #efeee8;
+  font-weight: 400;
+  font-size: 13px;
+}
+.r-footer-links > div {
+  display: flex;
+  gap: 30px;
+}
+.r-footer-links svg {
+  width: 15px;
+  height: 15px;
+}
+.r-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 22px;
+  font-size: 9px;
+  color: #c2c7b7;
+}
+.r-sr-only,
+.r-skip:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.r-skip:focus {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: white;
+  padding: 15px;
+  z-index: 100;
+}
+.r-mobile-nav {
+  display: none;
+}
+/* Project reading experience */
+.r-case-hero {
+  padding-top: 38px;
+}
+.r-back {
+  font-size: 12px;
+  color: var(--r-muted) !important;
+}
+.r-case-kicker {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-top: 55px;
+}
+.rohini-site .r-case-badge {
+  font-size: 10px;
+  padding: 4px 11px;
+  border: 1px solid var(--r-line);
+  background: transparent;
+  color: var(--r-muted);
+}
+.r-case-hero h1 {
+  font-size: clamp(45px, 5.6vw, 76px);
+  max-width: 960px;
+  line-height: 1.07;
+  letter-spacing: -0.06em;
+  margin: 23px 0;
+}
+.r-lede {
+  font-size: 18px;
+  line-height: 1.8;
+  color: var(--r-muted);
+  max-width: 710px;
+}
+.r-case-meta {
+  display: flex;
+  gap: 70px;
+  padding: 35px 0 40px;
+}
+.r-case-meta span {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--r-muted);
+}
+.r-case-meta p {
+  font-size: 13px;
+  margin-top: 5px;
+}
+.r-case-cover {
+  position: relative;
+  height: 500px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.r-case-cover img {
+  object-fit: contain;
+}
+.r-case-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 65px;
+  align-items: start;
+  padding-top: 75px;
+  padding-bottom: 70px;
+}
+.r-case-toc {
+  position: sticky;
+  top: 35px;
+}
+.r-case-toc .r-eyebrow {
+  font-size: 9px;
+  margin-bottom: 20px;
+}
+.r-case-toc nav {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--r-line);
+}
+.r-case-toc nav a {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--r-muted);
+  padding: 9px 0 9px 15px;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+  line-height: 1.4;
+}
+.r-case-toc nav a span {
+  font-size: 9px;
+  opacity: 0.65;
+}
+.r-case-toc nav a[aria-current],
+.r-case-toc nav a:hover {
+  color: var(--r-accent);
+  border-left-color: var(--r-accent);
+}
+.r-toc-back {
+  display: block;
+  font-size: 11px;
+  margin-top: 28px;
+}
+.r-case-section {
+  padding-bottom: 60px;
+  margin-bottom: 45px;
+  border-bottom: 1px solid var(--r-line);
+}
+.r-case-section-title {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  margin-bottom: 25px;
+}
+.r-case-section-title > span {
+  font-size: 10px;
+  color: var(--r-accent);
+}
+.r-case-section-title h2 {
+  font-size: 34px;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+.r-case-blocks {
+  font-size: 15px;
+  line-height: 1.9;
+  color: #55584e;
+}
+.r-case-blocks h3 {
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--r-ink);
+  margin: 32px 0 15px;
+  letter-spacing: -0.02em;
+}
+.r-case-blocks p,
+.r-case-blocks ul,
+.r-case-blocks ol {
+  margin-bottom: 18px;
+}
+.r-case-blocks ul,
+.r-case-blocks ol {
+  padding-left: 24px;
+  list-style: disc;
+}
+.r-case-blocks ol {
+  list-style: decimal;
+}
+.r-case-blocks li {
+  margin: 8px 0;
+}
+.r-case-blocks a {
+  color: var(--r-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.r-case-blocks figure {
+  margin: 27px 0 35px;
+}
+.rohini-site .r-image-button {
+  display: block;
+  position: relative;
+  padding: 16px;
+  width: 100%;
+  background: #e9e7df;
+  border: 1px solid var(--r-line);
+  border-radius: 5px;
+  min-height: 0;
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.r-image-button img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 740px;
+}
+.r-tall-figure .r-image-button img {
+  max-height: 580px;
+  width: auto;
+  margin: auto;
+}
+.r-image-zoom {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: #f5f2eced;
+  border: 1px solid var(--r-line);
+  padding: 5px 10px;
+  font-size: 10px;
+  color: var(--r-ink);
+  border-radius: 3px;
+}
+.r-case-blocks figcaption {
+  text-align: center;
+  font-size: 10px;
+  color: var(--r-muted);
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+}
+.rohini-site .r-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  margin: 10px 0 20px;
+  color: var(--r-accent);
+}
+.r-next-project {
+  padding-top: 50px;
+  padding-bottom: 60px;
+  border-top: 1px solid var(--r-line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.r-next-project h2 {
+  font-size: 45px;
+  letter-spacing: -0.04em;
+  margin-top: 12px;
+}
+.r-next-project p {
+  color: var(--r-muted);
+  font-size: 13px;
+  margin-top: 5px;
+}
+.r-next-arrow {
+  display: grid;
+  place-items: center;
+  width: 75px;
+  height: 75px;
+  border: 1px solid var(--r-line);
+  border-radius: 50%;
+}
+.r-next-arrow svg {
+  width: 30px;
+  height: 30px;
+}
+.r-next-arrow:hover {
+  background: var(--r-ink);
+  color: white;
+}
+.r-private {
+  padding-top: 70px;
+  padding-bottom: 80px;
+  max-width: 970px;
+}
+.r-private h2 {
+  font-size: 42px;
+  letter-spacing: -0.04em;
+  margin-top: 20px;
+}
+.r-private > p {
+  color: var(--r-muted);
+  max-width: 650px;
+  margin: 20px 0;
+  line-height: 1.9;
+}
+.r-private > div {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+.rohini-site [role="dialog"] {
+  max-width: min(1100px, 94vw);
+  max-height: 94vh;
+  overflow: auto;
+  background: var(--r-paper);
+  color: var(--r-ink);
+}
+.r-lightbox img {
+  max-height: 73vh;
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+}
+.r-lightbox a {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  margin-top: 15px;
+}
+.r-about-hero {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 70px;
+  align-items: center;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+.r-about-hero h1 {
+  font-size: 64px;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+  margin: 23px 0;
+}
+.r-about-hero h1 em {
+  color: var(--r-accent);
+}
+.r-about-hero .r-lede {
+  font-size: 16px;
+}
+.r-about-hero .r-primary-link {
+  margin-top: 28px;
+}
+.r-about-portrait {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 150px 150px 4px 4px;
+}
+.r-about-portrait img {
+  object-fit: cover;
+  filter: saturate(0.7);
+}
+.r-about-story {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  padding-top: 60px;
+  padding-bottom: 65px;
+  border-top: 1px solid var(--r-line);
+}
+.r-about-story p {
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--r-muted);
+  margin-bottom: 22px;
+}
+.r-about-story > div > div:first-child p {
+  font-size: 23px;
+  color: var(--r-ink);
+  line-height: 1.65;
+}
+.r-approach {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  padding-top: 55px;
+  padding-bottom: 45px;
+  border-top: 1px solid var(--r-line);
+}
+.r-accordion > div {
+  border: 0;
+  border-bottom: 1px solid var(--r-line);
+  border-radius: 0;
+}
+.r-accordion button {
+  padding: 22px 0;
+  border: 0;
+  background: transparent;
+  font-size: 15px;
+}
+.r-accordion [role="region"] {
+  background: transparent;
+  border: 0;
+  padding: 0 0 20px;
+  line-height: 1.9;
+  color: var(--r-muted);
+}
+.r-about-resumes {
+  padding-bottom: 70px;
+}
+.r-about-resumes a {
+  font-size: 11px;
+  color: var(--r-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+@media (min-width: 1500px) {
+  .r-hero {
+    padding-top: 95px;
+    padding-bottom: 85px;
+  }
+  .r-portrait-frame {
+    height: 470px;
+  }
+}
+@media (max-width: 1050px) {
+  .r-wrap {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .r-header {
+    padding: 0 35px;
+  }
+  .r-hero {
+    gap: 35px;
+  }
+  .r-hero h1 {
+    font-size: 67px;
+  }
+  .r-spark {
+    font-size: 33px;
+    margin-left: 12px;
+  }
+  .r-hero-actions {
+    gap: 15px;
+  }
+  .r-hero-note {
+    font-size: 9px;
+  }
+  .r-portrait-frame {
+    height: 375px;
+  }
+  .r-practice-strip > p {
+    gap: 18px;
+    font-size: 12px;
+  }
+  .r-project-image {
+    height: 280px;
+  }
+  .r-featured .r-project-info {
+    padding: 30px;
+  }
+  .r-featured .r-project-info h3 {
+    font-size: 32px;
+  }
+  .r-project-bottom {
+    flex-wrap: wrap;
+  }
+  .r-about-preview {
+    gap: 35px;
+  }
+  .r-about-preview h2,
+  .r-section-heading h2,
+  .r-approach h2 {
+    font-size: 40px;
+  }
+  .r-footer {
+    padding-left: 35px;
+    padding-right: 35px;
+  }
+  .r-case-layout {
+    gap: 35px;
+    grid-template-columns: 185px minmax(0, 1fr);
+  }
+  .r-about-hero {
+    gap: 35px;
+  }
+  .r-about-hero h1 {
+    font-size: 50px;
+  }
+}
+@media (max-width: 700px) {
+  .r-wrap {
+    padding-left: 23px;
+    padding-right: 23px;
+  }
+  .r-header {
+    height: 85px;
+    padding: 0 23px;
+  }
+  .r-desktop-nav,
+  .rohini-site .r-contact-pill {
+    display: none;
+  }
+  .r-brand {
+    font-size: 10px;
+    gap: 10px;
+  }
+  .r-monogram {
+    font-size: 46px;
+  }
+  .rohini-site .r-menu-button {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 12px;
+    min-height: 42px;
+    background: transparent;
+    border: 0;
+  }
+  .r-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 23px 23px;
+    border-bottom: 1px solid var(--r-line);
+    gap: 15px;
+    font-size: 17px;
+  }
+  .r-hero {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-top: 43px;
+    padding-bottom: 35px;
+  }
+  .r-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+  .r-hero h1 {
+    font-size: clamp(49px, 11.7vw, 78px);
+    margin-top: 25px;
+    margin-bottom: 23px;
+  }
+  .r-spark {
+    font-size: 35px;
+    margin: 5px 0 0 15px;
+  }
+  .r-hero-copy > p {
+    font-size: 14px;
+    max-width: 470px;
+  }
+  .r-hero-actions {
+    gap: 21px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+  }
+  .rohini-site .r-primary-link {
+    padding: 13px 17px;
+    gap: 20px;
+    font-size: 12px;
+  }
+  .rohini-site .r-text-link {
+    font-size: 12px;
+  }
+  .r-hero-note {
+    margin-top: 28px;
+  }
+  .r-portrait-area {
+    width: 84%;
+    max-width: 350px;
+    justify-self: center;
+    padding: 0;
+  }
+  .r-portrait-frame {
+    height: 365px;
+    border-radius: 160px 160px 3px 3px;
+  }
+  .r-photo-caption {
+    font-size: 13px;
+    padding-top: 13px;
+  }
+  .r-practice-strip {
+    display: block;
+    padding-top: 23px;
+    padding-bottom: 23px;
+  }
+  .r-practice-strip > span {
+    display: none;
+  }
+  .r-practice-strip > p {
+    justify-content: space-between;
+    font-size: 10px;
+    gap: 9px;
+  }
+  .r-practice-strip i {
+    width: 3px;
+    height: 3px;
+    flex-shrink: 0;
+  }
+  .r-work {
+    padding-top: 52px;
+    padding-bottom: 55px;
+  }
+  .r-section-heading {
+    display: block;
+  }
+  .r-section-heading h2,
+  .r-about-preview h2,
+  .r-approach h2 {
+    font-size: 37px;
+    line-height: 1.15;
+    margin-top: 16px;
+  }
+  .r-section-heading > p {
+    font-size: 12px;
+    margin-top: 20px;
+  }
+  .r-section-heading > p br {
+    display: none;
+  }
+  .r-filters {
+    margin: 25px 0;
+    gap: 3px;
+  }
+  .rohini-site .r-filter {
+    font-size: 11px;
+    padding: 6px 11px;
+    min-height: 36px;
+  }
+  .r-project-grid {
+    grid-template-columns: 1fr;
+    gap: 33px;
+  }
+  .r-featured .r-project-link {
+    display: block;
+  }
+  .r-featured .r-project-image {
+    height: 280px;
+  }
+  .r-featured .r-project-info {
+    padding: 25px;
+  }
+  .r-featured .r-project-info h3 {
+    font-size: 30px;
+  }
+  .r-featured .r-project-info > p {
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  .r-featured .r-project-bottom {
+    margin-top: 20px;
+  }
+  .r-project-image {
+    height: 290px;
+  }
+  .r-project-info {
+    padding-top: 18px;
+  }
+  .r-project-info h3 {
+    font-size: 25px;
+  }
+  .r-project-badge {
+    top: 14px !important;
+    left: 14px !important;
+  }
+  .r-project-bottom {
+    font-size: 9px;
+    margin-top: 12px;
+  }
+  .r-about-preview {
+    grid-template-columns: 1fr;
+    gap: 33px;
+    padding-top: 40px;
+    padding-bottom: 55px;
+  }
+  .r-desk-photo {
+    height: 280px;
+  }
+  .r-about-preview p {
+    font-size: 13px;
+    margin-top: 18px;
+  }
+  .r-footer {
+    padding: 43px 23px 20px;
+  }
+  .r-footer h2 {
+    font-size: 43px;
+    margin-top: 22px;
+  }
+  .r-footer .r-eyebrow {
+    font-size: 8px;
+    max-width: 210px;
+  }
+  .rohini-site .r-footer-arrow {
+    width: 55px;
+    height: 55px;
+  }
+  .r-footer-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+  .r-footer-links {
+    display: block;
+    padding: 30px 0;
+  }
+  .r-footer-links > div {
+    margin-top: 22px;
+    gap: 25px;
+  }
+  .rohini-site .r-footer-links a {
+    font-size: 12px;
+  }
+  .r-footer-bottom {
+    flex-wrap: wrap;
+    font-size: 8px;
+    gap: 14px;
+  }
+  .r-footer-bottom > span:nth-child(2) {
+    display: none;
+  }
+  .r-case-hero {
+    padding-top: 25px;
+  }
+  .r-case-kicker {
+    margin-top: 35px;
+  }
+  .r-case-hero h1 {
+    font-size: 45px;
+    margin-top: 20px;
+  }
+  .r-lede {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .r-case-meta {
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 25px 0 30px;
+  }
+  .r-case-meta p {
+    font-size: 11px;
+  }
+  .r-case-meta span {
+    font-size: 8px;
+  }
+  .r-case-cover {
+    height: 285px;
+  }
+  .r-case-layout {
+    display: block;
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+  .r-case-toc {
+    position: static;
+    padding-bottom: 30px;
+    margin-bottom: 35px;
+    border-bottom: 1px solid var(--r-line);
+  }
+  .r-case-toc nav {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    overflow: auto;
+    border: 0;
+    padding-bottom: 5px;
+  }
+  .r-case-toc nav a {
+    padding: 7px 12px;
+    background: #e9e6de;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+  .r-toc-back {
+    display: none;
+  }
+  .r-case-section-title h2 {
+    font-size: 29px;
+  }
+  .r-case-section-title {
+    gap: 13px;
+  }
+  .r-case-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+  }
+  .r-case-blocks {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .r-case-blocks h3 {
+    font-size: 21px;
+  }
+  .rohini-site .r-image-button {
+    padding: 8px;
+  }
+  .r-image-zoom {
+    font-size: 8px;
+    padding: 4px 6px;
+    right: 8px;
+    bottom: 8px;
+  }
+  .r-case-blocks figcaption {
+    font-size: 9px;
+  }
+  .r-next-project {
+    padding-top: 35px;
+    padding-bottom: 40px;
+    gap: 20px;
+  }
+  .r-next-project h2 {
+    font-size: 35px;
+  }
+  .r-next-project p {
+    font-size: 11px;
+  }
+  .r-next-arrow {
+    height: 55px;
+    width: 55px;
+    flex-shrink: 0;
+  }
+  .r-private {
+    padding-top: 45px;
+    padding-bottom: 50px;
+  }
+  .r-private h2 {
+    font-size: 33px;
+  }
+  .r-private > p {
+    font-size: 14px;
+  }
+  .r-private > div {
+    gap: 18px;
+  }
+  .r-about-hero {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    gap: 35px;
+  }
+  .r-about-hero h1 {
+    font-size: 46px;
+  }
+  .r-about-portrait {
+    height: 390px;
+    max-width: 350px;
+    width: 85%;
+    margin: auto;
+  }
+  .r-about-story {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding-top: 35px;
+    padding-bottom: 25px;
+  }
+  .r-about-story p {
+    font-size: 14px;
+  }
+  .r-about-story > div > div:first-child p {
+    font-size: 19px;
+  }
+  .r-approach {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-top: 35px;
+    padding-bottom: 30px;
+  }
+  .r-about-resumes {
+    padding-bottom: 40px;
+  }
+  .r-lightbox img {
+    max-height: 65vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rohini-site * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .r-project-link:hover .r-project-image img {
+    transform: none;
+  }
+}
+.rohini-site .r-case-blocks .r-tall-figure {
+  display: inline-block;
+  vertical-align: top;
+  width: 47%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+.rohini-site .r-case-blocks .r-small-figure {
+  max-width: 180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.r-archive-note {
+  font-size: 12px;
+  color: var(--r-muted);
+  padding: 16px 20px;
+  border-left: 2px solid var(--r-accent);
+  background: #ebe7dd;
+  margin-bottom: 25px !important;
+  line-height: 1.8;
+}

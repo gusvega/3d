@@ -9,3 +9,6 @@ playwright-report/
 public/me/
 experiments/me/out/
 experiments/me/package-lock.json
+
+# Unmodified source-site assets (including archival legacy CSS).
+public/rohini/assets/

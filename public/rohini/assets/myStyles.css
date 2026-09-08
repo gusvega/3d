@@ -1,0 +1,550 @@
+
+    body,
+    html {
+    width: 100%;
+    height: 100%;
+  }
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    .topnav {
+        font-size: 14px;
+    }
+
+    nav{
+
+      font-family: Lato;
+    }
+
+    .navbar-default{
+      background-color: #f63;
+      opacity: 0.8;
+    }
+    .navbar-default .navbar-nav>li>a{
+      color: white;
+    }
+
+    .navbar-default .navbar-brand{
+      color: white;
+      font-size: 20px;
+    }
+    .navbar-default .navbar-nav>li>a:hover {
+      color: black;
+      background-color: transparent;
+    }
+
+    .content-section-a {
+      padding: 50px 0;
+      background-color: #f8f8f8;
+    }
+
+    .content-section-a a{
+      text-decoration: none;
+    }
+
+    .content-section-about a{
+      text-decoration: none;
+    }
+
+    .intro-header {
+      padding-top: 50px;
+      padding-bottom: 50px;
+      text-align: center;
+      color: #f8f8f8;
+      background: url(images/Ro-Intro.png) no-repeat center center;
+      background-size: cover;
+    }
+
+    .intro-message {
+      position: relative;
+      padding-top: 20%;
+      padding-bottom: 20%;
+    }
+
+    .intro-message > h1 {
+      margin: 0;
+      text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+      font-size: 5em;
+    }
+
+
+    .intro-divider {
+        width: 400px;
+        border-top: 1px solid #f8f8f8;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+    }
+
+    .intro-message > h3 {
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    }
+
+    @media(max-width:767px) {
+    .intro-message {
+        padding-bottom: 15%;
+    }
+
+    .intro-message > h1 {
+        font-size: 3em;
+    }
+
+    ul.intro-social-buttons > li {
+        display: block;
+        margin-bottom: 20px;
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+    }
+
+    .network-name {
+        text-transform: uppercase;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 2px;
+    }
+
+    .content-section-about{
+        padding: 50px 0;
+        background-color: #666;
+
+    }
+
+    .content-section-a {
+        padding: 50px 0;
+        background-color: #f8f8f8;
+    }
+
+    .content-section-b {
+        padding: 50px 0;
+        border-top: 1px solid #e7e7e7;
+        border-bottom: 1px solid #e7e7e7;
+    }
+
+    .content-section-b a{
+      text-decoration: none;
+    }
+
+    .section-heading {
+        margin-bottom: 30px;
+    }
+
+    .section-heading-spacer {
+        float: left;
+        width: 200px;
+        border-top: 3px solid #e7e7e7;
+    }
+
+    .banner {
+        padding: 100px 0;
+        color: #f8f8f8;
+        background: url(../img/banner-bg.jpg) no-repeat center center;
+        background-size: cover;
+    }
+
+    .banner h2 {
+        margin: 0;
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+        font-size: 3em;
+    }
+
+    .banner ul {
+        margin-bottom: 0;
+    }
+
+    .banner-social-buttons {
+        float: right;
+        margin-top: 0;
+    }
+
+    @media(max-width:1199px) {
+        ul.banner-social-buttons {
+            float: left;
+            margin-top: 15px;
+        }
+    }
+
+    @media(max-width:767px) {
+        .banner h2 {
+            margin: 0;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+            font-size: 3em;
+        }
+
+        ul.banner-social-buttons > li {
+            display: block;
+            margin-bottom: 20px;
+            padding: 0;
+        }
+
+        ul.banner-social-buttons > li:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    footer {
+        padding: 70px;
+        text-align: center;
+        font-size: 16px;
+        background-color: #ccc;
+
+    }
+
+    footer a{
+      font-size: 16px;
+      color: #666;
+    }
+
+    footer a:hover{
+      text-decoration: none;
+      color: black;
+    }
+
+    p.copyright {
+        margin: 15px 0 0;
+
+    }
+    .row {
+      margin-right: -15px;
+      margin-left: -15px;
+    }
+    .projectRow1{
+      padding-top: 80px;
+    }
+
+    .projectRow1 img{
+      text-align: center;
+    }
+
+    .projectRow1 p{
+
+      font-size: 15px;
+    }
+    .projectRow2{
+      text-align: center;
+      padding-top: 80px;
+    }
+    .skills{
+      height: 150px;
+    }
+    .contacts{
+
+      background-color: #f8f8f8;
+      border-bottom: 1px solid #e7e7e7;
+      padding-top: 40px;
+    padding-bottom: 60px;
+    }
+
+    .contacts p{
+      font-size: 16px;
+      text-decoration: none;
+
+    }
+
+    .contacts p:hover{
+
+      color: #f63;
+    }
+    .contacts a:hover{
+
+      text-decoration: none;
+    }
+    .contact p{
+
+      font-family: Lato;
+      font-size: 16px;
+      text-align: center;
+      padding: 60px;
+    }
+
+    .footer{
+      height: 100px;
+      font-family: Lato;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom : 0px;
+     }
+    #projectContent{
+      padding-left: 150px;
+      margin-top : 40px;
+    }
+
+    .projectButton{
+
+      width: 170px;
+      height: 40px;
+      border: solid 3px #f63;
+      margin-top: 20px;
+      text-align: center;
+      padding-top: 5px;
+      font-size: 16px;
+      color:#666;
+      box-shadow: 1px 1px 3px #888888;
+      transition: all 0.3s ease 0s;
+    }
+
+    .projectButton:hover{
+      background-color: #f63;
+      color: white;
+      text-decoration: none;
+    }
+
+    .projectButton a{
+      color: #666;
+      text-decoration: none;
+    }
+
+    .projectButton a:hover{
+      color: white;
+      text-decoration: none;
+    }
+
+    #row1{
+      border: 1px solid #DBE0E6;
+      height: 400px;
+      background-color: white;
+      margin-top : 50px;
+      box-shadow: 1px 1px 3px #eee;
+    }
+
+    .projectTop{
+
+    }
+    .projectHeader{
+        padding: 100px 0;
+      color: #f63;
+    }
+
+    .challenge{
+
+    }
+
+    .challengeHeading{
+      padding-top: 30px;
+    }
+
+    /* .headerBackground{
+      background-color: #666;
+
+    } */
+    .headerBackground h2{
+      color: #f63;
+    }
+    .row p{
+      display: block;
+      font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+    }
+
+    .border-right{
+      border-right: 1px solid #ddd;
+    }
+
+    .challenge li{
+      font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+    }
+
+    .approach{
+      padding-top: 30px;
+    }
+
+    .business{
+      text-align: center;
+    }
+    .business h3{
+      padding-top: 30px;
+      padding-bottom: 20px;
+    }
+
+    .business img{
+     display: block;
+    margin-left: auto;
+    margin-right: auto }
+    }
+
+
+    .business li{
+      font-size: 18px;
+      color: #666;
+      line-height:32px;
+      word-wrap: break-word;
+      word-spacing: 3px;
+
+    }
+
+    .businessSD li{
+      font-size: 18px;
+      color: #666;
+      line-height:32px;
+      word-wrap: break-word;
+      word-spacing: 3px;
+
+    }
+
+    .business h3{
+      color: black;
+    }
+    .competitive{
+      padding: 30px 0;
+    }
+
+    .competitive li{
+      font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+    }
+
+    .competitiveContent li{
+      font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+    }
+    .persona{
+      padding: 30px;
+    }
+
+    .uxVision li{
+       font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+
+    }
+
+    .design{
+      padding: 30px 0;
+    }
+
+    .wireframeHeading{
+      padding: 30px 0;
+    }
+
+    .wireframe{
+
+    }
+
+    .testingHeading{
+
+    }
+    .testing{
+      }
+
+    .testing p{
+      padding-top: 30px;
+      display: block;
+      font-size: 18px;
+      line-height:32px;
+      color: #666;
+      word-wrap: break-word;
+      word-spacing: 3px;
+    }
+
+
+    .prototypeHeading{
+      padding: 30px 0;
+    }
+
+
+    .interviewContent img{
+      padding-top: 20px;
+    }
+
+    .interviewContent p{
+      padding-top: 20px;
+    }
+
+    .userJourney p{
+      padding-top: 20px;
+    }
+
+    .userJourney img{
+      padding-top: 20px;
+    }
+
+    .userGoalsContent{
+      text-align: center;
+    }
+
+    .userGoalsContent img{
+     display: block;
+    margin-left: auto;
+    margin-right: auto }
+    }
+
+    .wireframeCarousel{
+      background-color: #f63;
+    }
+    .carousel{
+    background-color: : #f63;
+    margin-top: 40px;
+
+    /*border: 2px solid #ccc;*/
+}
+.carousel .item img{
+    margin: 0 auto; /* Align slide image horizontally center */
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+    color: #666;
+
+}
+
+.buttonAnim:hover{
+
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px transparent;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+
+
+}
+
+.btn-info{
+  background-color: #f63;
+  border: 1px solid #666;
+
+}
+.btn-info:hover{
+  background-color: #f63;
+  opacity: .9;
+  border: 1px solid #666;
+
+}
+
+.btn-info:active{
+  background-color: #666;
+}
+.aboutMe{
+  padding:100px;
+}

@@ -1,0 +1,1798 @@
+{
+  "home-depot": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HomeDepot-Mobile.jpg",
+          "alt": "HomeDepot Mobile",
+          "width": 800,
+          "height": 600
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Client: A concept piece for a Home Depot DIY Mobile App.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>This was a group project of three members.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p> Duration :  2 weeks sprint</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Process:  Research, User Interviews, Guerrilla Testing, Competitive analysis, Surveys, Affinity diagramming , Customer Journey, Sketching, Storyboarding, Wireframes, User Interface Design, Rapid Prototyping, User Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>My Role:  User Interviews, Guerrilla Testing, Surveys, Sketching, Wireframes, User Interface Design, Usability Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Tools :  Survey Monkey, Xtensio (Persona), Photoshop, Sketch, InVision.</p>"
+        },
+        {
+          "type": "link",
+          "text": "View Prototype",
+          "href": "https://projects.invisionapp.com/share/8UA406W6G#/screens/212044569"
+        }
+      ]
+    },
+    {
+      "id": "challenge-1",
+      "title": "Challenge",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The challenge is to create a sister app to the Home Depot e-Commerce app focusing on DIY-ers.<br/>\n            The following are the requirements for this app:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>It needs to have the same look and feel as the original app.</li>\n<li>It needs to be lighter and simpler.</li>\n<li>INSPIRE, EDUCATE and EMPOWER it's users while building brand recognition.</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "id": "research-2",
+      "title": "Research",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "Business Goals"
+        },
+        {
+          "type": "heading",
+          "text": "EMPOWER USERS"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Empower_icon.png",
+          "alt": "Empower icon",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Educating and empowering customers, Home Depot has an opportunity to build brand loyalty.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "INCREASE STORE TRAFFIC"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Increase_traffic.png",
+          "alt": "Increase traffic",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Customers who would like to tackle DIY projects are more likely to make frequent trips to the store.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "INCREASE SALES"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Increase_icon.png",
+          "alt": "Increase icon",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Customers that visit the store to purchase items are more likely to browse aisles and purchase other items.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "Competitive Analysis"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>For the competitive analysis of the Home Depot’s DIY app, we compared the DIY section on their website to three of their competitors. We did this due to lack of existing DIY apps. We looked at: Ace, TrueValue, and Lowe’s. </p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HomeDepot-Competitive.png",
+          "alt": "HomeDepot Competitive",
+          "width": 894,
+          "height": 140
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>From the analysis, we feel Home Depot is missing out on the opportunity to empower, educate and become a trusted advisor to its DIY users. To provide an optimal experience for users, the app should include: </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Instructional Videos</li>\n<li>Instructional Articles</li>\n<li>Step-By-Step Instructions</li>\n<li>Material &amp; Tool Lists</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>We believe these features would increase their sales by empowering their users to tackle and complete more DIY projects.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "User Interviews"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>To understand our potential users, we sent out a survey to our networks about their DIY habits. In total, we received 38 responses. In addition to our online survey, we also spoke to 10 people in-person at local hardware stores. Using this information we were able to develop a primary persona for the app. </p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HomeOwners.jpg",
+          "alt": "HomeOwners",
+          "width": 365,
+          "height": 211
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/DIY.jpg",
+          "alt": "DIY",
+          "width": 365,
+          "height": 211
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Workshop.jpg",
+          "alt": "Workshop",
+          "width": 365,
+          "height": 211
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Survey-Graph.png",
+          "alt": "Survey Graph",
+          "width": 1302,
+          "height": 1034
+        },
+        {
+          "type": "heading",
+          "text": "User Journey"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Applying \"Affinity mapping\" to the data we collected we came up with the \"end to end\" user journey. My role was to map the emotions the users were going through in each stage.</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/P3-UserJourney.jpg",
+          "alt": "P3 UserJourney",
+          "width": 600,
+          "height": 437
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/P3-JustUserJourney.jpg",
+          "alt": "P3 JustUserJourney",
+          "width": 600,
+          "height": 437
+        },
+        {
+          "type": "heading",
+          "text": "Persona"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-Jody.jpg",
+          "alt": "HD Jody",
+          "width": 1240,
+          "height": 837
+        },
+        {
+          "type": "heading",
+          "text": "User Goals"
+        },
+        {
+          "type": "heading",
+          "text": "LEARN NEW SKILLS"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/New_Skills_icon.png",
+          "alt": "New Skills icon",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Jody loves learning new skills and trying new things.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "ACCOMPLISHMENT"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/award_icon.png",
+          "alt": "award icon",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>After completing new projects or learning new skills, she gets a strong sense of accomplishment.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "SOCIAL VALIDATION"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/social_icon.png",
+          "alt": "social icon",
+          "width": 270,
+          "height": 270
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Jody loves sharing images and details about her accomplishments on social media.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "User Flow"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HomeDepot_Flow_Diagram.png",
+          "alt": "HomeDepot Flow Diagram",
+          "width": 612,
+          "height": 792
+        }
+      ]
+    },
+    {
+      "id": "design-3",
+      "title": "Design",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Evolution.png",
+          "alt": "Evolution",
+          "width": 852,
+          "height": 156
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-initialSketch.png",
+          "alt": "HD initialSketch",
+          "width": 527,
+          "height": 526
+        },
+        {
+          "type": "paragraph",
+          "html": "<p><br/><br/><br/><br/>For user testing, we spoke to 5 people and asked them to walk through our paper prototype. <br/><br/>\n User Scenario: <br/><br/>\n          The users were given the following scenario and were asked to walk through the paper prototypes. Users were instructed to think aloud while walking through. <br/>\"Your shower tiles are broken and needs repair. You are looking for inspiration and ways to learn how to replace them yourself.\"\n          </p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p><br/><br/><br/><br/>For this app, we went through 7+ iterations of design. We began by whiteboarding together, then developing our own designs based off of the whiteboard sketches. <br/><br/>\n          From there we combined our designs into one paper prototype that we tested with users and then iterated several times in our wireframes before arriving at a final high-fidelity design.</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-Whiteboard.jpg",
+          "alt": "HD Whiteboard",
+          "width": 527,
+          "height": 526
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-Sketch.jpg",
+          "alt": "HD Sketch",
+          "width": 961,
+          "height": 543
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-Wires.jpg",
+          "alt": "HD Wires",
+          "width": 975,
+          "height": 548
+        }
+      ]
+    },
+    {
+      "id": "wireframes-4",
+      "title": "Wireframes",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/1%20-%20Home%20Page.png",
+          "alt": "1   Home Page",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/2%20-%20DIY%20Category%20Browse.png",
+          "alt": "2   DIY Category Browse",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/3%20-%20Bath%20Categories.png",
+          "alt": "3   Bath Categories",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/4%20-%20TILE%20SHOWER.png",
+          "alt": "4   TILE SHOWER",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/5%20-%20Removing%20tile%2C%20video.png",
+          "alt": "5   Removing tile, video",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/6%20-%20Removing%20tile%2C%20instructions.png",
+          "alt": "6   Removing tile, instructions",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-L/7%20-%20Removing%20tile%2C%20materials.png",
+          "alt": "7   Removing tile, materials",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/1%20-%20Home%20Page.png",
+          "alt": "1   Home Page",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/2%20-%20DIY%20Category%20Browse.png",
+          "alt": "2   DIY Category Browse",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/3%20-%20Bath%20Categories.png",
+          "alt": "3   Bath Categories",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/4%20-%20TILE%20SHOWER.png",
+          "alt": "4   TILE SHOWER",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/5%20-%20Removing%20tile%2C%20video.png",
+          "alt": "5   Removing tile, video",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/6%20-%20Removing%20tile%2C%20instructions%20Copy.png",
+          "alt": "6   Removing tile, instructions Copy",
+          "width": 375,
+          "height": 667
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HD-H/7%20-%20Removing%20tile%2C%20materials.png",
+          "alt": "7   Removing tile, materials",
+          "width": 375,
+          "height": 667
+        }
+      ]
+    },
+    {
+      "id": "solution-5",
+      "title": "Solution",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>We added the features users had requested most to our prototype design. Our design supports users who are visual learners as well as readers. During design process, we came with many features. But, considering this is MVP (Minimum Viable Product), we kept our design simple and functional. </p>"
+        }
+      ]
+    }
+  ],
+  "joe-coffee": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Phone-background.jpg",
+          "alt": "Phone background",
+          "width": 800,
+          "height": 600
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Client: Joe, Coffey Ventures, LLC</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>This was a group project of four members.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p> Duration :  3 weeks sprint</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Process:  User Research, Context Research, User Interviews, Guerrilla Testing, Competitive analysis, Surveys, Affinity diagramming , Customer Journey, Sketching, Storyboarding, Wireframes, User Interface Design, Rapid Prototyping, Usability Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>My Role:  User Interviews, Guerrilla Testing, Surveys, Sketching, Wireframes, User Interface Design, Usability Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Tools :  Google forms, Photoshop, Sketch, InVision.</p>"
+        },
+        {
+          "type": "link",
+          "text": "View Prototype",
+          "href": "https://invis.io/PYAGENTA6"
+        }
+      ]
+    },
+    {
+      "id": "challenge-1",
+      "title": "Challenge",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>\"Joe Coffee\" is a mobile ordering app that allows users to order coffee from independent coffee shops. The challenge is to re-design the existing mobile ordering app. The client wanted to conduct reasearch and usability studies, in order to assess the following:<br/>\n</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Where in the process of ordering coffee do the users get stuck?</li>\n<li>What are the most useful and favorite features? </li>\n<li>What are the missing features that users want the most?</li>\n<li>How can we help the regular customers order coffee in a few clicks?</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "id": "research-2",
+      "title": "Research",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The research for this project started with the following:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Identifying business goals.</li>\n<li>Understanding current user flow and missing features.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>During the research phase the following questions needed to be answered.</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>What is the real opportunity to delight coffee drinkers?</li>\n<li>How do we drive engagement with the app and make it stickier?</li>\n<li>Who is the most impactful audience? The coffee shops or the coffee drinkers?</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>We went through the following process to seek answers for the above questions </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Performed comparative and competitive analysis.</li>\n<li>Conducted user surveys and user interviews</li>\n<li>Observed customer behavior at coffee shops during peak and off-peak hours.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Business Goals"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Business goals from stakeholder interview</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Add 1,000 independent coffee shops by early 2018</li>\n<li>3 weeks ago there were 6, today there are 9</li>\n<li>Add Rewards program</li>\n<li>Seeking to provide the same feel as Starbucks, “Your loyalty is good everywhere.”</li>\n<li>Joe is willing to foot the initial bill.</li>\n<li>Increase daily usage</li>\n<li>Most important metric to investors</li>\n<li>Get 15 people at each coffee shop ordering per day (minimum 5 drinks/day per shop)</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "What's working in the current app?"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/positives.png",
+          "alt": "positives",
+          "width": 1440,
+          "height": 900
+        },
+        {
+          "type": "heading",
+          "text": "Areas of improvement that we identified"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ExistingApp.png",
+          "alt": "ExistingApp",
+          "width": 2880,
+          "height": 1400
+        },
+        {
+          "type": "heading",
+          "text": "Current user flow"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ExistingUserFLow.png",
+          "alt": "ExistingUserFLow",
+          "width": 1288,
+          "height": 506
+        },
+        {
+          "type": "heading",
+          "text": "Areas of improvement that we identified"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ExistingUserFlow-FallOut.png",
+          "alt": "ExistingUserFlow FallOut",
+          "width": 1342,
+          "height": 638
+        },
+        {
+          "type": "heading",
+          "text": "Competitive Analysis"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>For the comparative analysis, I looked in to mobile apps like Dunkin Donuts, Starbucks, Cups, Skip.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "Comparative Analysis"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>For the comparative analysis, I looked in to mobile apps like Dunkin Donuts, Starbucks, Gastronaut, Uber, etc.</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CompetitiveAnalysisJoe.png",
+          "alt": "CompetitiveAnalysisJoe",
+          "width": 900,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ComparativeJoe.png",
+          "alt": "ComparativeJoe",
+          "width": 581,
+          "height": 650
+        },
+        {
+          "type": "heading",
+          "text": "User Research"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Sent survey to regular coffee drinkers and Joe coffee app users.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "Survey Results : Coffee Drinkers"
+        },
+        {
+          "type": "heading",
+          "text": "Survey Results : Joe App Users"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Responses: 54</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Key takeaways:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Want convenient location.</li>\n<li>Value good coffee.</li>\n<li>Deterred by long lines and order indecision of others.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Responses: 9</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Key takeaways:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Want convenient location.</li>\n<li>Find it’s easy to get lost in order flow.</li>\n<li>Possible to order from a shop that’s closed or wrong location.</li>\n</ul>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Survey.jpg",
+          "alt": "Joe Survey",
+          "width": 652,
+          "height": 225
+        },
+        {
+          "type": "heading",
+          "text": "On-Site Observations"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>From 4 Independent coffee shops during the morning rush.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Key takeaways:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>63% were regulars.</li>\n<li>90% order the same drink every day.</li>\n<li>Average of 2 baristas working.</li>\n<li>Baristas know the names of regulars.</li>\n<li>Baristas go above and beyond by preparing the drink when they see regulars in line or outside.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Key pain points we are addressing today:"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Help regular users order coffee in just a few steps.</li>\n<li>Make it easier to find a store.</li>\n<li>Remove the guesswork of knowing when their drink will be ready.</li>\n<li>Incentivize repeat usage.</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "id": "design-3",
+      "title": "Design",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The design process included the following steps:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Creating user persona</li>\n<li>Storyboarding</li>\n<li>User testing with paper prototypes</li>\n<li>User testing with clickable wireframes</li>\n<li>More iterations of the above and refining the final design.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "User Persona"
+        },
+        {
+          "type": "heading",
+          "text": "Storyboard"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/personas-mockup.jpg",
+          "alt": "personas mockup",
+          "width": 800,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Storyboard.png",
+          "alt": "Storyboard",
+          "width": 792,
+          "height": 612
+        },
+        {
+          "type": "heading",
+          "text": "User Testing, Iterations, & Process"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Iteration-Joe.png",
+          "alt": "Iteration Joe",
+          "width": 1426,
+          "height": 654
+        },
+        {
+          "type": "heading",
+          "text": "Home Screen"
+        },
+        {
+          "type": "heading",
+          "text": "Confirmation Screen"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Home-Joe.png",
+          "alt": "Home Joe",
+          "width": 1349,
+          "height": 617
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Confirmation-Joe.png",
+          "alt": "Confirmation Joe",
+          "width": 1376,
+          "height": 533
+        }
+      ]
+    },
+    {
+      "id": "wireframes-4",
+      "title": "Wireframes",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Splash.jpg",
+          "alt": "Joe Splash",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-SignIn.jpg",
+          "alt": "Joe SignIn",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Welcome.jpg",
+          "alt": "Joe Welcome",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Map.jpg",
+          "alt": "Joe Map",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-List.jpg",
+          "alt": "Joe List",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Modifier.jpg",
+          "alt": "Joe Modifier",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Tip.jpg",
+          "alt": "Joe Tip",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Payment.jpg",
+          "alt": "Joe Payment",
+          "width": 500,
+          "height": 600
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Joe-Wires/Joe-Confirmation.jpg",
+          "alt": "Joe Confirmation",
+          "width": 500,
+          "height": 600
+        }
+      ]
+    },
+    {
+      "id": "solution-5",
+      "title": "Solution",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>We added a map interface to help users locate themselves and order coffee by choosing the closest shop. Added an onboarding experience to guide users to order coffee. This eliminates confusion in the ordering workflow. ETA for the order eliminates the guesswork of when their drink will be ready. Faster ordering experience for repeat users with less number of clicks.</p>"
+        }
+      ]
+    },
+    {
+      "id": "prototype-6",
+      "title": "Prototype",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>Checkout the prototype below:</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Phone-background.jpg",
+          "alt": "Phone background",
+          "width": 800,
+          "height": 600
+        }
+      ]
+    },
+    {
+      "id": "next-steps-7",
+      "title": "Next Steps",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>During the research we found that there are two sides (users and baristas) that needed focus. We chose to focus on improving the user's experience since we are designing the Minimum Viable Product (MVP). Future design iteration will need to concentrate on improving baristas' experience as they are the face of Joe. Specifically, </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>How do baristas interact with Joe when they receive an order.</li>\n<li>Onboarding/training for baristas.</li>\n<li>Many did not know how Joe worked.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Other areas for future work based on the usability testing we did:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Ability to order multiple drinks in a single flow.</li>\n<li>Ability for users to order ahead or schedule their order in advance.</li>\n<li>Troubleshooting</li>\n<li>What happens when a drink is wrong?</li><li>Add HELP/Customer Support.</li>\n</ul>"
+        }
+      ]
+    }
+  ],
+  "about": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p class=\"mb-0\" style=\"font-size: 20px; color: #666;\">I am a passionate UX Designer with a background in web design and development. I invoke user delight by creating useful and usable user experiences. With the unique combination of skills, I bring method to madness by designing functional and creative UX. In my free time, I enjoy spending time with family, traveling and hiking.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>I’m from a beautiful town called Tirunelveli near the southern tip of India, currently living in Seattle, WA. My interests include playing competitive badminton, cooking &amp; spending time with my family. </p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>With a background in Software Engineering and as a recent Web Designer/Developer I bring in a unique mix of technical skills to UX design. In my previous role as a Web Designer, I learnt to be a team player and developed a passion for customer focused innovation.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>As a competitive badminton player I value perseverance.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>The above experiences in my life have helped me hone my skills as a UX designer, with a focus on customer delight and attention to detail.</p>"
+        }
+      ]
+    }
+  ],
+  "impinj-lab": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Lab-Main.jpg",
+          "alt": "Impinj Lab Main",
+          "width": 800,
+          "height": 600
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Client: Impinj</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>This was an independent project.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p> Duration :  4 weeks sprint</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Process:  Research, Re-design, Iterate, Hand-off and communication to delivery team.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>My Role:  I was solely responsible for the entire process mentioned above. </p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Tools :  Photoshop, Sketch, InVision.</p>"
+        }
+      ]
+    },
+    {
+      "id": "challenge-1",
+      "title": "Challenge",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>This is a lab equipment reservation system for engineers to schedule and run tests on shared test equipment. This system can be accessed via APIs or through a basic HTML page. The goal of this project is to build a powerful and better user interface for this system.<br/>\n          Some of the challenges in this project are:\n            </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Lot of RFID related technical jargon to learn and comprehend.</li>\n<li>Understanding how the current lab reservation system works. </li>\n<li>Varied number of use cases (API vs UI)</li>\n<li>What features the users currently like the most?</li>\n<li>How to help engineers in running their tests fairly quickly by optimizing the current reservation system?</li>\n<li>Understanding the problems faced by the engineers in using the existing system ?</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "id": "research-2",
+      "title": "Research",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>During the research phase I explored the following:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Understanding how the engineers use the current reservation system.</li>\n<li>Identifying missing features.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Project Goals:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>To empower more Impinj employees to use the reservation system to run their own tests.</li>\n<li>Improve the experience for current and prospective users while preserving its value as a work tool for the team.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Current Home Page</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Current-Home.png",
+          "alt": "Impinj Current Home",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Current Details Page</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Current-Details.png",
+          "alt": "Impinj Current Details",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Current Details Modal</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Current-Modal.png",
+          "alt": "Impinj Current Modal",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "heading",
+          "text": "What's working in the current app?"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>To find what’s working and not working, I interviewed 6 engineers.</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>To run tests against a reader, the engineer has to reserve a reader that belongs to the correct reader family, model and hostname. To make the selection easier, each type is given a test fixture name. example name — “awesome-lily”. The engineers were able to reserve a reader by remembering the test fixture name.</li>\n<li>The engineers were able to set a time for their reservation.</li>\n<li>The reader reservation releases automatically once the time expires.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Areas of improvement in the current system:"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>I did Heuristic Evaluation for the current system. A few things to highlight:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Visibility of the system status</li>\n<li>The current UI shows if a reader is available or not. But the status is not highly visible. There is no significant difference between “Available” and “Unavailable” states.</li>\n<li>Match between the system and the real world</li>\n<li>IP address is not a very user friendly choice for naming testers. Using a friendly name instead will be more easier for the users to remember.</li>\n<li>User control and freedom</li>\n<li> There is no \"undo” action available in the UI. There is no fallback or restore to default available for a reader.</li>\n<li>Consistency and Standards</li>\n<li> There is a disconnect between what is in the page versus default values.</li>\n<li>Flexibility and efficiency of use</li>\n<li> Currently, there is no easy way to search or find the necessary reader. The engineer has to go through the entire list to find the one needed.</li>\n<li>Aesthetic and minimalist design</li>\n<li> The current UI has most information needed by the users, but is lacking the aesthetic and minimalist design.</li>\n</ul>"
+        },
+        {
+          "type": "link",
+          "text": "Heuristics Visual",
+          "href": "/rohini/assets/images/Heuristic-Portfolio.pdf"
+        },
+        {
+          "type": "heading",
+          "text": "Scope of work (Research Summary):"
+        },
+        {
+          "type": "list",
+          "html": "<ol>\n<li>Search / Filters / Sort:</li>\n<li>Add search / filters to the home page. This will help testers to find the right reader fast.</li>\n<li>Release / Queueing:</li>\n<li>Change the button state to release once the reader is reserved. Queueing option for testers to make request to wait on particular reader.</li>\n<li>Reservation Dialog:</li>\n<li>Add filters for reader network, reader power, beaglebone network, reservation minutes and usage description.</li>\n<li>User sign in:</li>\n<li>Sign in options for all testers.</li>\n<li>Notifications:</li>\n<li>The notification icon should have the following options:<br/>\n                    a) Readers reserved b) Extend the reservation time c) Pending requests for reservations.</li>\n<li>History:</li>\n<li>Show the history of the readers and the tests currently running.</li>\n</ol>"
+        }
+      ]
+    },
+    {
+      "id": "re-design-3",
+      "title": "Re-Design",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The design process included the following steps:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Userflow.</li>\n<li>Sketching.</li>\n<li>Wireframes.</li>\n<li>Usability Testing with clickable prototype.</li>\n<li>More iterations of the above and refining the final design.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "User Flow"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Userflow.png",
+          "alt": "Impinj Userflow",
+          "width": 1535,
+          "height": 1898
+        },
+        {
+          "type": "heading",
+          "text": "User Testing, Iterations, & Process"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>In my initial design, I came up with couple of ways to make a reservation. </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Make a quick reservation on a reader that they are very familiar with. </li>\n<li>Provide filters and options to search and schedule tests. </li>\n<li>Based on user research I eliminated option (a) because it was confusing to the users and they felt they missed context. </li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p class=\"mb-0\">Lesson learnt: “Multiple ways to achieve the same task is not always useful to the users. It confuses than helping them.”</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>V1 : Quick Reservation</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Home-First.png",
+          "alt": "Impinj Home First",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p style=\"font-size: 14px;line-height: 25px;margin-top: 20px;\">\"Quick Reservation\" button at the very top to help users reserve a test fixture quickly. Turned out to be confusing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>V2 : Filter Options</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Home-Final.png",
+          "alt": "Impinj Home Final",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p style=\"font-size: 14px;line-height: 25px;margin-top: 20px;\">Filter options to find the right test fixture. Users found it very useful during usability testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Final</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Home-Colored.png",
+          "alt": "Impinj Home Colored",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p style=\"font-size: 14px;line-height: 25px;margin-top: 20px;\">Final mockup of the home page.</p>"
+        }
+      ]
+    },
+    {
+      "id": "wireframes-4",
+      "title": "Wireframes",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Filter.png",
+          "alt": "Impinj Filter",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Quick-Reserve.png",
+          "alt": "Impinj Quick Reserve",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Reservation.png",
+          "alt": "Impinj Reservation",
+          "width": 1440,
+          "height": 1161
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Notification.png",
+          "alt": "Impinj Notification",
+          "width": 1440,
+          "height": 1161
+        }
+      ]
+    },
+    {
+      "id": "solution-5",
+      "title": "Solution",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>I added a quick filter component to ease the process of finding the right reader. Such a filter can scale when many number of resources are added. I added notification for when the reservation ends. This will help the engineers not to hold a reader even after the reservation is done and also make it available for the next engineer waiting on them.</p>"
+        }
+      ]
+    },
+    {
+      "id": "next-steps-6",
+      "title": "Next Steps",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>During the research phase, I was exposed to two themes. One being, the current UI is not helping the engineers to find a reader quickly and allows bad practices like keeping the reservation on a reader for infinite number of minutes. Second, improving additional functionalities similar to what the API provides. The following were identified to be included in the v2 of the project.</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>User Login — this will help adding next set of features personalized to the user.</li>\n<li>Notifications — adding notifications like frequently reserved reader, history, reservation related notifications, etc.</li>\n<li>Queueing on readers — this helps the engineer to request a particular reader already in use. </li>\n<li>Extending the reservation time — this feature helps the user to extend the reservation time when they find that their tests are not going to end soon.</li>\n</ul>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>User Login</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-User-Login.png",
+          "alt": "Impinj User Login",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Home Page</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Home-Page-Icons.png",
+          "alt": "Impinj Home Page Icons",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Notification window expanded</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Notification-Expanded.png",
+          "alt": "Notification Expanded",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Profile window expanded</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Profile-Expanded.png",
+          "alt": "Profile Expanded",
+          "width": 1440,
+          "height": 1024
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Queuing on Test Fixture</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Details-Blurb.png",
+          "alt": "Impinj Details Blurb",
+          "width": 1440,
+          "height": 1161
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Call to action change of state</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Impinj-Button-Requested.png",
+          "alt": "Impinj Button Requested",
+          "width": 1440,
+          "height": 1161
+        }
+      ]
+    }
+  ],
+  "cdk": [
+    {
+      "id": "landingpage-html5-css3-template-1",
+      "title": "LandingPage HTML5/CSS3 template",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>I created a HTML5/CSS3 landing page template for the Excellence Motors to showcase the New Years promotional offer. </p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-LP.png",
+          "alt": "CDK LP",
+          "width": 939,
+          "height": 1114
+        }
+      ]
+    },
+    {
+      "id": "migration-of-lexus-site-in-to-a-flex-plus-platform-2",
+      "title": "Migration of lexus site in to a Flex Plus Platform",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>I migrated many lexus sites from Flex platform to Flex plus platform. Following is just one site migration I did for Lexus Edison. During the migration, my assignment is not only to migrate but also re-design the site.  </p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Project Goals:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>To create a responsive design.</li>\n<li>Follow Lexus OEM guidelines and style guides.</li>\n</ul>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-Edison-before.png",
+          "alt": "CDK Edison before",
+          "width": 940,
+          "height": 581
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-Edison-after.png",
+          "alt": "CDK Edison after",
+          "width": 940,
+          "height": 1650
+        }
+      ]
+    },
+    {
+      "id": "typography-4",
+      "title": "Typography",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>This is a mobile design I did for Jones Kia when our platform at CDK didn't support resposive design.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>This is a flyer I created for a website.</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-mobile.png",
+          "alt": "CDK mobile",
+          "width": 521,
+          "height": 704
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-Typography.png",
+          "alt": "CDK Typography",
+          "width": 756,
+          "height": 532
+        }
+      ]
+    },
+    {
+      "id": "banner-5",
+      "title": "Banner",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-memorial.png",
+          "alt": "CDK memorial",
+          "width": 938,
+          "height": 385
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-July4th.png",
+          "alt": "CDK July4th",
+          "width": 894,
+          "height": 367
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-car.png",
+          "alt": "CDK car",
+          "width": 905,
+          "height": 371
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-halloween.png",
+          "alt": "CDK halloween",
+          "width": 903,
+          "height": 370
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-thanksgiving.png",
+          "alt": "CDK thanksgiving",
+          "width": 898,
+          "height": 368
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/CDK-lease.png",
+          "alt": "CDK lease",
+          "width": 898,
+          "height": 368
+        }
+      ]
+    }
+  ],
+  "spitfyre": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/long-gif.gif",
+          "alt": "long gif",
+          "width": 887,
+          "height": 606
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Client: General Assembly Hackathon.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p> Duration :  24 hours.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Process:  Research, Competitive Analysis, Sketching, Persona creation, User Flow, Paper Prototype, Wireframes, User Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>My Role:  Sketching, Wireframes, User Interface Design, Usability Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Tools :  Axure RP, Google Slides.</p>"
+        },
+        {
+          "type": "link",
+          "text": "View Demo",
+          "href": "http://spitfyre.herokuapp.com/"
+        }
+      ]
+    },
+    {
+      "id": "challenge-1",
+      "title": "Challenge",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The General Assembly Seattle campus posted a challenge to group of designers and developers. The challenge is to design and build a simple HTML5 app that \"makes life better\". This can be anything from helping simplify someone’s day, help them lead healthier lives or just bring a bit of joy to their life.<br/>\n            Some of the constraints were:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Need to work with the given API list.</li>\n<li>Coming up with a product in less than 24 hours.</li>\n</ul>"
+        }
+      ]
+    },
+    {
+      "id": "brainstorming-ideas-2",
+      "title": "Brainstorming Ideas",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>Our team consists of two developers and two designers (incuding myself). We all got together and started brainstorming ideas. After fixing on using Urban Dictionary API, we found the idea of being able to replace common, proper words with their slang counterparts in everyday conversation to be hilarious, and the ability to look up slang to be useful.  After talking about a few features that turned into stretch goals, the developers confirmed that it would be possible to build an MVP in this amount of time.\n          </p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/collage-hackathon.jpg",
+          "alt": "collage hackathon",
+          "width": 500,
+          "height": 400
+        }
+      ]
+    },
+    {
+      "id": "persona-3",
+      "title": "Persona",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/persona-hackathon.png",
+          "alt": "persona hackathon",
+          "width": 1422,
+          "height": 774
+        }
+      ]
+    },
+    {
+      "id": "competitive-analysis-4",
+      "title": "Competitive Analysis",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>Some of the competitors I looked into are American slang, Slangit, Urban Dictionary.</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/competitive-hackathon.png",
+          "alt": "competitive hackathon",
+          "width": 1431,
+          "height": 810
+        }
+      ]
+    },
+    {
+      "id": "iterations-5",
+      "title": "Iterations",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/iteration-hackathon.png",
+          "alt": "iteration hackathon",
+          "width": 1434,
+          "height": 817
+        }
+      ]
+    },
+    {
+      "id": "demo-6",
+      "title": "Demo",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>Checkout the demo below:</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Spitfyre.jpg",
+          "alt": "Spitfyre",
+          "width": 4500,
+          "height": 3000
+        }
+      ]
+    },
+    {
+      "id": "what-i-learned-7",
+      "title": "What I learned",
+      "blocks": [
+        {
+          "type": "list",
+          "html": "<ul><li>\nHow to collaborate with developers. It was a great experience and our developers were extremely talented. It was great talking with them about restrictions and what we can build within the given time limit. Myself having the experience with the front end developement skills, I was able to understand and design the project that can be built within the given timeframe.</li>\n</ul>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>The importance of hand drawn sketches and paper prototype. We were able to communicate our ideas to developers effectively using our paper prototype. They were able to see how the interactions work and build them accordingly. When announcing the result, the judges mentioned that one of the reason we won, is our team collaboration and how we interacted with each other using sketches, paper prototype.</li></ul>"
+        }
+      ]
+    },
+    {
+      "id": "next-steps-8",
+      "title": "Next Steps",
+      "blocks": [
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Adding the ability to the user to compile their own dictionary.</li>\n<li>Utilizing the sound that came with the API for the searched words.</li>\n<li>More usability testing.</li>\n</ul>"
+        }
+      ]
+    }
+  ],
+  "standard-goods": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Laptop.jpg",
+          "alt": "Laptop",
+          "width": 2700,
+          "height": 2448
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Client: TheStandardGoods.com</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Standard Goods is a boutique in Capitol Hill, selling unique designer collections. They specialize on products crafted in North America.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p> Duration :  2 weeks sprint</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Process:  Research, Competitive analysis, Task Analysis, Affinity diagramming , Customer Journey, Sketching, Storyboarding, Card sort, Site map, Wireframes, User Interface Design, Rapid Prototyping, User Testing.</p>"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>Tools :  Photoshop, Omnigraffle and InVision.</p>"
+        },
+        {
+          "type": "link",
+          "text": "View Prototype",
+          "href": "https://projects.invisionapp.com/share/8UA406W6G#/screens/212044569"
+        }
+      ]
+    },
+    {
+      "id": "challenge-1",
+      "title": "Challenge",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>The challenge is to identify things to improve and make the website more user friendly. Specifically, I had to identify:</p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Better and meaningful ways to organize and group products (Information Architecture).</li>\n<li>Where in the process of purchasing a product, an user gets stuck.</li>\n<li>How to engage and guide the users in completing the purchase.</li>\n</ul>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Challenge-Screenshot.jpg",
+          "alt": "Challenge Screenshot",
+          "width": 1024,
+          "height": 479
+        }
+      ]
+    },
+    {
+      "id": "research-2",
+      "title": "Research",
+      "blocks": [
+        {
+          "type": "heading",
+          "text": "Business Analysis"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>I started by getting to know StandardGoods: </p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Core values.</li>\n<li>Competitors.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Business Goals"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>Increase in Online Sales.</li>\n<li>High customer satisfaction, by adding customer reviews to the site.</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Competitive and Comparative Analysis"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>I chose competitors like Totokaelo and Anthropologie for the competitive analysis. After comparing features, I identified answers to the following questions.<br/></p>"
+        },
+        {
+          "type": "list",
+          "html": "<ul>\n<li>What is StandardGoods doing the best ?</li>\n<li>How can the checkout process be made simple and clear to the buyer ?</li>\n<li>Which features need improvement ?</li>\n<li>How can the product grouping be made better?</li>\n</ul>"
+        },
+        {
+          "type": "heading",
+          "text": "Persona"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Dexter.jpg",
+          "alt": "Dexter",
+          "width": 1350,
+          "height": 696
+        },
+        {
+          "type": "heading",
+          "text": "UX Vision"
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>\n              UX vision for this project is to help the users by simplifying the shopping online experience. Some of the biggest pain points of Dexter are\n              \n<li>He was confused by the way the products are grouped. </li>\n<li>No easy way to filter and sort products.</li>\n<li>Very little information about the products and no reviews.</li>\n<li>Methods of payment are not obvious.</li>\n\n</p>"
+        }
+      ]
+    },
+    {
+      "id": "design-3",
+      "title": "Design",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Evolution.png",
+          "alt": "Evolution",
+          "width": 852,
+          "height": 156
+        }
+      ]
+    },
+    {
+      "id": "usability-testing-4",
+      "title": "Usability Testing:",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>I created an initial version of wireframes for the improved site and put it through usability testing with multiple users.\n   The Before and After snapshots below show how the wireframes evolved during the testing phase.\n        </p>"
+        },
+        {
+          "type": "heading",
+          "text": "Before"
+        },
+        {
+          "type": "heading",
+          "text": "After"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Masthead-before.png",
+          "alt": "Masthead before",
+          "width": 645,
+          "height": 90
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Masthead-after.png",
+          "alt": "Masthead after",
+          "width": 641,
+          "height": 132
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>The users felt the masthead needed extra whitespace. So, I iterated my wireframe to incorporate user feedback.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "Before"
+        },
+        {
+          "type": "heading",
+          "text": "After"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ProductDetails-before.png",
+          "alt": "ProductDetails before",
+          "width": 377,
+          "height": 383
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ProductDetails-after.png",
+          "alt": "ProductDetails after",
+          "width": 425,
+          "height": 494
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>While testing, users felt there was no clear visual indication if the \"Add to cart\" operation succeeded. If the users wanted to checkout at this point, there was no obvious way to do it. I solved these problems by changing the color of the \"Add to cart\" button to gray when clicked and revealing a new button to proceed with checkout.</p>"
+        },
+        {
+          "type": "heading",
+          "text": "Before"
+        },
+        {
+          "type": "heading",
+          "text": "After"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Checkout-before.png",
+          "alt": "Checkout before",
+          "width": 416,
+          "height": 264
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Checkout-after.png",
+          "alt": "Checkout after",
+          "width": 437,
+          "height": 329
+        },
+        {
+          "type": "paragraph",
+          "html": "<p>The methods of payment weren't clear. Specifically the credit card options were not obviously displayed misleading the users. I solved this problem by redesigning the checkout flow.</p>"
+        }
+      ]
+    },
+    {
+      "id": "wireframe-5",
+      "title": "Wireframe",
+      "blocks": [
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/HomePage.png",
+          "alt": "HomePage",
+          "width": 377,
+          "height": 567
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/ProductList.png",
+          "alt": "ProductList",
+          "width": 370,
+          "height": 555
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Modal.png",
+          "alt": "Modal",
+          "width": 376,
+          "height": 567
+        },
+        {
+          "type": "heading",
+          "text": "For more wires click here....."
+        }
+      ]
+    },
+    {
+      "id": "prototype-6",
+      "title": "Prototype",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "html": "<p>Checkout the prototype below:</p>"
+        },
+        {
+          "type": "image",
+          "src": "/rohini/assets/images/Laptop.jpg",
+          "alt": "Laptop",
+          "width": 2700,
+          "height": 2448
+        }
+      ]
+    }
+  ]
+}
