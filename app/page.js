@@ -5,9 +5,9 @@ const sketches = [
     title: "me",
     number: "03",
     type: "Creative system",
-    badge: "Exploded instruments",
+    badge: "Work in progress",
     description:
-      "Music, software and hardware. Explore the layers of one connected creative practice.",
+      "Music, software and hardware. I’m still working on this interactive world. Explore it as it takes shape.",
     image: "/me-preview.webp",
   },
   {
