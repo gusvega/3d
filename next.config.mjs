@@ -7,6 +7,13 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: "/music/sw.js",
+        headers: [
+          { key: "Service-Worker-Allowed", value: "/music" },
+          { key: "Cache-Control", value: "no-cache" },
+        ],
+      },
+      {
         source: "/:path*",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
