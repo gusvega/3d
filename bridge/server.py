@@ -79,7 +79,7 @@ class Handler(BaseHTTPRequestHandler):
     def headers_out(self, code, length, typ='application/json'):
         self.send_response(code)
         origin=self.headers.get('Origin','')
-        if origin in ('https://3d.gusvega.dev','http://localhost:3018','http://127.0.0.1:3018'):
+        if origin in ('https://gusvega.dev','https://3d.gusvega.dev','http://localhost:3018','http://127.0.0.1:3018'):
             self.send_header('Access-Control-Allow-Origin',origin)
         self.send_header('Vary','Origin')
         self.send_header('Access-Control-Allow-Headers','Authorization, Content-Type')

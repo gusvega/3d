@@ -42,3 +42,7 @@ SPECTRA_KEY_FILE="/path/to/access-key" SPECTRA_BROWSER=webkit node bridge/browse
 ```
 
 The browser check expects an existing prepared test song. Set `SPECTRA_TEST_URL` to verify production. A generated 18-second musical test fixture exercised the real separation pipeline, lossless packet decoding, playback, solo, seeking and WAV download in Chromium and WebKit at 390 px. This is browser-engine verification, not a physical iPhone/Android or cellular-network test.
+
+## Migration
+
+The private workspace now lives at https://gusvega.dev/Spectra in gusvega/personal-website. The original route permanently redirects there. The Mac key and prepared songs remain unchanged; enter the same key once on the new origin. The bridge allows gusvega.dev through its explicit CORS allowlist.

@@ -7,6 +7,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/spectra",
+        destination: "https://gusvega.dev/Spectra",
+        permanent: true,
+      },
+      {
         source: "/music",
         destination: "https://gusvega.dev/music",
         permanent: true,
