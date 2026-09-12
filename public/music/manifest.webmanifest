@@ -1,11 +1,11 @@
 {
-  "name": "Gus Music — Compose and learn",
+  "name": "Gus Music \u2014 Compose and learn",
   "short_name": "Music",
   "start_url": "/music",
   "scope": "/music",
   "display": "standalone",
-  "background_color": "#121513",
-  "theme_color": "#121513",
+  "background_color": "#0f0f0f",
+  "theme_color": "#0f0f0f",
   "icons": [
     {
       "src": "/music/icon.svg",

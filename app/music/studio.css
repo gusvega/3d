@@ -1,21 +1,48 @@
+.music-app.music-app {
+  --gus-color-background: 15 15 15;
+  --gus-color-foreground: 245 245 245;
+  --gus-color-card: 24 24 24;
+  --gus-color-card-foreground: 245 245 245;
+  --gus-color-primary: 245 245 245;
+  --gus-color-primary-foreground: 15 15 15;
+  --gus-color-secondary: 38 38 38;
+  --gus-color-secondary-foreground: 245 245 245;
+  --gus-color-muted: 38 38 38;
+  --gus-color-muted-foreground: 163 163 163;
+  --gus-color-accent: 64 64 64;
+  --gus-color-accent-foreground: 245 245 245;
+  --gus-color-border: 64 64 64;
+  --gus-color-input: 64 64 64;
+  --gus-color-ring: 245 245 245;
+  --gus-color-popover: 24 24 24;
+  --gus-color-popover-foreground: 245 245 245;
+  --gus-color-success: 212 212 212;
+  --gus-color-warning: 212 212 212;
+  --gus-color-destructive: 212 212 212;
+  --gus-color-info: 212 212 212;
+  --gus-font-family-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
 .music-app {
-  --bg: #121513;
-  --panel: #1a1e1b;
-  --line: #333a33;
-  --text: #eef0e9;
-  --muted: #a0aaa0;
-  --green: #c7ef9d;
-  --amber: #e6c899;
+  --bg: rgb(var(--gus-color-background));
+  --panel: rgb(var(--gus-color-card));
+  --line: rgb(var(--gus-color-border));
+  --text: rgb(var(--gus-color-foreground));
+  --muted: rgb(var(--gus-color-muted-foreground));
+  --highlight: rgb(var(--gus-color-primary));
+  --chord-mark: #cbcbcb;
   min-height: 100svh;
   background: var(--bg);
   color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--gus-font-family-sans);
   color-scheme: dark;
   font-size: 14px;
   line-height: 1.5;
   padding-bottom: env(safe-area-inset-bottom);
 }
 .music-app * {
+  border-color: rgb(var(--gus-color-border));
   box-sizing: border-box;
 }
 .music-app button,
@@ -29,7 +56,7 @@
 }
 .music-app button {
   border: 1px solid var(--line);
-  background: #222822;
+  background: #262626;
   color: var(--text);
   border-radius: 7px;
   padding: 9px 14px;
@@ -39,8 +66,8 @@
     border-color 0.15s;
 }
 .music-app button:hover {
-  background: #30392e;
-  border-color: #64715d;
+  background: #363636;
+  border-color: #6d6d6d;
 }
 .music-app button:disabled {
   opacity: 0.4;
@@ -50,13 +77,13 @@
 .music-app input:focus-visible,
 .music-app select:focus-visible,
 .music-app a:focus-visible {
-  outline: 2px solid var(--green);
+  outline: 2px solid var(--highlight);
   outline-offset: 3px;
 }
 .music-app input:not([type="checkbox"]):not([type="range"]),
 .music-app select {
   border: 1px solid var(--line);
-  background: #171b17;
+  background: #1a1a1a;
   color: var(--text);
   border-radius: 6px;
   padding: 10px 12px;
@@ -64,16 +91,16 @@
 }
 .music-app input[type="checkbox"],
 .music-app input[type="range"] {
-  accent-color: var(--green);
+  accent-color: var(--highlight);
 }
 .music-app .primary {
-  background: var(--green);
-  color: #172011;
-  border-color: var(--green);
+  background: var(--highlight);
+  color: #1d1d1d;
+  border-color: var(--highlight);
   font-weight: 600;
 }
 .music-app .primary:hover {
-  background: #dcffb9;
+  background: #f3f3f3;
 }
 .music-app h1,
 .music-app h2,
@@ -121,7 +148,7 @@
   line-height: 1;
   font-weight: 700;
   width: 30px;
-  color: var(--green);
+  color: var(--highlight);
 }
 .header-note {
   color: var(--muted);
@@ -134,7 +161,7 @@
 }
 .save-indicator {
   font-size: 11px;
-  color: var(--green);
+  color: var(--highlight);
 }
 .save-indicator span {
   color: var(--muted);
@@ -173,7 +200,7 @@
 .key-orbit {
   width: 122px;
   height: 122px;
-  border: 1px solid #526248;
+  border: 1px solid #5d5d5d;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -181,14 +208,14 @@
   justify-content: center;
   position: relative;
   margin-right: 35px;
-  background: radial-gradient(circle at center, #2b3825, #151a15);
+  background: radial-gradient(circle at center, #343434, #191919);
 }
 .key-orbit:before,
 .key-orbit:after {
   content: "";
   position: absolute;
   inset: -12px;
-  border: 1px solid #2f3b2c;
+  border: 1px solid #373737;
   border-radius: 50%;
   transform: rotate(-25deg) scaleX(1.4);
 }
@@ -198,7 +225,7 @@
 .key-orbit span {
   font-size: 42px;
   line-height: 1.1;
-  color: var(--green);
+  color: var(--highlight);
 }
 .key-orbit small {
   color: var(--muted);
@@ -220,7 +247,7 @@
   color: var(--muted);
 }
 .music-tabs button.active {
-  border-bottom-color: var(--green);
+  border-bottom-color: var(--highlight);
   color: var(--text);
 }
 .music-tabs small {
@@ -232,15 +259,15 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  background: #1c211c;
+  background: #202020;
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 16px 20px;
   margin-bottom: 22px;
 }
 .music-app .play-button {
-  background: var(--green);
-  color: #172011;
+  background: var(--highlight);
+  color: #1d1d1d;
   width: 48px;
   height: 48px;
   flex-shrink: 0;
@@ -297,13 +324,13 @@
   margin-left: auto;
 }
 .music-app .toggle.active {
-  color: var(--green);
-  border-color: #536146;
-  background: #283025;
+  color: var(--highlight);
+  border-color: #5c5c5c;
+  background: #2e2e2e;
 }
 .brief-box {
-  border: 1px solid #46503e;
-  background: linear-gradient(110deg, #232d20, #1a201a);
+  border: 1px solid #4d4d4d;
+  background: linear-gradient(110deg, #2a2a2a, #1e1e1e);
   border-radius: 10px;
   padding: 20px 24px;
   margin-bottom: 24px;
@@ -311,7 +338,7 @@
 .brief-box label {
   font-size: 9px;
   letter-spacing: 1.6px;
-  color: var(--green);
+  color: var(--highlight);
   display: block;
   margin-bottom: 12px;
 }
@@ -373,14 +400,14 @@
 }
 .chord-card {
   border: 1px solid var(--line);
-  background: #202620;
+  background: #242424;
   border-radius: 8px;
   padding: 14px;
   min-width: 0;
 }
 .chord-card.current {
-  border-color: #7e9169;
-  background: #293225;
+  border-color: #8a8a8a;
+  background: #2f2f2f;
 }
 .chord-top {
   display: flex;
@@ -391,7 +418,7 @@
 }
 .chord-top span {
   margin-left: auto;
-  color: var(--green);
+  color: var(--highlight);
 }
 .music-app .chord-top button {
   border: 0;
@@ -440,9 +467,9 @@
   border-color: transparent;
 }
 .track-tabs button.active {
-  color: var(--green);
-  background: #2c3527;
-  border-color: #4d5d40;
+  color: var(--highlight);
+  background: #323232;
+  border-color: #585858;
 }
 .track-tabs span {
   margin-left: 8px;
@@ -463,9 +490,9 @@
   background: none;
 }
 .bar-tabs button.active {
-  background: #3a4432;
-  border-color: #788868;
-  color: var(--green);
+  background: #414141;
+  border-color: #828282;
+  color: var(--highlight);
 }
 .roll-tools {
   display: flex;
@@ -497,7 +524,7 @@
   overflow: auto;
   border: 1px solid var(--line);
   border-radius: 6px;
-  background: #151a16;
+  background: #191919;
 }
 .piano-roll {
   position: relative;
@@ -523,14 +550,14 @@
   right: 0;
   height: 23px;
   display: flex;
-  border-bottom: 1px solid #252d25;
+  border-bottom: 1px solid #2b2b2b;
 }
 .roll-row > span {
   width: 43px;
   flex-shrink: 0;
   font-family: monospace;
   font-size: 9px;
-  color: #939f90;
+  color: #9b9b9b;
   padding: 4px 5px;
   border-right: 1px solid var(--line);
   text-align: right;
@@ -544,18 +571,18 @@
   height: 23px;
   min-height: 0;
   border: 0;
-  border-right: 1px solid #242c24;
+  border-right: 1px solid #2a2a2a;
   border-radius: 0;
   padding: 0;
   background: transparent;
   opacity: 1;
 }
 .music-app .roll-cells button:nth-child(4n + 1) {
-  border-left: 1px solid #3b4538;
+  border-left: 1px solid #424242;
   background: #ffffff03;
 }
 .music-app .roll-cells button:enabled:hover {
-  background: #c7ef9d30;
+  background: #e1e1e130;
 }
 .note-layer {
   position: absolute;
@@ -567,11 +594,11 @@
   position: absolute;
   height: 17px;
   min-height: 0;
-  border: 1px solid #91ad77;
+  border: 1px solid #a3a3a3;
   padding: 0 4px;
-  background: #8fa978;
+  background: #a0a0a0;
   border-radius: 3px;
-  color: #172013;
+  color: #1d1d1d;
   font-size: 9px;
   text-align: left;
   overflow: hidden;
@@ -579,14 +606,14 @@
   white-space: nowrap;
 }
 .music-app .roll-note.selected {
-  background: var(--green);
-  border-color: #edffd8;
+  background: var(--highlight);
+  border-color: #f8f8f8;
 }
 .playhead {
   position: absolute;
   top: 24px;
   bottom: 0;
-  background: #fff;
+  background: #ffffff;
   width: 1px;
   pointer-events: none;
 }
@@ -611,7 +638,7 @@
   width: 70px;
 }
 .insight-panel {
-  background: linear-gradient(155deg, #2a3025, #1c211b);
+  background: linear-gradient(155deg, #2e2e2e, #202020);
 }
 .insight-panel h2 {
   font-size: 56px;
@@ -626,8 +653,8 @@
 }
 .note-badges span {
   font-size: 10px;
-  background: #38402f;
-  color: #d7e4c6;
+  background: #3d3d3d;
+  color: #dfdfdf;
   padding: 4px 8px;
   border-radius: 4px;
 }
@@ -653,7 +680,7 @@
   flex: 1;
   min-width: 0;
   min-height: 52px;
-  background: #232a20;
+  background: #282828;
 }
 .scale-chips strong {
   font-size: 11px;
@@ -680,7 +707,7 @@
   padding: 0;
   background: none;
   border-color: transparent;
-  color: var(--green);
+  color: var(--highlight);
 }
 .mixer-track strong {
   display: block;
@@ -694,12 +721,12 @@
 }
 .meter {
   margin-left: auto;
-  color: #8ca977;
+  color: #9f9f9f;
   letter-spacing: 1px;
   font-size: 13px;
 }
 .music-app .muted {
-  color: #697066 !important;
+  color: #6e6e6e !important;
 }
 .mixer-panel > p {
   margin: 24px 0 0;
@@ -727,16 +754,16 @@
   padding: 0;
   min-height: 36px;
   font-size: 10px;
-  background: #262d25;
-  color: #67715f;
+  background: #2b2b2b;
+  color: #6e6e6e;
 }
 .drum-row button.downbeat {
-  border-color: #66715b;
+  border-color: #6d6d6d;
 }
 .music-app .drum-row button.on {
-  background: #c7d9ad;
-  color: #26321e;
-  border-color: #c7d9ad;
+  background: #d2d2d2;
+  color: #2e2e2e;
+  border-color: #d2d2d2;
 }
 .muted-copy {
   color: var(--muted);
@@ -747,13 +774,13 @@
   gap: 12px;
   flex-wrap: wrap;
   font-size: 9px;
-  color: #a3b89b;
+  color: #b1b1b1;
 }
 .keyboard-legend span:nth-child(2) {
-  color: var(--amber);
+  color: var(--chord-mark);
 }
 .keyboard-legend span:nth-child(3) {
-  color: var(--green);
+  color: var(--highlight);
 }
 .heading-muted {
   font-size: 14px;
@@ -785,19 +812,19 @@
 .music-app .piano-key.white {
   height: 165px;
   z-index: 1;
-  background: #d5d8cf;
-  border: 1px solid #161b16;
-  color: #687063;
+  background: #d7d7d7;
+  border: 1px solid #1a1a1a;
+  color: #6d6d6d;
   padding-bottom: 12px;
 }
 .music-app .piano-key.black {
   height: 103px;
   z-index: 2;
-  background: #101511;
-  border: 1px solid #3d453c;
-  color: #788574;
+  background: #141414;
+  border: 1px solid #434343;
+  color: #818181;
   padding-bottom: 10px;
-  box-shadow: 0 4px 5px #0007;
+  box-shadow: 0 4px 5px #00000077;
 }
 .piano-key span {
   font-size: 10px;
@@ -807,26 +834,26 @@
   min-height: 13px;
 }
 .music-app .piano-key.white.in-scale {
-  background: #eff1e8;
-  color: #26321f;
+  background: #f0f0f0;
+  color: #2e2e2e;
 }
 .music-app .piano-key.black.in-scale {
-  background: #34412f;
-  color: #e7efdf;
+  background: #3d3d3d;
+  color: #ececec;
 }
 .music-app .piano-key.chord-tone:after {
   content: "";
   width: 6px;
   height: 6px;
-  background: #987a43;
+  background: #7c7c7c;
   border-radius: 50%;
   position: absolute;
   bottom: 47px;
 }
 .music-app .piano-key.lit {
-  background: var(--green) !important;
-  color: #172011 !important;
-  box-shadow: inset 0 -5px 0 #89af5e;
+  background: var(--highlight) !important;
+  color: #1d1d1d !important;
+  box-shadow: inset 0 -5px 0 #a1a1a1;
 }
 .learn-panel > p {
   max-width: 740px;
@@ -835,8 +862,8 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  background: #293324;
-  border: 1px solid #4d5b40;
+  background: #303030;
+  border: 1px solid #565656;
   border-radius: 8px;
   padding: 24px;
   margin: 24px 0;
@@ -878,8 +905,8 @@
   color: var(--muted);
 }
 .phrase-notes button.active {
-  border-color: var(--green);
-  background: #38472f;
+  border-color: var(--highlight);
+  background: #424242;
 }
 .lesson-columns {
   display: grid;
@@ -914,7 +941,7 @@
 }
 .setup-grid > label > span {
   font-size: 12px;
-  color: var(--green);
+  color: var(--highlight);
 }
 .setup-grid small {
   display: flex;
@@ -951,7 +978,7 @@
   margin: 24px 0;
 }
 .export-summary strong {
-  color: var(--green);
+  color: var(--highlight);
   font-size: 22px;
   font-weight: 400;
 }
@@ -998,7 +1025,7 @@
   margin-bottom: 10px;
 }
 .transfer-note {
-  border-left: 2px solid var(--green);
+  border-left: 2px solid var(--highlight);
   padding: 4px 0 4px 20px;
   margin: 30px 0 0;
   max-width: 700px;
@@ -1011,24 +1038,24 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #1b2419;
-  border: 1px solid #3c4b33;
+  background: #212121;
+  border: 1px solid #464646;
   border-radius: 7px;
   padding: 12px 16px;
-  color: #d7e2ce;
+  color: #dedede;
   font-size: 12px;
   margin: 24px 0;
 }
 .music-status > span {
   font-size: 8px;
-  color: var(--green);
+  color: var(--highlight);
 }
 .music-footer {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   font-size: 10px;
-  color: #909b8e;
+  color: #989898;
   padding: 20px 0 32px;
   border-top: 1px solid var(--line);
 }
@@ -1441,4 +1468,35 @@
 }
 .music-intro {
   overflow: hidden;
+}
+
+.music-app .piano-key.lit {
+  background: #737373 !important;
+  color: #fff !important;
+  box-shadow: inset 0 -5px 0 #fff;
+}
+.music-app .piano-key.lit.chord-tone:after {
+  background: #fff;
+}
+.music-app .roll-note.selected {
+  outline: 1px solid #fff;
+  outline-offset: 1px;
+}
+.music-app .piano-key.white.in-scale {
+  border-top: 4px solid #fff;
+}
+.music-app .piano-key.black.in-scale {
+  border-top: 4px solid #a3a3a3;
+}
+.music-app .piano-key span {
+  display: block;
+}
+.music-app .scale-chips button {
+  flex-direction: column;
+}
+.music-app .chord-top button {
+  flex-shrink: 0;
+}
+.music-app .roll-note {
+  justify-content: flex-start;
 }

@@ -26,3 +26,7 @@ Octave labels default to MIDI 60 = C3, with scientific labels available. Drum tr
 Physical iPhone audio, external MIDI hardware and actual Ableton import/playback require device/host verification. A passing browser or MIDI-file test is not proof of those paths.
 
 Chromium offline reload passed. WebKit composition, touch practice, export and audio checks passed; Playwright WebKit returned an internal browser error during offline reload, so Safari offline reopening remains unverified.
+
+## Visual system
+
+Music uses `@gusvega/ui@1.0.0` Button, Input, Card, Badge and Heading components. The published library CSS is scoped to `.music-app` (regenerate with `node scripts/music-styles.mjs` and format with Prettier) and a local neutral token theme keeps the interface, keyboard, icons and install metadata grayscale. No homepage card or navigation link is added.

@@ -13,7 +13,7 @@ export const metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#121513",
+  themeColor: "#0f0f0f",
 };
 export default function MusicPage() {
   return <MusicStudio />;

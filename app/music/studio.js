@@ -19,6 +19,8 @@ import {
   validateProject,
 } from "../../lib/music/engine.mjs";
 import { MusicAudio } from "../../lib/music/audio.mjs";
+import { Button, Input, Card, Badge, Heading } from "@gusvega/ui";
+import "./gus-ui.css";
 import "./studio.css";
 const STORE = "gus-music-project-v1";
 const LABELS = {
@@ -450,21 +452,21 @@ export default function MusicStudio() {
     })();
   }
   const keyboard = (
-    <section className="music-panel keyboard-panel">
+    <Card className="music-panel keyboard-panel">
       <div className="panel-heading">
         <div>
           <span className="music-eyebrow">AT YOUR FINGERTIPS</span>
-          <h2>
+          <Heading level={2}>
             {ROOTS[p.root]} {p.mode}{" "}
             <span className="heading-muted">
               / {showHints ? names.join(" · ") : "Listen and explore"}
             </span>
-          </h2>
+          </Heading>
         </div>
         <div className="keyboard-legend">
-          <span>● Scale</span>
-          <span>● Chord</span>
-          <span>● {practice ? "Next note" : "Selected / playing"}</span>
+          <span>○ Scale</span>
+          <span>● Chord tone</span>
+          <span>▰ {practice ? "Next note" : "Selected / playing"}</span>
         </div>
       </div>
       <div className="keyboard-scroll">
@@ -475,7 +477,8 @@ export default function MusicStudio() {
                 (x) => x < n && ![1, 3, 6, 8, 10].includes(pc(x)),
               ).length;
             return (
-              <button
+              <Button
+                variant="secondary"
                 key={n}
                 className={`piano-key ${black ? "black" : "white"} ${showHints && sc.includes(pc(n)) ? "in-scale" : ""} ${showHints && currentChord.notes.some((x) => pc(x) === pc(n)) ? "chord-tone" : ""} ${nowNotes.includes(n) || (showHints && target.includes(n)) ? "lit" : ""}`}
                 style={{
@@ -497,7 +500,7 @@ export default function MusicStudio() {
                 {showHints && sc.includes(pc(n)) && (
                   <small>{sc.indexOf(pc(n)) + 1}</small>
                 )}
-              </button>
+              </Button>
             );
           })}
         </div>
@@ -508,7 +511,7 @@ export default function MusicStudio() {
           : "Scientific octave labels: MIDI 60 = C4."}{" "}
         Scale highlighting is guidance; you can audition every key.
       </p>
-    </section>
+    </Card>
   );
   return (
     <main className="music-app">
@@ -524,16 +527,16 @@ export default function MusicStudio() {
           <span className="save-indicator">
             ● <span>{loaded ? "Saved on this device" : "Loading"}</span>
           </span>
-          <button onClick={() => setTab("export")}>
+          <Button variant="secondary" onClick={() => setTab("export")}>
             Export MIDI <span aria-hidden>↗</span>
-          </button>
+          </Button>
         </div>
       </header>
       <div className="music-shell">
         <section className="music-intro">
           <div>
             <div className="music-eyebrow">COMPOSE · PLAY · UNDERSTAND</div>
-            <h1>Make a little music.</h1>
+            <Heading level={1}>Make a little music.</Heading>
             <p>Find the notes. Feel the connection. Make it yours.</p>
           </div>
           <div className="key-orbit" aria-label={`${ROOTS[p.root]} ${p.mode}`}>
@@ -550,7 +553,8 @@ export default function MusicStudio() {
             ["setup", "03", "My Ableton"],
             ["export", "04", "Projects & export"],
           ].map(([id, num, label]) => (
-            <button
+            <Button
+              variant="secondary"
               key={id}
               aria-current={tab === id ? "page" : undefined}
               className={tab === id ? "active" : ""}
@@ -558,17 +562,18 @@ export default function MusicStudio() {
             >
               <small>{num}</small>
               {label}
-            </button>
+            </Button>
           ))}
         </nav>
         <div className="music-transport">
-          <button
+          <Button
+            variant="secondary"
             className="play-button"
             aria-label={playing ? "Stop playback" : "Play composition"}
             onClick={play}
           >
             {playing ? "■" : "▶"}
-          </button>
+          </Button>
           <div className="transport-position">
             <strong>
               {String(Math.floor(beat / 4) + 1).padStart(2, "0")}
@@ -606,7 +611,7 @@ export default function MusicStudio() {
           </label>
           <label>
             BPM
-            <input
+            <Input
               type="number"
               min="40"
               max="220"
@@ -646,7 +651,8 @@ export default function MusicStudio() {
               ))}
             </select>
           </label>
-          <button
+          <Button
+            variant="secondary"
             className={loop ? "toggle active" : "toggle"}
             aria-pressed={loop}
             onClick={() => {
@@ -655,8 +661,9 @@ export default function MusicStudio() {
             }}
           >
             ↻ Loop
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
             className={slow ? "toggle active" : "toggle"}
             aria-pressed={slow}
             onClick={() => {
@@ -665,14 +672,14 @@ export default function MusicStudio() {
             }}
           >
             ½ Speed
-          </button>
+          </Button>
         </div>
         {tab === "compose" && (
           <>
             <section className="brief-box">
               <label htmlFor="music-brief">WHAT DO YOU WANT TO WRITE?</label>
               <div>
-                <input
+                <Input
                   id="music-brief"
                   value={brief}
                   onChange={(e) => setBrief(e.target.value)}
@@ -681,9 +688,13 @@ export default function MusicStudio() {
                   }}
                   maxLength={250}
                 />
-                <button className="primary" onClick={applyBrief}>
+                <Button
+                  variant="secondary"
+                  className="primary"
+                  onClick={applyBrief}
+                >
                   Create composition <span>↗</span>
-                </button>
+                </Button>
               </div>
               <small>
                 Try a key, 4 / 8 / 16 bars, BPM, and “sparse” or “busy”. A
@@ -692,11 +703,11 @@ export default function MusicStudio() {
             </section>
             <div className="composer-layout">
               <div className="composer-main">
-                <section className="music-panel">
+                <Card className="music-panel">
                   <div className="panel-heading">
                     <div>
                       <span className="music-eyebrow">01 / THE HARMONY</span>
-                      <h2>A home for your melody.</h2>
+                      <Heading level={2}>A home for your melody.</Heading>
                     </div>
                     <select
                       aria-label="Progression preset"
@@ -741,12 +752,13 @@ export default function MusicStudio() {
                           <div className="chord-top">
                             <small>{String(i + 1).padStart(2, "0")}</small>
                             <span>{c.roman}</span>
-                            <button
+                            <Button
+                              variant="secondary"
                               aria-label={`Hear chord ${i + 1}: ${c.label}`}
                               onClick={() => hear(c.notes, "chords")}
                             >
                               ▷
-                            </button>
+                            </Button>
                           </div>
                           <strong>{c.label}</strong>
                           <p>
@@ -788,14 +800,17 @@ export default function MusicStudio() {
                     One chord per bar. The four-chord sequence repeats through
                     your phrase.
                   </p>
-                </section>
-                <section className="music-panel">
+                </Card>
+                <Card className="music-panel">
                   <div className="panel-heading">
                     <div>
                       <span className="music-eyebrow">02 / THE PHRASE</span>
-                      <h2>A few notes. Your own direction.</h2>
+                      <Heading level={2}>
+                        A few notes. Your own direction.
+                      </Heading>
                     </div>
-                    <button
+                    <Button
+                      variant="secondary"
                       disabled={!history.length}
                       onClick={() => {
                         stop();
@@ -807,11 +822,12 @@ export default function MusicStudio() {
                       }}
                     >
                       ↶ Undo
-                    </button>
+                    </Button>
                   </div>
                   <div className="track-tabs">
                     {["melody", "chords", "bass", "arp"].map((k) => (
-                      <button
+                      <Button
+                        variant="secondary"
                         key={k}
                         className={part === k ? "active" : ""}
                         onClick={() => {
@@ -820,12 +836,13 @@ export default function MusicStudio() {
                         }}
                       >
                         {LABELS[k]} <span>{p.notes[k].length}</span>
-                      </button>
+                      </Button>
                     ))}
                   </div>
                   <div className="bar-tabs" aria-label="Select bar">
                     {Array.from({ length: p.bars }, (_, i) => (
-                      <button
+                      <Button
+                        variant="secondary"
                         aria-label={`Bar ${i + 1}${p.locked.includes(i) ? ", melody locked" : ""}`}
                         className={bar === i ? "active" : ""}
                         key={i}
@@ -837,7 +854,7 @@ export default function MusicStudio() {
                       >
                         {i + 1}
                         {p.locked.includes(i) ? " ·" : ""}
-                      </button>
+                      </Button>
                     ))}
                   </div>
                   <div className="roll-tools">
@@ -865,7 +882,8 @@ export default function MusicStudio() {
                         <option value={2}>1/2</option>
                       </select>
                     </label>
-                    <button
+                    <Button
+                      variant="secondary"
                       aria-pressed={p.locked.includes(bar)}
                       onClick={() =>
                         change({
@@ -877,7 +895,7 @@ export default function MusicStudio() {
                       }
                     >
                       {p.locked.includes(bar) ? "● Locked" : "○ Lock melody"}
-                    </button>
+                    </Button>
                   </div>
                   <div className="roll-scroll">
                     <div
@@ -900,7 +918,8 @@ export default function MusicStudio() {
                           </span>
                           <div className="roll-cells">
                             {Array.from({ length: 16 }, (_, s) => (
-                              <button
+                              <Button
+                                variant="secondary"
                                 tabIndex={edit ? 0 : -1}
                                 disabled={!edit}
                                 aria-label={`Place ${name(pitch, p.root, p.mode, p.octaveOffset)} at beat ${s / 4 + 1}`}
@@ -913,7 +932,8 @@ export default function MusicStudio() {
                       ))}
                       <div className="note-layer" style={{ left: 43, top: 24 }}>
                         {barNotes.map((n, i) => (
-                          <button
+                          <Button
+                            variant="secondary"
                             key={`${n.start}-${n.pitch}-${i}`}
                             aria-label={`${name(n.pitch, p.root, p.mode, p.octaveOffset)}, beat ${n.start - bar * 4 + 1}, ${n.duration} beats`}
                             className={`roll-note ${i === selected ? "selected" : ""}`}
@@ -941,7 +961,7 @@ export default function MusicStudio() {
                               p.octaveOffset,
                               false,
                             )}
-                          </button>
+                          </Button>
                         ))}
                       </div>
                       {playing && activeBar === bar && (
@@ -955,12 +975,13 @@ export default function MusicStudio() {
                     </div>
                   </div>
                   <div className="variation-tools">
-                    <button
+                    <Button
+                      variant="secondary"
                       className="primary"
                       onClick={() => regenerate("melody")}
                     >
                       ↗ New melody variation
-                    </button>
+                    </Button>
                     <label>
                       Density{" "}
                       <input
@@ -974,35 +995,37 @@ export default function MusicStudio() {
                         }
                       />
                     </label>
-                    <button onClick={() => regenerate()}>
+                    <Button variant="secondary" onClick={() => regenerate()}>
                       Regenerate all parts
-                    </button>
+                    </Button>
                   </div>
                   <p className="panel-foot">
                     Tap a note to hear it and learn why it fits. Enable Draw
                     notes to add or remove notes. Density applies to the next
                     variation.
                   </p>
-                </section>
+                </Card>
               </div>
               <aside className="composer-aside">
-                <section className="music-panel insight-panel">
+                <Card className="music-panel insight-panel">
                   <span className="music-eyebrow">THE NOTEBOOK</span>
-                  <h2>
+                  <Heading level={2}>
                     {chosen
                       ? name(chosen.pitch, p.root, p.mode, p.octaveOffset)
                       : "Room for a note."}
-                  </h2>
+                  </Heading>
                   {explanation ? (
                     <>
                       <div className="note-badges">
                         <span>
                           Degree {explanation.degree || "outside scale"}
                         </span>
-                        <span>{explanation.role}</span>
+                        <Badge variant="secondary">{explanation.role}</Badge>
                       </div>
                       <p>{explanation.text}</p>
-                      <button onClick={compare}>▷ Hear why</button>
+                      <Button variant="secondary" onClick={compare}>
+                        ▷ Hear why
+                      </Button>
                     </>
                   ) : (
                     <p>Draw a note to begin exploring this bar.</p>
@@ -1011,13 +1034,14 @@ export default function MusicStudio() {
                   <span className="music-eyebrow">YOUR SCALE</span>
                   <div className="scale-chips">
                     {names.map((n, i) => (
-                      <button
+                      <Button
+                        variant="secondary"
                         key={n}
                         onClick={() => hear([60 + p.root + MODES[p.mode][i]])}
                       >
                         <strong>{n}</strong>
                         <small>{i + 1}</small>
-                      </button>
+                      </Button>
                     ))}
                   </div>
                   <p className="small-copy">
@@ -1025,15 +1049,16 @@ export default function MusicStudio() {
                     tones give you landing points; other scale notes add
                     movement.
                   </p>
-                  <button onClick={() => setTab("learn")}>
+                  <Button variant="secondary" onClick={() => setTab("learn")}>
                     Practice this phrase →
-                  </button>
-                </section>
-                <section className="music-panel mixer-panel">
+                  </Button>
+                </Card>
+                <Card className="music-panel mixer-panel">
                   <span className="music-eyebrow">YOUR ENSEMBLE</span>
                   {PARTS.map((k) => (
                     <div className="mixer-track" key={k}>
-                      <button
+                      <Button
+                        variant="secondary"
                         aria-label={`${p.muted.includes(k) ? "Unmute" : "Mute"} ${LABELS[k]}`}
                         aria-pressed={!p.muted.includes(k)}
                         className={p.muted.includes(k) ? "muted" : ""}
@@ -1047,7 +1072,7 @@ export default function MusicStudio() {
                         }
                       >
                         ●
-                      </button>
+                      </Button>
                       <div>
                         <strong>{LABELS[k]}</strong>
                         <small>{p.setup[k]}</small>
@@ -1065,14 +1090,14 @@ export default function MusicStudio() {
                     Browser instruments are previews. Your Ableton instruments
                     provide the final sound.
                   </p>
-                </section>
+                </Card>
               </aside>
             </div>
-            <section className="music-panel">
+            <Card className="music-panel">
               <div className="panel-heading">
                 <div>
                   <span className="music-eyebrow">03 / THE PULSE</span>
-                  <h2>Give it somewhere to move.</h2>
+                  <Heading level={2}>Give it somewhere to move.</Heading>
                 </div>
                 <span className="muted-copy">Editing bar {bar + 1}</span>
               </div>
@@ -1082,7 +1107,8 @@ export default function MusicStudio() {
                     <div className="drum-row" key={k}>
                       <strong>{LABELS[k]}</strong>
                       {Array.from({ length: 16 }, (_, i) => (
-                        <button
+                        <Button
+                          variant="secondary"
                           key={i}
                           aria-label={`${LABELS[k]} step ${i + 1}`}
                           aria-pressed={p.notes[k].some(
@@ -1092,13 +1118,14 @@ export default function MusicStudio() {
                           onClick={() => toggleDrum(k, i)}
                         >
                           {i % 4 === 0 ? i / 4 + 1 : "·"}
-                        </button>
+                        </Button>
                       ))}
                     </div>
                   ))}
                 </div>
               </div>
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => {
                   const notes = { ...p.notes };
                   for (const k of ["kick", "clap", "hat"])
@@ -1114,16 +1141,16 @@ export default function MusicStudio() {
                 }}
               >
                 Repeat this drum bar across the phrase
-              </button>
-            </section>
+              </Button>
+            </Card>
           </>
         )}
         {tab === "learn" && (
-          <section className="music-panel learn-panel">
+          <Card className="music-panel learn-panel">
             <div className="panel-heading">
               <div>
                 <span className="music-eyebrow">PLAY & UNDERSTAND</span>
-                <h2>Let your ears lead your hands.</h2>
+                <Heading level={2}>Let your ears lead your hands.</Heading>
               </div>
               <label>
                 <input
@@ -1141,7 +1168,8 @@ export default function MusicStudio() {
             </p>
             <div className="bar-tabs">
               {Array.from({ length: p.bars }, (_, i) => (
-                <button
+                <Button
+                  variant="secondary"
                   key={i}
                   className={bar === i ? "active" : ""}
                   onClick={() => {
@@ -1151,7 +1179,7 @@ export default function MusicStudio() {
                   }}
                 >
                   Bar {i + 1}
-                </button>
+                </Button>
               ))}
             </div>
             <div className="lesson-banner">
@@ -1159,18 +1187,19 @@ export default function MusicStudio() {
                 <span className="music-eyebrow">
                   {practice ? "YOUR TURN" : "START WITH ONE PHRASE"}
                 </span>
-                <h3>
+                <Heading level={3}>
                   {practice && expected
                     ? `Play ${showHints ? name(expected.pitch, p.root, p.mode, p.octaveOffset) : "the next note"}`
                     : `Bar ${bar + 1} · ${chord(p.root, p.mode, p.progression[bar % 4]).label}`}
-                </h3>
+                </Heading>
                 <p>
                   {practice
                     ? `Note ${practiceIndex + 1} of ${melodyNotes.length}`
                     : "Listen, follow the highlighted keys, then try it yourself."}
                 </p>
               </div>
-              <button
+              <Button
+                variant="secondary"
                 className="primary"
                 disabled={!melodyNotes.length}
                 onClick={() => {
@@ -1180,8 +1209,9 @@ export default function MusicStudio() {
                 }}
               >
                 {practice ? "Finish practice" : "Practice this bar →"}
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="secondary"
                 onClick={async () => {
                   try {
                     const a = getAudio();
@@ -1203,11 +1233,12 @@ export default function MusicStudio() {
                 }}
               >
                 ▷ Hear this bar
-              </button>
+              </Button>
             </div>
             <div className="phrase-notes">
               {melodyNotes.map((n, i) => (
-                <button
+                <Button
+                  variant="secondary"
                   key={i}
                   className={practiceIndex === i && practice ? "active" : ""}
                   onClick={() => {
@@ -1225,75 +1256,81 @@ export default function MusicStudio() {
                   <span>
                     Beat {(n.start % 4) + 1} · {n.duration} beats
                   </span>
-                </button>
+                </Button>
               ))}
             </div>
             {keyboard}
             <div className="lesson-columns">
               <article>
                 <span className="music-eyebrow">01 / FIND HOME</span>
-                <h3>{ROOTS[p.root]} is your tonic.</h3>
+                <Heading level={3}>{ROOTS[p.root]} is your tonic.</Heading>
                 <p>
                   Play {ROOTS[p.root]}, then another scale note, then return.
                   The tonic is the tonal center. A phrase can return here to
                   sound finished.
                 </p>
-                <button onClick={() => hear([60 + p.root])}>
+                <Button variant="secondary" onClick={() => hear([60 + p.root])}>
                   Hear the tonic
-                </button>
+                </Button>
               </article>
               <article>
                 <span className="music-eyebrow">02 / FOLLOW THE CHORD</span>
-                <h3>
+                <Heading level={3}>
                   {currentChord.label}:{" "}
                   {currentChord.notes
                     .map((n) => name(n, p.root, p.mode, p.octaveOffset, false))
                     .join(", ")}
                   .
-                </h3>
+                </Heading>
                 <p>
                   These three chord tones are useful landing points. Try one on
                   a strong beat, then connect it to another with a nearby scale
                   note.
                 </p>
-                <button onClick={() => hear(currentChord.notes, "chords")}>
+                <Button
+                  variant="secondary"
+                  onClick={() => hear(currentChord.notes, "chords")}
+                >
                   Hear the chord
-                </button>
+                </Button>
               </article>
               <article>
                 <span className="music-eyebrow">03 / MAKE A SENTENCE</span>
-                <h3>Repeat, then change.</h3>
+                <Heading level={3}>Repeat, then change.</Heading>
                 <p>
                   Play a short motif twice. On the second pass, change only its
                   ending. Repetition gives the listener something to recognize;
                   the new ending creates direction.
                 </p>
-                <button
+                <Button
+                  variant="secondary"
                   onClick={() => {
                     setTab("compose");
                     setPart("melody");
                   }}
                 >
                   Edit your motif →
-                </button>
+                </Button>
               </article>
             </div>
-            <button onClick={connectMidi}>Connect MIDI keyboard</button>
+            <Button variant="secondary" onClick={connectMidi}>
+              Connect MIDI keyboard
+            </Button>
             <p className="small-copy">
               {midiStatus ||
                 "Optional on supported browsers. Your phone’s touch keyboard is always available."}
             </p>
-          </section>
+          </Card>
         )}
         {tab === "compose" && keyboard}
         {tab === "setup" && (
-          <section className="music-panel">
+          <Card className="music-panel">
             <div className="panel-heading">
               <div>
                 <span className="music-eyebrow">
                   YOUR STUDIO, CONNECTED BY MUSIC
                 </span>
-                <h2>A place for every part.</h2>
+                <Heading level={2}>A place for every part.</Heading>
               </div>
             </div>
             <p>
@@ -1321,7 +1358,7 @@ export default function MusicStudio() {
                   {["kick", "clap", "hat"].includes(k) && (
                     <small>
                       Trigger note{" "}
-                      <input
+                      <Input
                         aria-label={`${LABELS[k]} MIDI trigger`}
                         type="number"
                         min="0"
@@ -1367,14 +1404,14 @@ export default function MusicStudio() {
             </label>
             <div className="lesson-columns">
               <article>
-                <h3>1. Open your template</h3>
+                <Heading level={3}>1. Open your template</Heading>
                 <p>
                   Open Gus Music Template in Live and set the tempo to {p.bpm}{" "}
                   BPM. The composition uses {p.bars} bars in 4/4.
                 </p>
               </article>
               <article>
-                <h3>2. Place the MIDI</h3>
+                <Heading level={3}>2. Place the MIDI</Heading>
                 <p>
                   Import each part to its chosen MIDI track at the same bar, or
                   put the clips in one Session scene. Use individual exports to
@@ -1382,7 +1419,7 @@ export default function MusicStudio() {
                 </p>
               </article>
               <article>
-                <h3>3. Play through your sounds</h3>
+                <Heading level={3}>3. Play through your sounds</Heading>
                 <p>
                   Use your configured instruments and hardware routing. MIDI
                   carries notes, durations and velocities. It does not include
@@ -1395,19 +1432,19 @@ export default function MusicStudio() {
               tracks. Companion audio tracks are for recording their sound. This
               page does not adjust monitoring or arm tracks.
             </p>
-          </section>
+          </Card>
         )}
         {tab === "export" && (
-          <section className="music-panel">
+          <Card className="music-panel">
             <div className="panel-heading">
               <div>
                 <span className="music-eyebrow">TAKE THE IDEA WITH YOU</span>
-                <h2>From a small phrase to your studio.</h2>
+                <Heading level={2}>From a small phrase to your studio.</Heading>
               </div>
             </div>
             <label className="project-title">
               Project name
-              <input
+              <Input
                 maxLength={100}
                 value={p.title}
                 onChange={(e) => setP({ ...p, title: e.target.value })}
@@ -1422,10 +1459,15 @@ export default function MusicStudio() {
               <span>{PARTS.length} MIDI tracks</span>
             </div>
             <div className="export-actions">
-              <button className="primary" onClick={() => exportMidi()}>
+              <Button
+                variant="secondary"
+                className="primary"
+                onClick={() => exportMidi()}
+              >
                 Download all tracks .mid ↗
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="secondary"
                 onClick={() => {
                   download(
                     JSON.stringify(p, null, 2),
@@ -1438,10 +1480,10 @@ export default function MusicStudio() {
                 }}
               >
                 Download project
-              </button>
-              <button onClick={() => file.current.click()}>
+              </Button>
+              <Button variant="secondary" onClick={() => file.current.click()}>
                 Import project
-              </button>
+              </Button>
               <input
                 ref={file}
                 type="file"
@@ -1449,7 +1491,9 @@ export default function MusicStudio() {
                 hidden
                 onChange={importProject}
               />
-              <button onClick={saveVersion}>Save a version</button>
+              <Button variant="secondary" onClick={saveVersion}>
+                Save a version
+              </Button>
             </div>
             <p className="small-copy">
               MIDI exports include every part, including muted tracks. All
@@ -1465,15 +1509,15 @@ export default function MusicStudio() {
                       {p.setup[k]} · {p.notes[k].length} notes
                     </small>
                   </div>
-                  <button onClick={() => exportMidi([k])}>
+                  <Button variant="secondary" onClick={() => exportMidi([k])}>
                     Download MIDI ↓
-                  </button>
+                  </Button>
                 </div>
               ))}
             </div>
-            <h3>
+            <Heading level={3}>
               Saved versions <span className="muted-copy">/ this browser</span>
-            </h3>
+            </Heading>
             {library.length ? (
               library.map((v, i) => (
                 <div className="saved-version" key={i}>
@@ -1483,7 +1527,8 @@ export default function MusicStudio() {
                       {ROOTS[v.root]} {v.mode} · {v.bpm} BPM · {v.bars} bars
                     </small>
                   </div>
-                  <button
+                  <Button
+                    variant="secondary"
                     onClick={() => {
                       change(validateProject(v));
                       setBar(0);
@@ -1491,7 +1536,7 @@ export default function MusicStudio() {
                     }}
                   >
                     Load
-                  </button>
+                  </Button>
                 </div>
               ))
             ) : (
@@ -1514,7 +1559,7 @@ export default function MusicStudio() {
                 cloud sync.
               </p>
             </div>
-          </section>
+          </Card>
         )}
         <div className="music-status" role="status">
           <span>●</span>
