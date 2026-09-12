@@ -4,6 +4,15 @@ const nextConfig = {
   async rewrites() {
     return { beforeFiles: [{ source: "/me", destination: "/me/index.html" }] };
   },
+  async redirects() {
+    return [
+      {
+        source: "/music",
+        destination: "https://gusvega.dev/music",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
