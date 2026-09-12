@@ -45,4 +45,4 @@ The browser check expects an existing prepared test song. Set `SPECTRA_TEST_URL`
 
 ## Migration
 
-The private workspace now lives at https://gusvega.dev/Spectra in gusvega/personal-website. The original route permanently redirects there. The Mac key and prepared songs remain unchanged; enter the same key once on the new origin. The bridge allows gusvega.dev through its explicit CORS allowlist.
+The private workspace now lives at https://gusvega.dev/spectra-tool in gusvega/personal-website. The original route permanently redirects there. The Mac key and prepared songs remain unchanged; enter the same key once on the new origin. The bridge allows gusvega.dev through its explicit CORS allowlist.

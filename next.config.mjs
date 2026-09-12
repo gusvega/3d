@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: "/spectra",
-        destination: "https://gusvega.dev/Spectra",
+        destination: "https://gusvega.dev/spectra-tool",
         permanent: true,
       },
       {
